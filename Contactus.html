@@ -1,0 +1,2706 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Cookie Vault</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --vanilla-0:#fffdf0;
+    --vanilla-1:#fff8d7;
+    --vanilla-2:#fff0ad;
+    --vanilla-3:#f6df79;
+    --vanilla-4:#e5c55a;
+    --vanilla-5:#bd9635;
+
+    --cream:#fffdf4;
+    --cream-2:#f8efd1;
+    --cream-3:#ead9aa;
+
+    --espresso:#17100b;
+    --espresso-2:#291a10;
+    --coffee:#4b2c19;
+    --coffee-soft:#79583d;
+
+    --gold:#b98a28;
+    --gold-light:#e8ca6c;
+}
+
+* {
+    box-sizing:border-box;
+}
+
+html {
+    scroll-behavior:smooth;
+}
+
+body {
+    margin:0;
+    min-height:100vh;
+    overflow-x:hidden;
+    color:var(--espresso);
+    font-family:"DM Sans",sans-serif;
+    position:relative;
+
+    background:
+        radial-gradient(circle at 15% 12%,rgba(255,255,240,.95) 0 5%,transparent 22%),
+        radial-gradient(circle at 84% 17%,rgba(255,249,203,.9) 0 7%,transparent 24%),
+        radial-gradient(circle at 51% 91%,rgba(229,197,91,.42) 0 4%,transparent 27%),
+        linear-gradient(125deg,#f3dd78 0%,#fff0ae 24%,#fff9d9 48%,#f7e59a 72%,#e7c960 100%);
+}
+
+body::before {
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:-5;
+    opacity:.42;
+
+    background-image:
+        radial-gradient(rgba(79,55,14,.12) .7px,transparent .8px),
+        radial-gradient(rgba(255,255,255,.38) .8px,transparent 1px);
+
+    background-size:19px 19px,31px 31px;
+    background-position:0 0,8px 13px;
+    mix-blend-mode:multiply;
+}
+
+body::after {
+    content:"";
+    position:fixed;
+    width:900px;
+    height:900px;
+    left:50%;
+    top:43%;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    pointer-events:none;
+    z-index:-6;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,244,.72),
+            rgba(255,247,198,.36) 32%,
+            transparent 69%
+        );
+
+    filter:blur(20px);
+}
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
+header {
+    position:fixed;
+    top:18px;
+    left:50%;
+    z-index:1000;
+    width:max-content;
+    max-width:calc(100% - 24px);
+    transform:translateX(-50%);
+    padding:7px;
+
+    border:1px solid rgba(255,248,237,.13);
+    border-radius:999px;
+
+    background:rgba(31,11,7,.76);
+    backdrop-filter:blur(22px) saturate(140%);
+
+    box-shadow:
+        0 18px 55px rgba(39,20,5,.30),
+        inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+header nav {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:3px;
+}
+
+header nav a {
+    display:block;
+    padding:10px 14px;
+    border-radius:999px;
+    color:#d8c6b8;
+    text-decoration:none;
+    font-size:.77rem;
+    font-weight:700;
+    white-space:nowrap;
+
+    transition:
+        color .22s ease,
+        background .22s ease,
+        transform .22s ease;
+}
+
+header nav a:hover {
+    color:#fff8ed;
+    background:rgba(229,45,89,.16);
+    transform:translateY(-1px);
+}
+
+header nav a.active {
+    color:#fffdf4;
+    background:rgba(255,255,255,.09);
+}
+
+/* =========================================================
+   BOTANICAL BACKGROUND
+   ========================================================= */
+
+.botanical-field {
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:-1;
+}
+
+/* =========================================================
+   VANILLA ORCHIDS
+   ========================================================= */
+
+.vanilla-flower {
+    position:absolute;
+    width:150px;
+    height:150px;
+
+    filter:
+        drop-shadow(0 18px 24px rgba(65,43,9,.14))
+        drop-shadow(0 2px 4px rgba(255,255,255,.35));
+
+    animation:
+        flowerFloat 8s ease-in-out infinite,
+        flowerBloom 6s ease-in-out infinite;
+}
+
+.vanilla-flower::before {
+    content:"";
+    position:absolute;
+    inset:19px;
+    border-radius:50%;
+
+    background:
+        radial-gradient(circle at 47% 43%,rgba(255,255,255,.95) 0 3%,transparent 4%),
+        radial-gradient(circle at 50% 50%,#d6ad3b 0 7%,#9a6d17 8% 13%,#f1d779 14% 24%,transparent 25%);
+
+    z-index:5;
+}
+
+.vanilla-flower span {
+    position:absolute;
+    display:block;
+    width:64px;
+    height:96px;
+
+    border-radius:
+        58% 42% 61% 39% /
+        67% 58% 42% 33%;
+
+    background:
+        radial-gradient(ellipse at 36% 24%,rgba(255,255,255,.98) 0 5%,transparent 27%),
+        radial-gradient(ellipse at 61% 75%,rgba(211,172,64,.38),transparent 57%),
+        linear-gradient(145deg,#fffef2 0%,#fff9da 35%,#f1df98 73%,#d7bc67 100%);
+
+    border:1px solid rgba(183,151,63,.28);
+
+    box-shadow:
+        inset -7px -10px 16px rgba(172,134,35,.13),
+        inset 8px 8px 16px rgba(255,255,255,.65),
+        0 7px 14px rgba(87,60,14,.08);
+
+    transform-origin:50% 78%;
+}
+
+.vanilla-flower span::after {
+    content:"";
+    position:absolute;
+    left:50%;
+    top:17%;
+    width:1px;
+    height:68%;
+    transform:translateX(-50%) rotate(5deg);
+
+    background:
+        linear-gradient(
+            to bottom,
+            transparent,
+            rgba(176,139,45,.35),
+            transparent
+        );
+}
+
+.vanilla-flower span:nth-child(1) {
+    left:43px;
+    top:0;
+}
+
+.vanilla-flower span:nth-child(2) {
+    right:2px;
+    top:39px;
+    transform:rotate(72deg);
+}
+
+.vanilla-flower span:nth-child(3) {
+    right:24px;
+    bottom:1px;
+    transform:rotate(144deg);
+}
+
+.vanilla-flower span:nth-child(4) {
+    left:18px;
+    bottom:4px;
+    transform:rotate(216deg);
+}
+
+.vanilla-flower span:nth-child(5) {
+    left:0;
+    top:40px;
+    transform:rotate(288deg);
+}
+
+.vanilla-flower .lip {
+    position:absolute;
+    z-index:8;
+    left:49px;
+    top:49px;
+    width:54px;
+    height:63px;
+
+    border-radius:55% 45% 48% 52%;
+
+    background:
+        radial-gradient(ellipse at 50% 18%,#fffde8 0 8%,transparent 9%),
+        radial-gradient(ellipse at 50% 42%,#f7e79f 0 19%,#d6ac3e 20% 32%,transparent 33%),
+        linear-gradient(155deg,#fffbe6,#efd779 60%,#c5962e);
+
+    box-shadow:
+        inset 7px 8px 11px rgba(255,255,255,.6),
+        inset -7px -10px 14px rgba(139,95,12,.16);
+}
+
+.vanilla-flower .pollen {
+    position:absolute;
+    z-index:10;
+    left:72px;
+    top:70px;
+    width:11px;
+    height:11px;
+    border-radius:50%;
+
+    background:
+        radial-gradient(circle at 30% 30%,#fff6ad,#b47c18 72%);
+
+    box-shadow:
+        8px -4px 0 -2px #c69429,
+        -7px -5px 0 -3px #d4a63b,
+        4px 9px 0 -3px #a87519;
+}
+
+.flower-a {
+    left:-25px;
+    top:125px;
+    transform:rotate(-17deg) scale(1.08);
+}
+
+.flower-b {
+    right:-32px;
+    top:180px;
+    transform:rotate(21deg) scale(.9);
+    animation-delay:-2.2s;
+}
+
+.flower-c {
+    left:7%;
+    bottom:25px;
+    transform:rotate(34deg) scale(.65);
+    animation-delay:-4s;
+}
+
+.flower-d {
+    right:9%;
+    bottom:2px;
+    transform:rotate(-24deg) scale(.7);
+    animation-delay:-5.5s;
+}
+
+/* =========================================================
+   VANILLA PODS
+   ========================================================= */
+
+.vanilla-pod {
+    position:absolute;
+    width:260px;
+    height:29px;
+
+    border-radius:
+        55% 45% 48% 52% /
+        62% 59% 41% 38%;
+
+    background:
+        radial-gradient(ellipse at 17% 33%,rgba(131,91,43,.85) 0 1.3%,transparent 2%),
+        radial-gradient(ellipse at 43% 63%,rgba(105,70,31,.7) 0 1.2%,transparent 2%),
+        radial-gradient(ellipse at 74% 34%,rgba(121,82,37,.7) 0 1.3%,transparent 2%),
+        repeating-linear-gradient(90deg,rgba(15,9,5,.22) 0 2px,rgba(79,48,21,.17) 2px 5px,transparent 5px 11px),
+        linear-gradient(180deg,#4b321c 0%,#21140c 26%,#0f0a07 51%,#2d1b0e 77%,#5a3a1d 100%);
+
+    border:1px solid rgba(45,25,8,.75);
+
+    box-shadow:
+        inset 0 4px 4px rgba(255,203,108,.16),
+        inset 0 -6px 8px rgba(0,0,0,.55),
+        0 15px 25px rgba(45,26,6,.24);
+
+    opacity:.94;
+
+    animation:podDrift 9s ease-in-out infinite;
+}
+
+.vanilla-pod::before {
+    content:"";
+    position:absolute;
+    left:7%;
+    top:5px;
+    width:83%;
+    height:4px;
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(205,156,72,.4),
+            rgba(255,213,123,.16),
+            transparent
+        );
+}
+
+.vanilla-pod::after {
+    content:"";
+    position:absolute;
+    right:-10px;
+    top:7px;
+    width:18px;
+    height:15px;
+    border-radius:50% 30% 30% 50%;
+
+    background:
+        linear-gradient(90deg,#160d08,#51331a);
+
+    box-shadow:inset -4px 0 5px rgba(0,0,0,.45);
+}
+
+.pod-a {
+    left:-52px;
+    top:325px;
+    transform:rotate(18deg);
+}
+
+.pod-b {
+    right:-61px;
+    top:560px;
+    transform:rotate(-28deg) scale(1.1);
+    animation-delay:-3s;
+}
+
+.pod-c {
+    left:2%;
+    bottom:155px;
+    transform:rotate(-12deg) scale(.68);
+    animation-delay:-5s;
+}
+
+.pod-d {
+    right:3%;
+    bottom:235px;
+    transform:rotate(23deg) scale(.72);
+    animation-delay:-7s;
+}
+
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+main {
+    position:relative;
+    z-index:2;
+
+    width:min(1450px,calc(100% - 56px));
+    margin:0 auto;
+    padding:142px 0 90px;
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero {
+    position:relative;
+
+    display:grid;
+    grid-template-columns:minmax(0,.9fr) minmax(420px,1.1fr);
+    align-items:end;
+    gap:70px;
+
+    margin-bottom:55px;
+}
+
+.hero-copy {
+    position:relative;
+    padding-left:10px;
+}
+
+.eyebrow {
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:20px;
+
+    color:#6d501c;
+    font-size:.72rem;
+    font-weight:800;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+}
+
+.eyebrow::before {
+    content:"";
+    width:34px;
+    height:1px;
+    background:#8f6b24;
+}
+
+.hero h1 {
+    max-width:760px;
+    margin:0;
+
+    font-family:"Playfair Display",serif;
+    font-size:clamp(4rem,7.5vw,8.4rem);
+    line-height:.82;
+    letter-spacing:-.065em;
+    font-weight:700;
+    color:#26170d;
+}
+
+.hero h1 em {
+    display:block;
+    color:#8c641c;
+    font-weight:600;
+    transform:translateX(52px);
+}
+
+.hero-description {
+    max-width:510px;
+    margin:32px 0 0 58px;
+
+    color:#5c4227;
+    font-size:1rem;
+    line-height:1.75;
+}
+
+.hero-stamp {
+    justify-self:end;
+    width:160px;
+    height:160px;
+    margin-right:8%;
+
+    border-radius:50%;
+
+    display:grid;
+    place-items:center;
+    text-align:center;
+
+    border:1px solid rgba(76,48,10,.28);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,242,.85),
+            rgba(255,239,169,.55) 61%,
+            rgba(224,190,77,.45)
+        );
+
+    box-shadow:
+        inset 0 0 0 8px rgba(255,255,240,.22),
+        inset 0 0 0 9px rgba(122,82,12,.12),
+        0 25px 55px rgba(70,45,5,.16);
+
+    transform:rotate(8deg);
+}
+
+.hero-stamp strong {
+    display:block;
+    font-family:"Playfair Display",serif;
+    font-size:2rem;
+    line-height:.9;
+}
+
+.hero-stamp span {
+    display:block;
+    margin-top:8px;
+    font-size:.62rem;
+    letter-spacing:.17em;
+    font-weight:800;
+}
+
+/* =========================================================
+   EXPERIENCE
+   ========================================================= */
+
+.experience {
+    position:relative;
+
+    display:grid;
+    grid-template-columns:minmax(420px,.92fr) minmax(540px,1.08fr);
+
+    min-height:760px;
+
+    border-radius:46px;
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            125deg,
+            rgba(255,253,239,.91),
+            rgba(255,244,192,.83)
+        );
+
+    border:1px solid rgba(111,78,19,.2);
+
+    box-shadow:
+        0 45px 100px rgba(70,44,5,.18),
+        0 12px 30px rgba(91,58,8,.11),
+        inset 0 1px 0 rgba(255,255,255,.85);
+}
+
+/* =========================================================
+   COOKIE SIDE
+   ========================================================= */
+
+.cookie-side {
+    position:relative;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:75px 60px;
+
+    background:
+        radial-gradient(circle at 42% 45%,rgba(255,255,255,.88),transparent 46%);
+}
+
+.cookie-side::before {
+    content:"VANILLA • HAND BAKED • PRIVATE BATCH";
+
+    position:absolute;
+    top:34px;
+    left:44px;
+
+    color:rgba(76,50,15,.47);
+    font-size:.59rem;
+    font-weight:800;
+    letter-spacing:.18em;
+}
+
+.cookie-side::after {
+    content:"";
+    position:absolute;
+    bottom:38px;
+    left:50%;
+    width:230px;
+    height:26px;
+    transform:translateX(-50%);
+    border-radius:50%;
+
+    background:rgba(83,50,9,.16);
+    filter:blur(13px);
+}
+
+/* =========================================================
+   COOKIE
+   ========================================================= */
+
+.cookie {
+    position:relative;
+
+    width:min(570px,100%);
+    aspect-ratio:1/.93;
+
+    border-radius:
+        47% 53% 50% 46% /
+        50% 45% 55% 50%;
+
+    padding:70px 78px;
+
+    background:
+        radial-gradient(circle at 30% 21%,rgba(255,250,205,.96) 0 2%,transparent 2.5%),
+        radial-gradient(circle at 73% 27%,rgba(255,255,226,.85) 0 1.5%,transparent 2%),
+        radial-gradient(circle at 25% 73%,rgba(186,134,37,.27) 0 1.2%,transparent 1.8%),
+        radial-gradient(circle at 78% 70%,rgba(179,129,33,.22) 0 1.2%,transparent 1.9%),
+        linear-gradient(145deg,#fff7c8 0%,#f7dc78 28%,#e8bd49 63%,#c9942d 100%);
+
+    border:3px solid rgba(166,115,24,.32);
+
+    box-shadow:
+        inset 18px 20px 35px rgba(255,255,226,.62),
+        inset -24px -26px 45px rgba(113,69,8,.25),
+        inset 0 -2px 0 rgba(107,66,11,.22),
+        0 38px 55px rgba(82,50,5,.24);
+
+    transform:rotate(-2deg);
+    transition:transform .4s ease,box-shadow .4s ease;
+}
+
+.cookie:hover {
+    transform:rotate(-1deg) translateY(-4px);
+
+    box-shadow:
+        inset 18px 20px 35px rgba(255,255,226,.62),
+        inset -24px -26px 45px rgba(113,69,8,.25),
+        0 45px 70px rgba(82,50,5,.27);
+}
+
+.cookie::before {
+    content:"";
+    position:absolute;
+    inset:12px;
+    border-radius:inherit;
+
+    border:2px solid rgba(138,91,13,.19);
+
+    box-shadow:inset 0 0 22px rgba(110,66,9,.13);
+    pointer-events:none;
+}
+
+.cookie::after {
+    content:"";
+    position:absolute;
+    left:11%;
+    top:10%;
+    width:30%;
+    height:13%;
+
+    border-radius:50%;
+    transform:rotate(-12deg);
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,235,.62),
+            transparent
+        );
+
+    filter:blur(4px);
+}
+
+/* =========================================================
+   COOKIE SPECKLES
+   ========================================================= */
+
+.bean-specks {
+    position:absolute;
+    inset:35px;
+    pointer-events:none;
+    opacity:.8;
+}
+
+.bean-specks span {
+    position:absolute;
+    width:4px;
+    height:4px;
+    border-radius:50%;
+
+    background:
+        radial-gradient(circle at 30% 30%,#5b3514,#17100a);
+
+    box-shadow:0 1px 2px rgba(0,0,0,.28);
+}
+
+.bean-specks span:nth-child(1){left:14%;top:23%}
+.bean-specks span:nth-child(2){left:23%;top:46%}
+.bean-specks span:nth-child(3){left:34%;top:19%}
+.bean-specks span:nth-child(4){left:44%;top:33%}
+.bean-specks span:nth-child(5){left:57%;top:18%}
+.bean-specks span:nth-child(6){left:72%;top:30%}
+.bean-specks span:nth-child(7){left:82%;top:52%}
+.bean-specks span:nth-child(8){left:68%;top:67%}
+.bean-specks span:nth-child(9){left:49%;top:75%}
+.bean-specks span:nth-child(10){left:28%;top:69%}
+.bean-specks span:nth-child(11){left:17%;top:56%}
+.bean-specks span:nth-child(12){left:39%;top:52%}
+.bean-specks span:nth-child(13){left:63%;top:48%}
+.bean-specks span:nth-child(14){left:78%;top:75%}
+.bean-specks span:nth-child(15){left:52%;top:60%}
+.bean-specks span:nth-child(16){left:32%;top:38%}
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+.cookie-form {
+    position:relative;
+    z-index:4;
+    width:100%;
+}
+
+.form-kicker {
+    margin-bottom:7px;
+    color:rgba(72,44,11,.64);
+    font-size:.62rem;
+    font-weight:800;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+}
+
+.cookie-form h2 {
+    margin:0 0 23px;
+    color:#321d0d;
+
+    font-family:"Playfair Display",serif;
+    font-size:clamp(2rem,3vw,2.9rem);
+    line-height:.95;
+}
+
+.field {
+    margin-bottom:15px;
+}
+
+.field label {
+    display:block;
+    margin:0 0 6px;
+
+    color:rgba(55,34,12,.73);
+    font-size:.68rem;
+    font-weight:800;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+}
+
+.field input,
+.field textarea {
+    width:100%;
+
+    border:1px solid rgba(82,53,13,.2);
+    border-radius:15px;
+
+    padding:12px 14px;
+
+    color:#29180d;
+    font:inherit;
+    font-size:.83rem;
+    outline:none;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,240,.66),
+            rgba(255,244,190,.48)
+        );
+
+    box-shadow:
+        inset 0 2px 5px rgba(88,55,7,.07),
+        0 1px 0 rgba(255,255,255,.45);
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+    color:rgba(73,49,20,.43);
+}
+
+.field input:focus,
+.field textarea:focus {
+    border-color:rgba(108,72,14,.48);
+    background:rgba(255,255,244,.78);
+
+    box-shadow:
+        0 0 0 4px rgba(255,255,255,.22),
+        inset 0 2px 5px rgba(88,55,7,.05);
+}
+
+.field textarea {
+    min-height:100px;
+    resize:vertical;
+}
+
+.send-button {
+    width:100%;
+    margin-top:4px;
+    padding:14px 18px;
+
+    border:1px solid rgba(45,28,9,.55);
+    border-radius:999px;
+
+    cursor:pointer;
+
+    color:#fff9e6;
+    font:inherit;
+    font-size:.77rem;
+    font-weight:800;
+    letter-spacing:.03em;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2b1b0e,
+            #130d08 65%,
+            #493018
+        );
+
+    box-shadow:
+        0 13px 22px rgba(47,28,7,.23),
+        inset 0 1px 0 rgba(255,255,255,.12);
+
+    transition:
+        transform .22s ease,
+        box-shadow .22s ease;
+}
+
+.send-button:hover:not(:disabled) {
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 17px 28px rgba(47,28,7,.28),
+        inset 0 1px 0 rgba(255,255,255,.15);
+}
+
+.send-button:active:not(:disabled) {
+    transform:translateY(0);
+}
+
+.send-button:disabled {
+    cursor:wait;
+    opacity:.72;
+}
+
+.form-status {
+    min-height:20px;
+    margin-top:10px;
+    text-align:center;
+    color:#6f4d20;
+    font-size:.72rem;
+    line-height:1.4;
+}
+
+/* =========================================================
+   DISPLAY
+   ========================================================= */
+
+.display-side {
+    position:relative;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    min-height:760px;
+    overflow:hidden;
+
+    background:
+        radial-gradient(circle at 50% 48%,rgba(255,255,242,.9),transparent 44%),
+        linear-gradient(145deg,#f5dfa0,#ead079 55%,#d3ae4f);
+}
+
+.display-side::before {
+    content:"THE VANILLA TABLE";
+
+    position:absolute;
+    top:38px;
+    right:42px;
+
+    color:rgba(54,35,11,.43);
+    font-size:.58rem;
+    font-weight:800;
+    letter-spacing:.22em;
+}
+
+/* =========================================================
+   ETAGERE
+   ========================================================= */
+
+.etagere {
+    position:relative;
+    width:min(650px,88%);
+    height:650px;
+}
+
+.etagere::before,
+.etagere::after {
+    content:"";
+    position:absolute;
+    top:36px;
+    bottom:30px;
+    width:11px;
+    border-radius:999px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #6c4619,
+            #c18e31 38%,
+            #f0d275 51%,
+            #754a18 75%,
+            #2f1c0d
+        );
+
+    box-shadow:5px 8px 12px rgba(67,39,5,.19);
+}
+
+.etagere::before {
+    left:27px;
+}
+
+.etagere::after {
+    right:27px;
+}
+
+.top-ornament {
+    position:absolute;
+    top:5px;
+    left:50%;
+    width:140px;
+    height:24px;
+    transform:translateX(-50%);
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f3d477,
+            #8e611d
+        );
+
+    box-shadow:0 7px 11px rgba(64,39,5,.2);
+}
+
+.tier {
+    position:absolute;
+    left:50%;
+    width:92%;
+    transform:translateX(-50%);
+}
+
+.tier.top {
+    top:84px;
+}
+
+.tier.middle {
+    top:285px;
+}
+
+.tier.bottom {
+    top:486px;
+}
+
+/* =========================================================
+   PLATES — MORE DETAIL
+   ========================================================= */
+
+.plate {
+    position:absolute;
+    left:50%;
+    top:64px;
+
+    width:100%;
+    height:45px;
+
+    transform:translateX(-50%);
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            ellipse,
+            #fffef1 0 38%,
+            #f7edce 39% 47%,
+            #c8a24c 48% 49%,
+            #fff9df 50% 68%,
+            #b58a34 69% 70%,
+            #f8edc9 71% 77%,
+            transparent 78%
+        );
+
+    box-shadow:
+        0 13px 17px rgba(67,42,8,.21),
+        inset 0 2px 2px rgba(255,255,255,.7);
+}
+
+.plate::before {
+    content:"";
+    position:absolute;
+    left:50%;
+    top:50%;
+
+    width:69%;
+    height:58%;
+
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+
+    border:1px solid rgba(173,130,46,.22);
+
+    box-shadow:
+        inset 0 2px 4px rgba(130,91,18,.08);
+}
+
+.plate::after {
+    content:"";
+    position:absolute;
+    left:18%;
+    top:22%;
+    width:22%;
+    height:14%;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.7);
+    filter:blur(2px);
+}
+
+/* gold support */
+.tier::before {
+    content:"";
+    position:absolute;
+    left:50%;
+    top:91px;
+    width:88%;
+    height:9px;
+    transform:translateX(-50%);
+    border-radius:999px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #4e3011,
+            #d6ad4d 20%,
+            #f2d77b 50%,
+            #9a691f 80%,
+            #3c240e
+        );
+
+    box-shadow:0 5px 8px rgba(65,39,6,.17);
+}
+
+/* =========================================================
+   GLASS CLOCHE
+   ========================================================= */
+
+.cloche {
+    position:absolute;
+    left:50%;
+    top:2px;
+
+    width:220px;
+    height:110px;
+
+    transform:translateX(-50%);
+
+    border-radius:220px 220px 32px 32px;
+
+    background:
+        linear-gradient(
+            110deg,
+            rgba(255,255,255,.12),
+            rgba(255,255,255,.47) 25%,
+            rgba(255,255,255,.07) 49%,
+            rgba(255,255,255,.32) 68%,
+            rgba(255,255,255,.08)
+        );
+
+    border:1px solid rgba(255,255,255,.66);
+
+    box-shadow:
+        inset 10px 4px 17px rgba(255,255,255,.42),
+        inset -11px -5px 20px rgba(121,92,37,.12),
+        0 13px 24px rgba(69,43,7,.14);
+
+    backdrop-filter:blur(2px);
+
+    transition:
+        transform .85s cubic-bezier(.18,.82,.18,1),
+        opacity .4s ease;
+}
+
+.cloche::before {
+    content:"";
+    position:absolute;
+    left:50%;
+    top:-9px;
+
+    width:22px;
+    height:13px;
+
+    transform:translateX(-50%);
+    border-radius:50%;
+
+    background:
+        radial-gradient(circle at 35% 30%,#ffe99a,#a57423);
+
+    box-shadow:0 4px 5px rgba(50,30,5,.23);
+}
+
+.cloche::after {
+    content:"";
+    position:absolute;
+    left:17%;
+    top:13%;
+    width:16%;
+    height:56%;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,0),
+            rgba(255,255,255,.72),
+            rgba(255,255,255,0)
+        );
+
+    filter:blur(2px);
+}
+
+/* =========================================================
+   DESSERTS — HIGH DETAIL
+   ========================================================= */
+
+/* ---------------- VANILLA MILLE FEUILLE ---------------- */
+
+.dessert.mille {
+    position:absolute;
+    z-index:3;
+
+    left:50%;
+    top:14px;
+
+    width:152px;
+    height:78px;
+
+    transform:translateX(-50%);
+}
+
+.mille .pastry {
+    position:absolute;
+    left:8px;
+    right:8px;
+    height:17px;
+
+    border-radius:4px;
+
+    background:
+        repeating-linear-gradient(
+            0deg,
+            rgba(122,69,18,.13) 0 2px,
+            transparent 2px 5px
+        ),
+        linear-gradient(
+            180deg,
+            #fff1ae,
+            #d99a38
+        );
+
+    box-shadow:
+        inset 0 3px 4px rgba(255,255,222,.7),
+        inset 0 -3px 5px rgba(107,59,11,.24),
+        0 5px 7px rgba(66,39,5,.17);
+}
+
+.mille .p1 {
+    top:48px;
+    transform:skewX(-2deg);
+}
+
+.mille .p2 {
+    top:28px;
+    transform:skewX(1deg);
+}
+
+.mille .p3 {
+    top:8px;
+    transform:skewX(-1deg);
+}
+
+.mille .cream-layer {
+    position:absolute;
+    left:15px;
+    right:15px;
+    height:15px;
+
+    border-radius:4px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #fffef0,
+            #fff0ad 55%,
+            #e5c86d
+        );
+
+    box-shadow:
+        inset 0 3px 5px rgba(255,255,255,.72),
+        0 2px 4px rgba(103,62,10,.11);
+}
+
+.mille .c1 {
+    top:41px;
+}
+
+.mille .c2 {
+    top:21px;
+}
+
+.mille .vanilla-drizzle {
+    position:absolute;
+    z-index:5;
+
+    left:20px;
+    top:3px;
+
+    width:112px;
+    height:14px;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #fffdf0,
+            #eac866,
+            #fff8d2,
+            #d3a33e
+        );
+
+    box-shadow:
+        0 3px 4px rgba(85,49,7,.16),
+        inset 0 2px 2px rgba(255,255,255,.72);
+}
+
+.mille .crumb {
+    position:absolute;
+    z-index:7;
+
+    width:5px;
+    height:3px;
+    border-radius:50%;
+
+    background:#704317;
+}
+
+.mille .crumb:nth-child(8){left:28px;top:15px}
+.mille .crumb:nth-child(9){left:51px;top:11px}
+.mille .crumb:nth-child(10){left:82px;top:16px}
+.mille .crumb:nth-child(11){left:105px;top:10px}
+
+/* ---------------- CRÈME BRÛLÉE ---------------- */
+
+.dessert.brulee {
+    position:absolute;
+    z-index:3;
+
+    left:50%;
+    top:15px;
+
+    width:148px;
+    height:76px;
+
+    transform:translateX(-50%);
+}
+
+.brulee .dish {
+    position:absolute;
+    left:3px;
+    top:17px;
+    width:142px;
+    height:58px;
+
+    border-radius:12px 12px 44px 44px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f7d984 0%,
+            #d99534 60%,
+            #7c4817 100%
+        );
+
+    box-shadow:
+        inset 0 7px 10px rgba(255,240,165,.38),
+        inset 0 -7px 12px rgba(87,43,6,.25),
+        0 13px 15px rgba(67,38,6,.2);
+}
+
+.brulee .custard {
+    position:absolute;
+    z-index:2;
+
+    left:13px;
+    top:8px;
+    width:122px;
+    height:43px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            ellipse at 35% 35%,
+            #fff5b6,
+            #f1ce67 58%,
+            #c9852a
+        );
+
+    box-shadow:
+        inset 0 4px 8px rgba(255,255,222,.5);
+}
+
+.brulee .burn {
+    position:absolute;
+    z-index:4;
+
+    width:15px;
+    height:7px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            ellipse,
+            #75400f,
+            #ad6718 55%,
+            transparent 72%
+        );
+
+    opacity:.8;
+}
+
+.brulee .burn:nth-child(3){left:32px;top:24px;transform:rotate(14deg)}
+.brulee .burn:nth-child(4){left:61px;top:18px;transform:rotate(-11deg)}
+.brulee .burn:nth-child(5){left:89px;top:28px;transform:rotate(8deg)}
+.brulee .burn:nth-child(6){left:51px;top:37px;transform:rotate(-7deg)}
+
+.brulee .sugar-shine {
+    position:absolute;
+    z-index:6;
+
+    left:27px;
+    top:17px;
+    width:48px;
+    height:7px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,230,.55);
+    filter:blur(2px);
+}
+
+/* ---------------- VANILLA CHOUX ---------------- */
+
+.dessert.choux {
+    position:absolute;
+    z-index:3;
+
+    left:50%;
+    top:16px;
+
+    width:120px;
+    height:80px;
+
+    transform:translateX(-50%);
+}
+
+.choux .ball {
+    position:absolute;
+
+    width:57px;
+    height:57px;
+
+    border-radius:48%;
+
+    background:
+        radial-gradient(circle at 28% 22%,rgba(255,252,214,.92) 0 5%,transparent 6%),
+        radial-gradient(circle at 48% 42%,#fff0ad 0 16%,#d39a3d 67%,#774716 100%);
+
+    box-shadow:
+        inset 8px 8px 13px rgba(255,255,230,.5),
+        inset -8px -9px 13px rgba(111,62,11,.22),
+        0 12px 15px rgba(65,37,5,.18);
+}
+
+.choux .b1 {
+    left:5px;
+    top:19px;
+    transform:rotate(-8deg);
+}
+
+.choux .b2 {
+    left:39px;
+    top:7px;
+    transform:rotate(5deg);
+}
+
+.choux .b3 {
+    left:68px;
+    top:22px;
+    transform:rotate(-5deg);
+}
+
+.choux .cream {
+    position:absolute;
+    z-index:5;
+
+    left:39px;
+    top:31px;
+
+    width:44px;
+    height:28px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            ellipse at 40% 30%,
+            #fffef1,
+            #fff1b5 65%,
+            #d9ad48
+        );
+
+    box-shadow:
+        inset 0 3px 5px rgba(255,255,255,.65),
+        0 5px 7px rgba(84,49,7,.14);
+}
+
+.choux .sugar {
+    position:absolute;
+    z-index:7;
+
+    width:4px;
+    height:4px;
+    border-radius:50%;
+
+    background:#fffbe0;
+
+    box-shadow:
+        10px 5px 0 #fffbe0,
+        23px -2px 0 #fffbe0,
+        36px 7px 0 #fffbe0;
+}
+
+/* =========================================================
+   DISPLAY PODS
+   ========================================================= */
+
+.display-pod {
+    position:absolute;
+    z-index:8;
+
+    width:118px;
+    height:12px;
+
+    border-radius:50%;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            rgba(12,7,4,.42) 0 2px,
+            transparent 2px 7px
+        ),
+        linear-gradient(
+            180deg,
+            #51351c,
+            #130d08 50%,
+            #392213
+        );
+
+    box-shadow:
+        inset 0 2px 2px rgba(222,169,76,.19),
+        0 7px 8px rgba(46,26,5,.22);
+}
+
+.display-pod.one {
+    top:80px;
+    left:18%;
+    transform:rotate(-12deg);
+}
+
+.display-pod.two {
+    top:278px;
+    right:13%;
+    transform:rotate(17deg);
+}
+
+/* =========================================================
+   LABEL
+   ========================================================= */
+
+.display-label {
+    position:absolute;
+    left:50%;
+    bottom:18px;
+    transform:translateX(-50%);
+
+    padding:10px 18px;
+
+    border-radius:999px;
+
+    color:rgba(54,34,10,.68);
+
+    border:1px solid rgba(87,56,11,.2);
+
+    background:rgba(255,249,216,.5);
+
+    backdrop-filter:blur(8px);
+
+    font-size:.6rem;
+    font-weight:800;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+}
+
+/* =========================================================
+   TRAVEL COOKIE
+   ========================================================= */
+
+.travel-cookie {
+    position:fixed;
+    z-index:2500;
+    pointer-events:none;
+    opacity:0;
+
+    border-radius:
+        47% 53% 50% 46% /
+        50% 45% 55% 50%;
+
+    background:
+        radial-gradient(circle at 27% 25%,#fff5b8 0 2%,transparent 3%),
+        radial-gradient(circle at 68% 30%,#4d2d12 0 1.5%,transparent 2%),
+        radial-gradient(circle at 38% 68%,#553014 0 1.5%,transparent 2%),
+        linear-gradient(145deg,#fff3af,#e8bb4a 60%,#a86c20);
+
+    border:2px solid rgba(123,77,13,.3);
+
+    box-shadow:
+        inset 9px 10px 18px rgba(255,255,235,.55),
+        inset -12px -14px 23px rgba(94,54,7,.25),
+        0 25px 45px rgba(63,37,5,.25);
+}
+
+/* =========================================================
+   SUCCESS
+   ========================================================= */
+
+.success-panel {
+    position:fixed;
+    z-index:3000;
+
+    left:50%;
+    top:50%;
+
+    width:min(460px,calc(100% - 40px));
+
+    transform:
+        translate(-50%,-45%)
+        scale(.92);
+
+    padding:38px;
+
+    border-radius:28px;
+
+    text-align:center;
+
+    opacity:0;
+    pointer-events:none;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,254,239,.97),
+            rgba(255,239,176,.97)
+        );
+
+    border:1px solid rgba(103,72,17,.2);
+
+    box-shadow:
+        0 35px 90px rgba(49,30,5,.3),
+        inset 0 1px 0 rgba(255,255,255,.9);
+
+    transition:
+        opacity .45s ease,
+        transform .55s cubic-bezier(.2,.9,.2,1);
+}
+
+.success-panel.show {
+    opacity:1;
+    pointer-events:auto;
+
+    transform:
+        translate(-50%,-50%)
+        scale(1);
+}
+
+.success-icon {
+    width:70px;
+    height:70px;
+    margin:0 auto 20px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:50%;
+
+    color:#fff9df;
+
+    background:
+        linear-gradient(145deg,#33200f,#110b07);
+
+    box-shadow:0 13px 25px rgba(54,31,4,.24);
+}
+
+.success-icon::before {
+    content:"✦";
+    font-size:1.7rem;
+}
+
+.success-panel h3 {
+    margin:0;
+
+    font-family:"Playfair Display",serif;
+    font-size:2rem;
+}
+
+.success-panel p {
+    margin:12px 0 0;
+
+    color:#6c502a;
+
+    font-size:.88rem;
+    line-height:1.65;
+}
+
+/* =========================================================
+   ANIMATION
+   ========================================================= */
+
+@keyframes flowerBloom {
+    0%,100% {
+        filter:
+            drop-shadow(0 18px 24px rgba(65,43,9,.14))
+            drop-shadow(0 2px 4px rgba(255,255,255,.35));
+    }
+
+    50% {
+        filter:
+            drop-shadow(0 22px 28px rgba(65,43,9,.18))
+            drop-shadow(0 3px 7px rgba(255,255,255,.42));
+    }
+}
+
+@keyframes flowerFloat {
+    0%,100% {
+        margin-top:0;
+    }
+
+    50% {
+        margin-top:-11px;
+    }
+}
+
+@keyframes podDrift {
+    0%,100% {
+        margin-top:0;
+    }
+
+    50% {
+        margin-top:-9px;
+    }
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width:1120px) {
+
+    main {
+        width:min(100% - 32px,950px);
+    }
+
+    .hero {
+        grid-template-columns:1fr;
+        gap:35px;
+    }
+
+    .hero-stamp {
+        justify-self:start;
+        margin-left:60px;
+    }
+
+    .experience {
+        grid-template-columns:1fr;
+    }
+
+    .display-side {
+        min-height:720px;
+    }
+}
+
+@media (max-width:760px) {
+
+    header {
+        top:10px;
+        max-width:calc(100% - 12px);
+        overflow-x:auto;
+    }
+
+    header nav {
+        width:max-content;
+    }
+
+    header nav a {
+        padding:9px 10px;
+        font-size:.68rem;
+    }
+
+    main {
+        width:calc(100% - 20px);
+        padding-top:110px;
+    }
+
+    .hero h1 {
+        font-size:clamp(3.3rem,15vw,5.6rem);
+    }
+
+    .hero h1 em {
+        transform:translateX(25px);
+    }
+
+    .hero-description {
+        margin-left:25px;
+    }
+
+    .hero-stamp {
+        width:120px;
+        height:120px;
+        margin-left:25px;
+    }
+
+    .experience {
+        border-radius:30px;
+    }
+
+    .cookie-side {
+        padding:60px 18px;
+    }
+
+    .cookie {
+        padding:52px 36px;
+        width:100%;
+    }
+
+    .display-side {
+        min-height:650px;
+    }
+
+    .etagere {
+        transform:scale(.82);
+        transform-origin:center;
+    }
+
+    .flower-a,
+    .flower-b,
+    .pod-a,
+    .pod-b {
+        opacity:.45;
+    }
+}
+
+@media (max-width:500px) {
+
+    .cookie {
+        padding:48px 28px;
+    }
+
+    .cookie-form h2 {
+        font-size:2rem;
+    }
+
+    .display-side {
+        min-height:580px;
+    }
+
+    .etagere {
+        transform:scale(.68);
+    }
+}
+
+@media (prefers-reduced-motion:reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        transition-duration:.01ms !important;
+        scroll-behavior:auto !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =======================================================
+     BOTANICAL VANILLA DECOR
+     ======================================================= -->
+
+<div class="botanical-field" aria-hidden="true">
+
+    <div class="vanilla-flower flower-a">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <div class="lip"></div>
+        <div class="pollen"></div>
+    </div>
+
+    <div class="vanilla-flower flower-b">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <div class="lip"></div>
+        <div class="pollen"></div>
+    </div>
+
+    <div class="vanilla-flower flower-c">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <div class="lip"></div>
+        <div class="pollen"></div>
+    </div>
+
+    <div class="vanilla-flower flower-d">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <div class="lip"></div>
+        <div class="pollen"></div>
+    </div>
+
+    <div class="vanilla-pod pod-a"></div>
+    <div class="vanilla-pod pod-b"></div>
+    <div class="vanilla-pod pod-c"></div>
+    <div class="vanilla-pod pod-d"></div>
+
+</div>
+
+<!-- =======================================================
+     NAVBAR
+     ======================================================= -->
+
+<header>
+    <nav>
+        <a href="Index.html">Home</a>
+        <a href="Recipes.html">Recipes</a>
+        <a href="PopularRecipes.html">Popular Recipes</a>
+        <a href="Posts.html">Posts</a>
+        <a href="Contactus.html" class="active">Contact</a>
+        <a href="MemoryGame.html">Memory Game</a>
+        <a href="History.html">History</a>
+    </nav>
+</header>
+
+<main>
+
+    <!-- ===================================================
+         HERO
+         =================================================== -->
+
+    <section class="hero">
+
+        <div class="hero-copy">
+
+            <div class="eyebrow">
+                The Vanilla Atelier
+            </div>
+
+            <h1>
+                Leave a note
+                <em>in the Vault.</em>
+            </h1>
+
+            <p class="hero-description">
+                Every message deserves something sweet.
+                Write yours below and we'll bake it into the
+                Cookie Vault before placing it on our little
+                patisserie table.
+            </p>
+
+        </div>
+
+        <div class="hero-stamp">
+            <div>
+                <strong>V</strong>
+                <span>
+                    PRIVATE<br>
+                    BATCH<br>
+                    NO. 07
+                </span>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ===================================================
+         MAIN EXPERIENCE
+         =================================================== -->
+
+    <section class="experience">
+
+        <!-- COOKIE -->
+
+        <div class="cookie-side">
+
+            <div class="cookie" id="mainCookie">
+
+                <div class="bean-specks" aria-hidden="true">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <form
+                    id="contactForm"
+                    class="cookie-form"
+                    action="https://formspree.io/f/mwlpeaqk"
+                    method="POST"
+                >
+
+                    <div class="form-kicker">
+                        Fresh from the oven
+                    </div>
+
+                    <h2>
+                        Send a cookie.
+                    </h2>
+
+                    <div class="field">
+                        <label for="name">
+                            Your name
+                        </label>
+
+                        <input
+                            id="name"
+                            name="name"
+                            type="text"
+                            placeholder="Who is writing?"
+                            required
+                        >
+                    </div>
+
+                    <div class="field">
+                        <label for="email">
+                            Email
+                        </label>
+
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            placeholder="you@example.com"
+                            required
+                        >
+                    </div>
+
+                    <div class="field">
+                        <label for="message">
+                            Your message
+                        </label>
+
+                        <textarea
+                            id="message"
+                            name="message"
+                            placeholder="Leave something sweet..."
+                            required
+                        ></textarea>
+                    </div>
+
+                    <button
+                        id="sendButton"
+                        class="send-button"
+                        type="submit"
+                    >
+                        Send My Cookie ✦
+                    </button>
+
+                    <div
+                        id="formStatus"
+                        class="form-status"
+                        aria-live="polite"
+                    ></div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <!-- =================================================
+             DESSERT DISPLAY
+             ================================================= -->
+
+        <div class="display-side">
+
+            <div class="etagere">
+
+                <div class="top-ornament"></div>
+
+                <!-- TOP -->
+                <div class="tier top">
+
+                    <div class="dessert mille">
+
+                        <div class="pastry p1"></div>
+                        <div class="cream-layer c1"></div>
+
+                        <div class="pastry p2"></div>
+                        <div class="cream-layer c2"></div>
+
+                        <div class="pastry p3"></div>
+
+                        <div class="vanilla-drizzle"></div>
+
+                        <div class="crumb"></div>
+                        <div class="crumb"></div>
+                        <div class="crumb"></div>
+                        <div class="crumb"></div>
+
+                    </div>
+
+                    <div class="cloche"></div>
+                    <div class="plate"></div>
+
+                    <div class="display-pod one"></div>
+
+                </div>
+
+                <!-- MIDDLE -->
+                <div class="tier middle">
+
+                    <div class="dessert brulee">
+
+                        <div class="dish"></div>
+                        <div class="custard"></div>
+
+                        <div class="burn"></div>
+                        <div class="burn"></div>
+                        <div class="burn"></div>
+                        <div class="burn"></div>
+
+                        <div class="sugar-shine"></div>
+
+                    </div>
+
+                    <div class="cloche"></div>
+                    <div class="plate"></div>
+
+                </div>
+
+                <!-- BOTTOM -->
+                <div class="tier bottom">
+
+                    <div class="dessert choux">
+
+                        <div class="ball b1"></div>
+                        <div class="ball b2"></div>
+                        <div class="ball b3"></div>
+
+                        <div class="cream"></div>
+
+                        <div class="sugar"></div>
+
+                    </div>
+
+                    <div class="cloche"></div>
+                    <div class="plate"></div>
+
+                    <div class="display-pod two"></div>
+
+                </div>
+
+            </div>
+
+            <div class="display-label">
+                Handcrafted vanilla collection
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<!-- =======================================================
+     TRAVEL COOKIE
+     ======================================================= -->
+
+<div
+    id="travelCookie"
+    class="travel-cookie"
+    aria-hidden="true"
+></div>
+
+<!-- =======================================================
+     SUCCESS
+     ======================================================= -->
+
+<div
+    id="successPanel"
+    class="success-panel"
+    role="status"
+    aria-live="polite"
+>
+
+    <div class="success-icon"></div>
+
+    <h3>
+        Your cookie arrived.
+    </h3>
+
+    <p>
+        Your note has been sent and your little cookie
+        has found its place on the Vanilla Table.
+    </p>
+
+</div>
+
+<script>
+
+/* =========================================================
+   CONTACT FORM
+   ========================================================= */
+
+const form =
+    document.getElementById("contactForm");
+
+const sendButton =
+    document.getElementById("sendButton");
+
+const status =
+    document.getElementById("formStatus");
+
+const mainCookie =
+    document.getElementById("mainCookie");
+
+const travelCookie =
+    document.getElementById("travelCookie");
+
+const successPanel =
+    document.getElementById("successPanel");
+
+const bottomTier =
+    document.querySelector(".tier.bottom");
+
+const targetCloche =
+    bottomTier.querySelector(".cloche");
+
+const targetPlate =
+    bottomTier.querySelector(".plate");
+
+
+/* =========================================================
+   COOKIE TRAVEL
+   ========================================================= */
+
+form.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    if (sendButton.disabled) {
+        return;
+    }
+
+    sendButton.disabled = true;
+    sendButton.textContent =
+        "Preparing your cookie...";
+
+    status.textContent = "";
+
+    const cookieRect =
+        mainCookie.getBoundingClientRect();
+
+    const targetRect =
+        targetPlate.getBoundingClientRect();
+
+    /*
+       Start with an exact visual copy of the main cookie.
+    */
+
+    travelCookie.style.left =
+        cookieRect.left + "px";
+
+    travelCookie.style.top =
+        cookieRect.top + "px";
+
+    travelCookie.style.width =
+        cookieRect.width + "px";
+
+    travelCookie.style.height =
+        cookieRect.height + "px";
+
+    travelCookie.style.opacity = "1";
+
+    travelCookie.style.transition = "none";
+
+    travelCookie.style.transform =
+        "translate3d(0,0,0) rotate(-2deg) scale(.9)";
+
+    /*
+       Allow browser to paint the starting position.
+    */
+
+    await new Promise(function(resolve) {
+        requestAnimationFrame(resolve);
+    });
+
+
+    let successful = false;
+
+
+    /* =====================================================
+       SEND TO FORMSPREE
+       ===================================================== */
+
+    try {
+
+        const formData =
+            new FormData(form);
+
+        const response =
+            await fetch(
+                form.action,
+                {
+                    method:"POST",
+                    body:formData,
+                    headers:{
+                        "Accept":"application/json"
+                    }
+                }
+            );
+
+        successful = response.ok;
+
+        if (!response.ok) {
+
+            let errorMessage =
+                "Something went wrong. Please try again.";
+
+            try {
+
+                const data =
+                    await response.json();
+
+                if (
+                    data &&
+                    Array.isArray(data.errors) &&
+                    data.errors.length
+                ) {
+                    errorMessage =
+                        data.errors
+                            .map(error => error.message)
+                            .join(", ");
+                }
+
+            } catch (error) {}
+
+            status.textContent =
+                errorMessage;
+
+            status.style.color =
+                "#8d3321";
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+        status.textContent =
+            "Network error. Please check your connection and try again.";
+
+        status.style.color =
+            "#8d3321";
+    }
+
+
+    /* =====================================================
+       SUCCESSFUL COOKIE JOURNEY
+       ===================================================== */
+
+    if (successful) {
+
+        sendButton.textContent =
+            "Cookie Sent ✦";
+
+
+        /*
+           PHASE 1
+           Lift the cookie away from the form.
+        */
+
+        travelCookie.style.transition =
+            "transform .6s cubic-bezier(.2,.85,.2,1)";
+
+        travelCookie.style.transform =
+            "translate3d(20px,-32px,0) rotate(18deg) scale(.82)";
+
+
+        /*
+           PHASE 2
+           Large smooth arc toward the dessert table.
+           The cookie rotates naturally rather than spinning
+           like a flat UI element.
+        */
+
+        setTimeout(function() {
+
+            const current =
+                mainCookie.getBoundingClientRect();
+
+            const destinationX =
+                targetRect.left +
+                targetRect.width / 2 -
+                (
+                    current.left +
+                    current.width / 2
+                );
+
+            const destinationY =
+                targetRect.top +
+                targetRect.height / 2 -
+                (
+                    current.top +
+                    current.height / 2
+                );
+
+            travelCookie.style.transition =
+                "transform 1.55s cubic-bezier(.12,.82,.16,1)";
+
+            travelCookie.style.transform =
+                `
+                translate3d(
+                    ${destinationX * .46}px,
+                    ${destinationY * .34 - 105}px,
+                    0
+                )
+                rotate(112deg)
+                scale(.67)
+                `;
+
+        }, 620);
+
+
+        /*
+           PHASE 3
+           Descend toward the plate.
+        */
+
+        setTimeout(function() {
+
+            const current =
+                mainCookie.getBoundingClientRect();
+
+            const destinationX =
+                targetRect.left +
+                targetRect.width / 2 -
+                (
+                    current.left +
+                    current.width / 2
+                );
+
+            const destinationY =
+                targetRect.top +
+                targetRect.height / 2 -
+                (
+                    current.top +
+                    current.height / 2
+                );
+
+            travelCookie.style.transition =
+                "transform 1.05s cubic-bezier(.18,.88,.22,1)";
+
+            travelCookie.style.transform =
+                `
+                translate3d(
+                    ${destinationX}px,
+                    ${destinationY - 7}px,
+                    0
+                )
+                rotate(198deg)
+                scale(.31)
+                `;
+
+        }, 1850);
+
+
+        /*
+           PHASE 4
+           Cookie lands.
+           
+           The cloche remains visually in front because the
+           travel cookie's z-index is lowered only now.
+        */
+
+        setTimeout(function() {
+
+            travelCookie.style.transition =
+                "transform .42s cubic-bezier(.2,.9,.2,1)";
+
+            travelCookie.style.transform =
+                `
+                translate3d(
+                    ${targetRect.left - cookieRect.left}px,
+                    ${targetRect.top - cookieRect.top + 3}px,
+                    0
+                )
+                rotate(205deg)
+                scale(.27)
+                `;
+
+        }, 2860);
+
+
+        /*
+           PHASE 5
+           Cookie has reached the plate.
+           
+           Move it behind the glass so the next animation
+           actually looks like the cloche is covering it.
+        */
+
+        setTimeout(function() {
+
+            travelCookie.style.zIndex = "1200";
+
+            /*
+               Slight plate bounce.
+            */
+
+            targetPlate.animate(
+                [
+                    {
+                        transform:
+                            "translateX(-50%) scale(1)"
+                    },
+                    {
+                        transform:
+                            "translateX(-50%) scale(1.035)"
+                    },
+                    {
+                        transform:
+                            "translateX(-50%) scale(1)"
+                    }
+                ],
+                {
+                    duration:430,
+                    easing:"cubic-bezier(.2,.8,.2,1)"
+                }
+            );
+
+        }, 3300);
+
+
+        /*
+           PHASE 6
+           The glass cloche rises slightly,
+           acknowledges the cookie,
+           then settles back down over it.
+        */
+
+        setTimeout(function() {
+
+            targetCloche.style.transform =
+                "translateX(-50%) translateY(-20px)";
+
+            targetCloche.style.opacity =
+                ".72";
+
+        }, 3500);
+
+
+        /*
+           PHASE 7
+           CLOSED GLASS LID.
+           
+           The cloche settles completely over the cookie.
+        */
+
+        setTimeout(function() {
+
+            targetCloche.style.transition =
+                "transform .9s cubic-bezier(.16,.84,.18,1), opacity .45s ease";
+
+            targetCloche.style.transform =
+                "translateX(-50%) translateY(0)";
+
+            targetCloche.style.opacity =
+                "1";
+
+        }, 3820);
+
+
+        /*
+           PHASE 8
+           Cookie disappears naturally behind the glass.
+        */
+
+        setTimeout(function() {
+
+            travelCookie.style.transition =
+                "opacity .35s ease";
+
+            travelCookie.style.opacity =
+                "0";
+
+        }, 4170);
+
+
+        /*
+           PHASE 9
+           Finish.
+        */
+
+        setTimeout(function() {
+
+            document.body.classList.add("sent");
+
+            successPanel.classList.add("show");
+
+            form.reset();
+
+            status.textContent = "";
+
+            setTimeout(function() {
+
+                sendButton.disabled = false;
+
+                sendButton.textContent =
+                    "Send Another Cookie ✦";
+
+                document.body.classList.remove("sent");
+
+            }, 4200);
+
+        }, 4500);
+
+
+    } else {
+
+        travelCookie.style.opacity = "0";
+
+        sendButton.disabled = false;
+
+        sendButton.textContent =
+            "Send My Cookie ✦";
+    }
+
+});
+
+
+/* =========================================================
+   DESSERT FLOATING
+   ========================================================= */
+
+const desserts =
+    document.querySelectorAll(".dessert");
+
+desserts.forEach(function(dessert,index) {
+
+    const baseTransform =
+        getComputedStyle(dessert).transform;
+
+    dessert.animate(
+        [
+            {
+                transform:baseTransform
+            },
+            {
+                transform:
+                    baseTransform +
+                    " translateY(-4px) rotate(.4deg)"
+            },
+            {
+                transform:baseTransform
+            }
+        ],
+        {
+            duration:3500 + index * 260,
+            iterations:Infinity,
+            easing:"ease-in-out"
+        }
+    );
+
+});
+
+
+/* =========================================================
+   SUCCESS PANEL
+   ========================================================= */
+
+successPanel.addEventListener(
+    "click",
+    function() {
+        successPanel.classList.remove("show");
+    }
+);
+
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Escape") {
+            successPanel.classList.remove("show");
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
+```

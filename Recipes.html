@@ -1,0 +1,3967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Cookie Vault — Recipes</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&display=swap" rel="stylesheet">
+
+<style>
+
+:root {
+    --cream: #f1eadf;
+    --paper: #e7ded1;
+    --brown: #241812;
+    --brown-soft: #684738;
+    --red: #9d1e2a;
+    --red-dark: #64121a;
+    --pink: #d9aaa9;
+    --gold: #b99355;
+    --black: #110b09;
+    --white: #fffaf3;
+    --line: rgba(36,24,18,.16);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--cream);
+    color: var(--brown);
+    font-family: "DM Sans", sans-serif;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    pointer-events: none;
+    opacity: .035;
+    background-image:
+        repeating-radial-gradient(circle at 20% 30%, #000 0 1px, transparent 1px 4px),
+        repeating-radial-gradient(circle at 70% 80%, #000 0 1px, transparent 1px 5px);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+a,
+article {
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+/* =========================================================
+   NAV
+   ========================================================= */
+
+header {
+    position: fixed;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    width: min(1200px, calc(100% - 30px));
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 3px;
+    padding: 6px;
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: 100px;
+    background: rgba(25,17,14,.88);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    box-shadow:
+        0 18px 60px rgba(30,15,10,.2),
+        inset 0 1px rgba(255,255,255,.1);
+}
+
+nav a {
+    padding: 10px 15px;
+    border-radius: 100px;
+    color: rgba(255,250,244,.62);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    white-space: nowrap;
+    transition: .3s ease;
+}
+
+nav a:hover,
+nav a.active {
+    background: rgba(255,255,255,.1);
+    color: white;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero {
+    position: relative;
+    min-height: 830px;
+    overflow: hidden;
+    padding: 190px 7vw 120px;
+    background:
+        radial-gradient(circle at 76% 42%, rgba(157,30,42,.12), transparent 24%),
+        radial-gradient(circle at 16% 75%, rgba(185,147,85,.10), transparent 23%),
+        var(--cream);
+}
+
+.hero-word {
+    position: absolute;
+    left: -3vw;
+    top: 165px;
+    font-size: clamp(150px, 27vw, 420px);
+    line-height: .72;
+    font-weight: 800;
+    letter-spacing: -.12em;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(36,24,18,.11);
+    white-space: nowrap;
+    user-select: none;
+}
+
+.hero-code {
+    position: absolute;
+    left: 32px;
+    top: 240px;
+    writing-mode: vertical-rl;
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: .3em;
+    color: rgba(36,24,18,.43);
+}
+
+.hero-label {
+    position: absolute;
+    right: 6vw;
+    top: 155px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: .27em;
+}
+
+.hero-label::before {
+    content: "";
+    width: 55px;
+    height: 1px;
+    background: var(--brown);
+}
+
+.hero-copy {
+    position: relative;
+    z-index: 20;
+    width: min(560px, 100%);
+    margin-top: 270px;
+}
+
+.hero-copy small {
+    display: block;
+    margin-bottom: 25px;
+    color: var(--red);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .3em;
+}
+
+.hero-copy h1 {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(70px, 10vw, 145px);
+    line-height: .76;
+    font-weight: 500;
+    letter-spacing: -.075em;
+}
+
+.hero-copy h1 em {
+    display: block;
+    margin-left: 80px;
+    color: var(--red);
+}
+
+.hero-copy p {
+    max-width: 380px;
+    margin: 38px 0 0 85px;
+    color: rgba(36,24,18,.57);
+    font-size: 12px;
+    line-height: 1.85;
+}
+
+
+/* =========================================================
+   HERO COOKIE
+   ========================================================= */
+
+.hero-cookie-stage {
+    position: absolute;
+    width: min(590px, 58vw);
+    aspect-ratio: 1;
+    right: 6%;
+    top: 170px;
+}
+
+.hero-ring {
+    position: absolute;
+    inset: 4%;
+    border: 1px solid rgba(36,24,18,.12);
+    border-radius: 50%;
+    animation: slowRotate 30s linear infinite;
+}
+
+.hero-ring::before {
+    content: "";
+    position: absolute;
+    inset: 11%;
+    border: 1px dashed rgba(36,24,18,.11);
+    border-radius: 50%;
+}
+
+.hero-ring::after {
+    content: "BAKED • HANDCRAFTED • OBSESSED •";
+    position: absolute;
+    inset: -17px;
+    display: grid;
+    place-items: center;
+    font-size: 7px;
+    font-weight: 800;
+    letter-spacing: .22em;
+    color: rgba(36,24,18,.36);
+}
+
+@keyframes slowRotate {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* =========================================================
+   UNIVERSAL COOKIE OBJECT
+   ========================================================= */
+
+.cookie-stage {
+    position: absolute;
+    inset: 58px 0 92px;
+}
+
+.cookie-stage::after {
+    content: "";
+    position: absolute;
+    width: 66%;
+    height: 11%;
+    left: 17%;
+    bottom: 7%;
+    border-radius: 50%;
+    background: rgba(40,17,9,.17);
+    filter: blur(17px);
+}
+
+.cookie {
+    position: absolute;
+    left: 50%;
+    top: 47%;
+    width: 69%;
+    height: 61%;
+    transform: translate(-50%,-50%);
+    isolation: isolate;
+    filter: drop-shadow(0 28px 22px rgba(38,15,8,.18));
+}
+
+.cookie::after {
+    content: "";
+    position: absolute;
+    z-index: 60;
+    width: 32%;
+    height: 13%;
+    left: 13%;
+    top: 9%;
+    border-radius: 50%;
+    background: rgba(255,244,216,.23);
+    filter: blur(11px);
+    transform: rotate(-18deg);
+    pointer-events: none;
+}
+
+
+/* baked surface */
+
+.baked {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow:
+        inset 13px 12px 22px rgba(255,239,199,.25),
+        inset -18px -21px 30px rgba(54,20,7,.34),
+        inset 0 0 0 1px rgba(70,30,11,.16);
+}
+
+
+/* tiny baked pores */
+
+.pore {
+    position: absolute;
+    z-index: 8;
+    width: 7px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(72,31,13,.22);
+}
+
+.pore.p1 { left: 20%; top: 42%; transform: rotate(18deg); }
+.pore.p2 { left: 72%; top: 35%; transform: rotate(-15deg); }
+.pore.p3 { left: 63%; top: 76%; transform: rotate(20deg); }
+.pore.p4 { left: 34%; top: 68%; transform: rotate(-30deg); }
+
+
+/* =========================================================
+   MACADAMIA
+   ========================================================= */
+
+.macadamia {
+    transform: translate(-50%,-50%) rotate(-5deg);
+}
+
+.macadamia .baked {
+    border-radius: 46% 54% 49% 51% / 52% 45% 55% 48%;
+    background:
+        radial-gradient(ellipse 13px 9px at 27% 31%, #f2d39e 0 58%, #a87843 60% 72%, transparent 74%),
+        radial-gradient(ellipse 16px 11px at 67% 24%, #f1cf98 0 58%, #9e6c39 60% 72%, transparent 74%),
+        radial-gradient(ellipse 12px 15px at 73% 67%, #e8c48c 0 58%, #956238 60% 72%, transparent 74%),
+        radial-gradient(ellipse 15px 10px at 31% 74%, #f3d29a 0 58%, #a4713e 60% 72%, transparent 74%),
+        linear-gradient(145deg,#bd7233,#e0a05c 44%,#bd7131 73%,#793515);
+}
+
+.macadamia .baked::before {
+    content: "";
+    position: absolute;
+    inset: 9%;
+    border-radius: inherit;
+    background:
+        radial-gradient(ellipse 15px 11px at 44% 54%, #fff5df 0 57%, #c5a77e 59% 70%, transparent 72%),
+        radial-gradient(ellipse 13px 17px at 57% 75%, #fff4dc 0 57%, #c1a17a 59% 70%, transparent 72%);
+}
+
+.macadamia .white-choc {
+    position: absolute;
+    z-index: 15;
+    background:
+        linear-gradient(145deg,#fffdf4,#eadbc0 55%,#bca47d);
+    box-shadow:
+        inset 2px 2px 3px rgba(255,255,255,.9),
+        inset -3px -4px 5px rgba(126,101,70,.18),
+        5px 7px 8px rgba(58,28,10,.16);
+    border-radius: 4px 7px 5px 3px;
+}
+
+.macadamia .wc1 {
+    width: 19%;
+    height: 13%;
+    left: 45%;
+    top: 22%;
+    transform: rotate(17deg);
+}
+
+.macadamia .wc2 {
+    width: 16%;
+    height: 12%;
+    left: 22%;
+    top: 53%;
+    transform: rotate(-25deg);
+}
+
+.macadamia .wc3 {
+    width: 18%;
+    height: 13%;
+    right: 18%;
+    bottom: 22%;
+    transform: rotate(31deg);
+}
+
+
+/* =========================================================
+   PEANUT BUTTER
+   ========================================================= */
+
+.peanut {
+    transform: translate(-50%,-50%) rotate(8deg);
+}
+
+.peanut .baked {
+    border-radius: 48% 52% 51% 49% / 45% 55% 46% 54%;
+    background:
+        repeating-linear-gradient(
+            117deg,
+            transparent 0 20px,
+            rgba(84,37,11,.14) 21px 25px,
+            transparent 26px 41px
+        ),
+        radial-gradient(circle at 25% 21%, #e8aa61, transparent 24%),
+        radial-gradient(circle at 75% 76%, #92451a, transparent 39%),
+        linear-gradient(145deg,#bd6d29,#d99850 44%,#b75f22 73%,#713014);
+}
+
+.peanut .baked::before {
+    content: "";
+    position: absolute;
+    inset: 12%;
+    border-radius: 46%;
+    border-top: 3px solid rgba(79,31,9,.18);
+    border-bottom: 2px solid rgba(255,213,158,.13);
+    transform: rotate(-9deg);
+}
+
+.peanut .peanut-piece {
+    position: absolute;
+    z-index: 15;
+    width: 13%;
+    height: 9%;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 28% 25%, #f0bd72, transparent 20%),
+        linear-gradient(145deg,#b06a2d,#7a3c18);
+    box-shadow: 3px 5px 7px rgba(55,22,7,.2);
+}
+
+.peanut .p1 {
+    left: 25%;
+    top: 25%;
+    transform: rotate(28deg);
+}
+
+.peanut .p2 {
+    right: 20%;
+    top: 48%;
+    transform: rotate(-22deg);
+}
+
+.peanut .p3 {
+    left: 43%;
+    bottom: 18%;
+    transform: rotate(42deg);
+}
+
+
+/* =========================================================
+   SUGAR SPRINKLE
+   ========================================================= */
+
+.sugar {
+    transform: translate(-50%,-50%) rotate(-4deg);
+}
+
+.sugar .baked {
+    border-radius: 50%;
+    background:
+        linear-gradient(145deg,#dfc49d,#f4e0bd 46%,#d5ad78 74%,#ad7747);
+}
+
+.sugar .icing {
+    position: absolute;
+    z-index: 15;
+    inset: 5%;
+    border-radius: 48% 52% 46% 54% / 52% 45% 55% 48%;
+    background:
+        radial-gradient(circle at 32% 22%, rgba(255,255,255,.95), transparent 20%),
+        linear-gradient(145deg,#ffd7df,#f4b7c3 48%,#e7a0b0 78%);
+    box-shadow:
+        inset 5px 5px 10px rgba(255,255,255,.75),
+        inset -7px -8px 12px rgba(161,67,84,.17),
+        0 8px 12px rgba(110,45,52,.13);
+}
+
+.sugar .sprinkle {
+    position: absolute;
+    z-index: 20;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    box-shadow:
+        inset 1px 1px 1px rgba(255,255,255,.7),
+        1px 2px 3px rgba(80,30,30,.14);
+}
+
+.sugar .s1 { left: 21%; top: 28%; background:#e84b68; }
+.sugar .s2 { left: 34%; top: 18%; background:#4e79bd; }
+.sugar .s3 { left: 51%; top: 28%; background:#e7b84d; }
+.sugar .s4 { left: 68%; top: 25%; background:#6ca36d; }
+.sugar .s5 { left: 76%; top: 46%; background:#d95072; }
+.sugar .s6 { left: 61%; top: 60%; background:#7c65a9; }
+.sugar .s7 { left: 43%; top: 71%; background:#edb449; }
+.sugar .s8 { left: 26%; top: 62%; background:#4e85bb; }
+.sugar .s9 { left: 48%; top: 48%; background:#df5270; }
+.sugar .s10 { left: 79%; top: 65%; background:#5f9f75; }
+.sugar .s11 { left: 31%; top: 43%; background:#e4a640; }
+.sugar .s12 { left: 57%; top: 78%; background:#6d76b7; }
+
+
+/* =========================================================
+   NUTELLA BANANA
+   ========================================================= */
+
+.nutella {
+    transform: translate(-50%,-50%) rotate(7deg);
+}
+
+.nutella .baked {
+    border-radius: 48% 52% 52% 48% / 55% 44% 56% 45%;
+    background:
+        radial-gradient(circle at 26% 22%, #633522, transparent 23%),
+        radial-gradient(circle at 72% 72%, #160806, transparent 37%),
+        linear-gradient(145deg,#2c130c,#522315 44%,#36150d 72%,#180907);
+}
+
+.nutella .sauce {
+    position: absolute;
+    z-index: 17;
+    inset: 8%;
+    border-radius: inherit;
+    background:
+        radial-gradient(ellipse 28px 18px at 38% 29%, #6b2b17 0 60%, transparent 64%),
+        radial-gradient(ellipse 25px 16px at 67% 57%, #762f17 0 60%, transparent 64%),
+        linear-gradient(145deg,transparent,#39140b);
+    opacity: .9;
+}
+
+.nutella .banana {
+    position: absolute;
+    z-index: 25;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 31% 27%, #fff7b5, transparent 17%),
+        linear-gradient(145deg,#fff2a2,#e3bd50 55%,#aa7b27);
+    box-shadow:
+        inset 2px 2px 4px rgba(255,255,210,.65),
+        inset -4px -4px 6px rgba(103,70,12,.2),
+        4px 6px 8px rgba(22,7,3,.3);
+}
+
+.nutella .b1 {
+    width: 22%;
+    height: 13%;
+    left: 20%;
+    top: 31%;
+    transform: rotate(24deg);
+}
+
+.nutella .b2 {
+    width: 25%;
+    height: 14%;
+    left: 47%;
+    top: 21%;
+    transform: rotate(-19deg);
+}
+
+.nutella .b3 {
+    width: 21%;
+    height: 13%;
+    right: 18%;
+    top: 45%;
+    transform: rotate(35deg);
+}
+
+.nutella .b4 {
+    width: 24%;
+    height: 14%;
+    left: 34%;
+    bottom: 19%;
+    transform: rotate(-31deg);
+}
+
+.nutella .banana-line {
+    position: absolute;
+    z-index: 28;
+    width: 29%;
+    height: 7%;
+    border-radius: 50%;
+    border-top: 5px solid #f2d878;
+    opacity: .8;
+    transform: rotate(14deg);
+}
+
+
+/* =========================================================
+   LEMON
+   ========================================================= */
+
+.lemon {
+    transform: translate(-50%,-50%) rotate(-9deg);
+}
+
+.lemon .baked {
+    border-radius: 47% 53% 52% 48% / 53% 44% 56% 47%;
+    background:
+        radial-gradient(circle at 25% 22%, #fff1a5, transparent 26%),
+        linear-gradient(145deg,#d9b83f,#f1d968 45%,#d0aa32 74%,#a27d1c);
+}
+
+.lemon .cream {
+    position: absolute;
+    z-index: 20;
+    width: 42%;
+    height: 24%;
+    left: 29%;
+    top: 39%;
+    border-radius: 50% 48% 42% 58%;
+    background:
+        radial-gradient(circle at 35% 24%, #fffef6, transparent 22%),
+        linear-gradient(145deg,#fffdf0,#f4ead0 55%,#d9c5a1);
+    box-shadow:
+        inset 5px 5px 8px rgba(255,255,255,.9),
+        inset -7px -7px 9px rgba(131,101,59,.18),
+        6px 8px 10px rgba(88,57,14,.18);
+}
+
+.lemon .cream::before {
+    content: "";
+    position: absolute;
+    width: 70%;
+    height: 30%;
+    left: 13%;
+    top: 30%;
+    border-radius: 50%;
+    background: #fffaf0;
+    box-shadow:
+        12px 8px 0 -3px #e9dcc2,
+        -9px 12px 0 -4px #fffdf5;
+}
+
+.lemon .wedge {
+    position: absolute;
+    z-index: 30;
+    width: 25%;
+    height: 27%;
+    right: 13%;
+    top: 13%;
+    border-radius: 100% 8% 8% 8%;
+    transform: rotate(25deg);
+    background:
+        repeating-linear-gradient(
+            25deg,
+            #fff3a4 0 7px,
+            #e3bd3c 8px 10px
+        ),
+        linear-gradient(145deg,#fff5a6,#d8ad2f);
+    clip-path: polygon(0 0,100% 38%,26% 100%);
+    box-shadow:
+        inset 3px 3px 5px rgba(255,255,220,.7),
+        5px 7px 9px rgba(93,66,12,.22);
+}
+
+.lemon .wedge::after {
+    content: "";
+    position: absolute;
+    width: 20%;
+    height: 20%;
+    left: 35%;
+    top: 28%;
+    border-radius: 50%;
+    background: #fff9bd;
+}
+
+
+/* =========================================================
+   RED VELVET
+   ========================================================= */
+
+.redvelvet {
+    transform: translate(-50%,-50%) rotate(5deg);
+}
+
+.redvelvet .baked {
+    border-radius: 49% 51% 45% 55% / 53% 46% 54% 47%;
+    background:
+        radial-gradient(circle at 25% 22%, #db5b63, transparent 24%),
+        linear-gradient(145deg,#b51f30,#c52d3c 44%,#8d1421 73%,#5b0e16);
+}
+
+.redvelvet .cream {
+    position: absolute;
+    z-index: 22;
+    width: 53%;
+    height: 29%;
+    left: 24%;
+    top: 37%;
+    border-radius: 55% 45% 48% 52%;
+    background:
+        radial-gradient(circle at 32% 21%, #fffdf1, transparent 20%),
+        linear-gradient(145deg,#fff8e7,#f1e0c4 55%,#d6c29d);
+    box-shadow:
+        inset 6px 6px 10px rgba(255,255,255,.85),
+        inset -7px -8px 11px rgba(126,75,53,.18),
+        7px 9px 13px rgba(71,14,18,.18);
+}
+
+.redvelvet .redcrumb {
+    position: absolute;
+    z-index: 30;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #9d1e2a;
+    box-shadow:
+        inset 1px 1px 2px rgba(255,130,130,.55),
+        2px 3px 3px rgba(70,10,15,.2);
+}
+
+.redvelvet .r1 { left: 25%; top: 26%; }
+.redvelvet .r2 { left: 70%; top: 31%; }
+.redvelvet .r3 { left: 67%; top: 63%; }
+.redvelvet .r4 { left: 32%; top: 70%; }
+.redvelvet .r5 { left: 51%; top: 25%; }
+
+
+/* =========================================================
+   BLUEBERRY
+   ========================================================= */
+
+.blueberry {
+    transform: translate(-50%,-50%) rotate(-5deg);
+}
+
+.blueberry .baked {
+    border-radius: 51% 49% 45% 55% / 47% 54% 46% 53%;
+    background:
+        radial-gradient(circle at 27% 20%, #fff3dd, transparent 27%),
+        linear-gradient(145deg,#e6d5b9,#f5e6cd 44%,#dbc39e 74%,#b18c60);
+}
+
+.blueberry .cream {
+    position: absolute;
+    z-index: 17;
+    width: 46%;
+    height: 22%;
+    left: 27%;
+    top: 42%;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 31% 22%, #fffef5, transparent 25%),
+        linear-gradient(145deg,#fffaf0,#eadfc9);
+    box-shadow:
+        inset 5px 5px 9px white,
+        inset -6px -7px 10px rgba(113,83,51,.16),
+        5px 8px 11px rgba(74,44,19,.15);
+}
+
+.blueberry .berry {
+    position: absolute;
+    z-index: 30;
+    width: 22%;
+    aspect-ratio: 1;
+    border-radius: 46% 54% 51% 49%;
+    background:
+        radial-gradient(circle at 28% 23%, rgba(255,255,255,.45), transparent 12%),
+        radial-gradient(circle at 56% 55%, #5973ad 0 8%, transparent 9%),
+        linear-gradient(145deg,#637dbb,#304b83 55%,#1e315c);
+    box-shadow:
+        inset 4px 4px 8px rgba(177,198,239,.32),
+        inset -6px -7px 10px rgba(16,25,53,.4),
+        5px 8px 9px rgba(27,31,67,.24);
+}
+
+.blueberry .b1 {
+    left: 17%;
+    top: 26%;
+}
+
+.blueberry .b2 {
+    left: 57%;
+    top: 22%;
+    transform: scale(.9);
+}
+
+.blueberry .b3 {
+    right: 16%;
+    bottom: 18%;
+    transform: scale(.96);
+}
+
+.blueberry .berry::after {
+    content: "";
+    position: absolute;
+    width: 18%;
+    height: 18%;
+    left: 41%;
+    top: 42%;
+    border-radius: 50%;
+    background: #8797c0;
+}
+
+
+/* =========================================================
+   CARAMEL
+   ========================================================= */
+
+.caramel {
+    transform: translate(-50%,-50%) rotate(9deg);
+}
+
+.caramel .baked {
+    border-radius: 48% 52% 54% 46% / 52% 47% 53% 48%;
+    background:
+        radial-gradient(circle at 25% 20%, #f2bb69, transparent 25%),
+        linear-gradient(145deg,#c37b2e,#e1a154 43%,#c06d27 72%,#793614);
+}
+
+.caramel .drizzle {
+    position: absolute;
+    z-index: 25;
+    width: 72%;
+    height: 8%;
+    left: 13%;
+    border-radius: 50%;
+    background: linear-gradient(90deg,#a95217,#f0b04d,#b25b19);
+    box-shadow:
+        inset 1px 2px 3px rgba(255,221,150,.55),
+        4px 6px 6px rgba(75,28,7,.18);
+}
+
+.caramel .d1 {
+    top: 30%;
+    transform: rotate(-17deg);
+}
+
+.caramel .d2 {
+    top: 50%;
+    width: 62%;
+    left: 20%;
+    transform: rotate(12deg);
+}
+
+.caramel .d3 {
+    top: 67%;
+    width: 47%;
+    left: 26%;
+    transform: rotate(-21deg);
+}
+
+.caramel .salt {
+    position: absolute;
+    z-index: 40;
+    width: 5px;
+    height: 5px;
+    background: #fffdf2;
+    border-radius: 1px;
+    box-shadow: 1px 2px 3px rgba(80,50,20,.2);
+}
+
+.caramel .s1 { left: 25%; top: 38%; transform: rotate(20deg); }
+.caramel .s2 { left: 57%; top: 32%; transform: rotate(40deg); }
+.caramel .s3 { left: 72%; top: 56%; transform: rotate(12deg); }
+.caramel .s4 { left: 36%; top: 61%; transform: rotate(28deg); }
+.caramel .s5 { left: 64%; top: 73%; transform: rotate(17deg); }
+
+.caramel .peanut {
+    position: absolute;
+    z-index: 30;
+    width: 14%;
+    height: 9%;
+    border-radius: 50%;
+    background: linear-gradient(145deg,#d49a54,#8b5123);
+    box-shadow:
+        inset 2px 2px 3px rgba(255,226,161,.35),
+        3px 4px 5px rgba(64,27,8,.2);
+}
+
+.caramel .pn1 { left: 17%; top: 25%; transform: rotate(22deg); }
+.caramel .pn2 { right: 19%; top: 42%; transform: rotate(-31deg); }
+.caramel .pn3 { left: 39%; bottom: 18%; transform: rotate(12deg); }
+
+
+/* =========================================================
+   PISTACHIO MATCHA
+   ========================================================= */
+
+.pistachio {
+    transform: translate(-50%,-50%) rotate(-7deg);
+}
+
+.pistachio .baked {
+    border-radius: 52% 48% 47% 53% / 46% 55% 45% 54%;
+    background:
+        radial-gradient(circle at 25% 20%, #c5d58b, transparent 25%),
+        linear-gradient(145deg,#718d47,#9eb463 45%,#718c47 74%,#4a6230);
+}
+
+.pistachio .cream {
+    position: absolute;
+    z-index: 22;
+    width: 47%;
+    height: 27%;
+    left: 27%;
+    top: 36%;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 31% 22%, #d7edac, transparent 22%),
+        linear-gradient(145deg,#b6ce79,#91ae5a 58%,#647f3e);
+    box-shadow:
+        inset 6px 5px 9px rgba(229,245,186,.6),
+        inset -7px -8px 11px rgba(50,72,27,.25),
+        6px 8px 11px rgba(42,56,23,.2);
+}
+
+.pistachio .cream::after {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 7px;
+    border-radius: 50%;
+    left: 22%;
+    top: 39%;
+    background: #657c3c;
+    box-shadow:
+        23px -8px 0 -1px #6d843e,
+        39px 8px 0 -2px #5d7338,
+        12px 17px 0 -2px #7b9446;
+}
+
+.pistachio .nut {
+    position: absolute;
+    z-index: 30;
+    width: 12%;
+    height: 8%;
+    border-radius: 50%;
+    background: linear-gradient(145deg,#d6d989,#829c4f);
+    box-shadow:
+        inset 2px 2px 3px rgba(242,248,180,.45),
+        3px 4px 5px rgba(45,62,21,.2);
+}
+
+.pistachio .n1 { left: 18%; top: 28%; transform: rotate(25deg); }
+.pistachio .n2 { right: 18%; top: 30%; transform: rotate(-17deg); }
+.pistachio .n3 { right: 22%; bottom: 24%; transform: rotate(33deg); }
+.pistachio .n4 { left: 25%; bottom: 19%; transform: rotate(-24deg); }
+
+
+/* =========================================================
+   STRAWBERRY SHORTCAKE
+   ========================================================= */
+
+.shortcake {
+    transform: translate(-50%,-50%) rotate(5deg);
+}
+
+.shortcake .baked {
+    border-radius: 49% 51% 54% 46% / 52% 46% 54% 48%;
+    background:
+        radial-gradient(circle at 28% 19%, #ffdce0, transparent 27%),
+        linear-gradient(145deg,#e99ca7,#f4b8bf 45%,#db8794 73%,#ad5564);
+}
+
+.shortcake .cream {
+    position: absolute;
+    z-index: 25;
+    width: 20%;
+    height: 32%;
+    border-radius: 50%;
+    background:
+        linear-gradient(145deg,#fffdf3,#f0e4cf 60%,#cbb99c);
+    box-shadow:
+        inset 5px 4px 7px white,
+        inset -5px -7px 8px rgba(112,79,52,.18),
+        4px 7px 9px rgba(93,34,45,.15);
+}
+
+.shortcake .c1 { left: 8%; top: 30%; transform: rotate(-10deg); }
+.shortcake .c2 { right: 8%; top: 28%; transform: rotate(9deg); }
+.shortcake .c3 { left: 17%; bottom: 13%; transform: rotate(-14deg); }
+.shortcake .c4 { right: 17%; bottom: 12%; transform: rotate(14deg); }
+
+.shortcake .cream::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 26%;
+    top: 28%;
+    left: 0;
+    border-radius: 50%;
+    background: #fffaf0;
+}
+
+.shortcake .berry {
+    position: absolute;
+    z-index: 35;
+    width: 19%;
+    height: 28%;
+    border-radius: 55% 45% 58% 42%;
+    background:
+        radial-gradient(circle at 35% 27%, #ffd9d9 0 4%, transparent 5%),
+        radial-gradient(circle at 67% 43%, #ffe0dc 0 4%, transparent 5%),
+        radial-gradient(circle at 48% 67%, #ffd2d2 0 4%, transparent 5%),
+        linear-gradient(145deg,#e94c61,#a71d30);
+    box-shadow:
+        inset 4px 4px 7px rgba(255,164,168,.32),
+        inset -5px -7px 9px rgba(91,13,24,.25),
+        4px 6px 8px rgba(86,22,32,.2);
+}
+
+.shortcake .b1 {
+    left: 41%;
+    top: 20%;
+    transform: rotate(-17deg);
+}
+
+.shortcake .b2 {
+    left: 53%;
+    top: 43%;
+    transform: rotate(24deg) scale(.85);
+}
+
+.shortcake .b3 {
+    left: 37%;
+    bottom: 16%;
+    transform: rotate(-8deg) scale(.8);
+}
+
+.shortcake .mint {
+    position: absolute;
+    z-index: 40;
+    width: 17%;
+    height: 10%;
+    border-radius: 100% 0 100% 0;
+    background:
+        linear-gradient(135deg,#668c59,#9bb77b 52%,#3d633b);
+    box-shadow:
+        inset 2px 2px 4px rgba(221,240,193,.35),
+        3px 5px 6px rgba(30,56,29,.2);
+}
+
+.shortcake .m1 {
+    left: 42%;
+    top: 35%;
+    transform: rotate(-28deg);
+}
+
+.shortcake .m2 {
+    left: 51%;
+    top: 30%;
+    transform: rotate(31deg) scale(.75);
+}
+
+
+/* =========================================================
+   CINNAMON
+   ========================================================= */
+
+.cinnamon {
+    transform: translate(-50%,-50%) rotate(-5deg);
+}
+
+.cinnamon .baked {
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 27% 20%, #f4d5ae, transparent 26%),
+        linear-gradient(145deg,#cda579,#e2bd91 45%,#c39468 74%,#906342);
+}
+
+.cinnamon .icing {
+    position: absolute;
+    z-index: 20;
+    inset: 7%;
+    border-radius: 49% 51% 46% 54%;
+    background:
+        radial-gradient(circle at 32% 21%, white, transparent 18%),
+        linear-gradient(145deg,#fffef5,#f4ead9 52%,#ddd0b8);
+    box-shadow:
+        inset 6px 6px 10px rgba(255,255,255,.85),
+        inset -7px -8px 11px rgba(112,78,47,.16),
+        5px 8px 10px rgba(83,52,27,.14);
+}
+
+.cinnamon .dot {
+    position: absolute;
+    z-index: 30;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #9b5d32;
+    box-shadow:
+        inset 1px 1px 2px rgba(240,187,132,.5),
+        2px 2px 3px rgba(78,39,17,.2);
+}
+
+.cinnamon .d1 { left: 25%; top: 28%; }
+.cinnamon .d2 { left: 49%; top: 21%; }
+.cinnamon .d3 { right: 25%; top: 34%; }
+.cinnamon .d4 { left: 31%; top: 57%; }
+.cinnamon .d5 { right: 29%; top: 61%; }
+.cinnamon .d6 { left: 53%; bottom: 19%; }
+
+.cinnamon .stick {
+    position: absolute;
+    z-index: 50;
+    width: 23%;
+    height: 12%;
+    right: -2%;
+    bottom: 9%;
+    border-radius: 50px;
+    transform: rotate(-32deg);
+    background:
+        repeating-linear-gradient(
+            90deg,
+            #8a4c25 0 5px,
+            #b86e3b 6px 9px,
+            #70401f 10px 13px
+        );
+    box-shadow:
+        inset 2px 2px 4px rgba(232,166,105,.3),
+        inset -4px -4px 5px rgba(65,30,13,.3),
+        5px 7px 8px rgba(60,27,11,.25);
+}
+
+.cinnamon .stick::after {
+    content: "";
+    position: absolute;
+    right: -2px;
+    top: 2px;
+    width: 25%;
+    height: 75%;
+    border-radius: 50%;
+    background: #613419;
+}
+
+
+/* =========================================================
+   STRAWBERRY WHITE CREAM
+   ========================================================= */
+
+.strawberrycream {
+    transform: translate(-50%,-50%) rotate(6deg);
+}
+
+.strawberrycream .baked {
+    border-radius: 47% 53% 51% 49% / 54% 45% 55% 46%;
+    background:
+        radial-gradient(circle at 26% 21%, #ffd0d5, transparent 26%),
+        linear-gradient(145deg,#d96f7c,#efadb2 46%,#d26b78 74%,#a94756);
+}
+
+.strawberrycream .core {
+    position: absolute;
+    z-index: 20;
+    width: 48%;
+    height: 29%;
+    left: 26%;
+    top: 37%;
+    border-radius: 50%;
+    background:
+        radial-gradient(ellipse at 35% 27%, #ffffff, transparent 25%),
+        linear-gradient(145deg,#fffdf3,#f3e5d0 58%,#d9c5a4);
+    box-shadow:
+        inset 7px 6px 10px white,
+        inset -7px -8px 12px rgba(112,74,51,.2),
+        7px 9px 13px rgba(83,25,33,.19);
+}
+
+.strawberrycream .slice {
+    position: absolute;
+    z-index: 35;
+    width: 14%;
+    height: 22%;
+    border-radius: 50% 50% 45% 45%;
+    background:
+        radial-gradient(circle at 35% 27%, #ffe0dc 0 4%, transparent 5%),
+        radial-gradient(circle at 67% 43%, #ffd9d4 0 4%, transparent 5%),
+        radial-gradient(circle at 48% 67%, #ffe0dc 0 4%, transparent 5%),
+        linear-gradient(145deg,#f15b6e,#bd263c);
+    box-shadow:
+        inset 3px 3px 6px rgba(255,183,183,.35),
+        inset -4px -5px 7px rgba(104,16,28,.25),
+        3px 5px 7px rgba(92,20,31,.2);
+}
+
+.strawberrycream .s1 { left: 11%; top: 19%; transform: rotate(-17deg); }
+.strawberrycream .s2 { left: 27%; top: 15%; transform: rotate(22deg); }
+.strawberrycream .s3 { right: 15%; top: 20%; transform: rotate(35deg); }
+.strawberrycream .s4 { left: 15%; bottom: 19%; transform: rotate(15deg); }
+.strawberrycream .s5 { right: 20%; bottom: 17%; transform: rotate(-24deg); }
+.strawberrycream .s6 { right: 5%; top: 46%; transform: rotate(12deg); }
+
+
+/* =========================================================
+   BUTTER RING
+   ========================================================= */
+
+.butterring {
+    width: 72%;
+    height: 61%;
+    transform: translate(-50%,-50%) rotate(3deg);
+}
+
+.butterring .baked {
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 50% 50%, #d8b274 0 23%, transparent 24%),
+        repeating-conic-gradient(
+            from 0deg,
+            #d89c52 0deg 12deg,
+            #f0c67d 13deg 25deg
+        ),
+        linear-gradient(145deg,#e2aa61,#ae682f);
+    box-shadow:
+        inset 14px 13px 22px rgba(255,235,193,.3),
+        inset -17px -20px 27px rgba(83,40,13,.26),
+        0 28px 35px rgba(47,22,9,.19);
+}
+
+.butterring .baked::before {
+    content: "";
+    position: absolute;
+    inset: 8%;
+    border-radius: 50%;
+    border: 8px solid rgba(104,58,21,.11);
+}
+
+.butter-knob {
+    position: absolute;
+    z-index: 50;
+    width: 31%;
+    height: 18%;
+    left: 35%;
+    top: 15%;
+    border-radius: 40% 48% 45% 55%;
+    transform: rotate(-8deg);
+    background:
+        radial-gradient(circle at 28% 24%, #fff4ae, transparent 19%),
+        linear-gradient(145deg,#ffe98e,#e8c45c 55%,#b98b2d);
+    box-shadow:
+        inset 5px 4px 7px rgba(255,255,213,.65),
+        inset -6px -7px 9px rgba(126,83,17,.2),
+        6px 8px 10px rgba(67,34,10,.22);
+}
+
+.butter-knob::after {
+    content: "";
+    position: absolute;
+    width: 65%;
+    height: 20%;
+    left: 17%;
+    top: 26%;
+    border-radius: 50%;
+    background: rgba(255,247,184,.6);
+}
+
+
+/* =========================================================
+   MINT OREO
+   ========================================================= */
+
+.mintoreo {
+    transform: translate(-50%,-50%) rotate(-7deg);
+}
+
+.mintoreo .baked {
+    border-radius: 49% 51% 53% 47% / 45% 56% 44% 55%;
+    background:
+        radial-gradient(circle at 25% 20%, #bce2bd, transparent 26%),
+        linear-gradient(145deg,#6da47a,#9bc89b 45%,#6b9c73 74%,#456d4d);
+}
+
+.mintoreo .oreo {
+    position: absolute;
+    z-index: 35;
+    width: 39%;
+    aspect-ratio: 1;
+    left: 30%;
+    top: 31%;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 50% 50%, #f5f0df 0 25%, transparent 26%),
+        radial-gradient(circle at 50% 50%, #17100e 0 52%, #39251e 54% 67%, #110b09 69%);
+    box-shadow:
+        inset 4px 4px 7px rgba(102,82,71,.3),
+        inset -7px -8px 11px rgba(0,0,0,.5),
+        8px 10px 13px rgba(28,22,18,.3);
+}
+
+.mintoreo .oreo::before {
+    content: "✦";
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    color: rgba(244,237,215,.32);
+    font-size: 23px;
+}
+
+.mintoreo .mintleaf {
+    position: absolute;
+    z-index: 50;
+    width: 19%;
+    height: 11%;
+    border-radius: 100% 0 100% 0;
+    background:
+        linear-gradient(135deg,#527e53,#9fc18a 50%,#365e3d);
+    box-shadow:
+        inset 2px 2px 4px rgba(218,244,198,.35),
+        4px 6px 7px rgba(35,61,36,.2);
+}
+
+.mintoreo .ml1 {
+    left: 22%;
+    top: 22%;
+    transform: rotate(-23deg);
+}
+
+.mintoreo .ml2 {
+    right: 19%;
+    top: 19%;
+    transform: rotate(37deg) scale(.82);
+}
+
+.mintoreo .ml3 {
+    right: 22%;
+    bottom: 17%;
+    transform: rotate(-10deg) scale(.7);
+}
+
+
+/* =========================================================
+   CRUNCH BERRY
+   ========================================================= */
+
+.crunchberry {
+    transform: translate(-50%,-50%) rotate(5deg);
+}
+
+.crunchberry .baked {
+    border-radius: 51% 49% 46% 54% / 47% 55% 45% 53%;
+    background:
+        radial-gradient(circle at 25% 20%, #fff0d2, transparent 25%),
+        linear-gradient(145deg,#dfc08e,#f0d5a9 46%,#d4ad75 74%,#a7784d);
+}
+
+.crunchberry .cereal {
+    position: absolute;
+    z-index: 30;
+    width: 14%;
+    height: 10%;
+    border-radius: 42% 58% 51% 49%;
+    box-shadow:
+        inset 2px 2px 3px rgba(255,255,255,.45),
+        3px 4px 5px rgba(78,39,19,.18);
+}
+
+.crunchberry .c1 {
+    left: 18%;
+    top: 24%;
+    background: linear-gradient(145deg,#ef6481,#b72e4c);
+    transform: rotate(25deg);
+}
+
+.crunchberry .c2 {
+    left: 38%;
+    top: 18%;
+    background: linear-gradient(145deg,#65aee5,#3475aa);
+    transform: rotate(-16deg);
+}
+
+.crunchberry .c3 {
+    right: 17%;
+    top: 28%;
+    background: linear-gradient(145deg,#e6ad4d,#a86b22);
+    transform: rotate(31deg);
+}
+
+.crunchberry .c4 {
+    right: 24%;
+    bottom: 21%;
+    background: linear-gradient(145deg,#ec5c78,#a72743);
+    transform: rotate(-21deg);
+}
+
+.crunchberry .c5 {
+    left: 28%;
+    bottom: 19%;
+    background: linear-gradient(145deg,#5eace2,#326f9f);
+    transform: rotate(12deg);
+}
+
+.crunchberry .berry {
+    position: absolute;
+    z-index: 35;
+    width: 18%;
+    aspect-ratio: 1;
+    border-radius: 48%;
+    background:
+        radial-gradient(circle at 28% 23%, rgba(255,255,255,.42), transparent 12%),
+        linear-gradient(145deg,#657fbb,#304978 58%,#1f3157);
+    box-shadow:
+        inset 3px 3px 6px rgba(177,197,234,.3),
+        inset -5px -6px 8px rgba(15,24,48,.35),
+        4px 6px 8px rgba(28,34,62,.22);
+}
+
+.crunchberry .b1 {
+    left: 52%;
+    top: 35%;
+}
+
+.crunchberry .b2 {
+    right: 13%;
+    bottom: 31%;
+    transform: scale(.78);
+}
+
+.crunchberry .berry::after {
+    content: "";
+    position: absolute;
+    width: 18%;
+    height: 18%;
+    left: 41%;
+    top: 42%;
+    border-radius: 50%;
+    background: #8b9bc4;
+}
+
+.crunchberry .straw {
+    position: absolute;
+    z-index: 40;
+    width: 13%;
+    height: 20%;
+    border-radius: 50% 50% 45% 45%;
+    background:
+        radial-gradient(circle at 38% 28%, #ffd9d6 0 4%, transparent 5%),
+        radial-gradient(circle at 65% 52%, #ffd5d3 0 4%, transparent 5%),
+        linear-gradient(145deg,#ef6475,#b82e42);
+}
+
+.crunchberry .st1 {
+    left: 16%;
+    bottom: 34%;
+    transform: rotate(-20deg);
+}
+
+.crunchberry .st2 {
+    right: 35%;
+    bottom: 13%;
+    transform: rotate(23deg);
+}
+
+
+/* =========================================================
+   DARK WHITE
+   ========================================================= */
+
+.darkwhite {
+    transform: translate(-50%,-50%) rotate(-8deg);
+}
+
+.darkwhite .baked {
+    border-radius: 50% 50% 46% 54% / 53% 46% 54% 47%;
+    background:
+        radial-gradient(circle at 26% 20%, #453025, transparent 25%),
+        linear-gradient(145deg,#24130e,#392019 44%,#21110d 72%,#100806);
+    box-shadow:
+        inset 13px 13px 22px rgba(119,72,45,.15),
+        inset -18px -21px 32px rgba(0,0,0,.52);
+}
+
+.darkwhite .whitechunk {
+    position: absolute;
+    z-index: 30;
+    background:
+        linear-gradient(145deg,#fff9e9,#eadcc1 55%,#bca581);
+    box-shadow:
+        inset 2px 2px 4px rgba(255,255,255,.9),
+        inset -4px -5px 6px rgba(105,79,50,.2),
+        6px 8px 10px rgba(0,0,0,.32);
+    border-radius: 4px 8px 5px 3px;
+}
+
+.darkwhite .w1 {
+    width: 23%;
+    height: 15%;
+    left: 20%;
+    top: 26%;
+    transform: rotate(-17deg);
+}
+
+.darkwhite .w2 {
+    width: 20%;
+    height: 18%;
+    right: 18%;
+    top: 20%;
+    transform: rotate(23deg);
+}
+
+.darkwhite .w3 {
+    width: 25%;
+    height: 14%;
+    right: 19%;
+    bottom: 23%;
+    transform: rotate(-11deg);
+}
+
+.darkwhite .w4 {
+    width: 19%;
+    height: 17%;
+    left: 25%;
+    bottom: 17%;
+    transform: rotate(31deg);
+}
+
+.darkwhite .whitechunk::after {
+    content: "";
+    position: absolute;
+    width: 35%;
+    height: 12%;
+    left: 14%;
+    top: 18%;
+    border-radius: 50%;
+    background: rgba(255,255,255,.55);
+}
+
+
+/* =========================================================
+   COFFEE TOFFEE
+   ========================================================= */
+
+.coffeetoffee {
+    transform: translate(-50%,-50%) rotate(7deg);
+}
+
+.coffeetoffee .baked {
+    border-radius: 49% 51% 53% 47% / 47% 54% 46% 53%;
+    background:
+        radial-gradient(circle at 27% 20%, #76503c, transparent 25%),
+        linear-gradient(145deg,#29130c,#492317 45%,#32160e 73%,#160a07);
+    box-shadow:
+        inset 14px 13px 23px rgba(153,99,66,.16),
+        inset -19px -22px 32px rgba(0,0,0,.55);
+}
+
+.coffeetoffee .chocoslab {
+    position: absolute;
+    z-index: 28;
+    background:
+        linear-gradient(145deg,#fffdf0,#e6d7bd 58%,#b8a17d);
+    box-shadow:
+        inset 2px 2px 4px rgba(255,255,255,.9),
+        inset -4px -5px 6px rgba(97,75,50,.22),
+        5px 7px 9px rgba(0,0,0,.28);
+    border-radius: 5px 8px 4px 6px;
+}
+
+.coffeetoffee .cs1 {
+    width: 26%;
+    height: 17%;
+    left: 18%;
+    top: 25%;
+    transform: rotate(-18deg);
+}
+
+.coffeetoffee .cs2 {
+    width: 23%;
+    height: 15%;
+    right: 18%;
+    bottom: 23%;
+    transform: rotate(21deg);
+}
+
+.coffeetoffee .toffee {
+    position: absolute;
+    z-index: 35;
+    width: 17%;
+    height: 12%;
+    background:
+        linear-gradient(145deg,#e4aa54,#b66a22 65%,#754012);
+    clip-path: polygon(6% 12%,85% 0,100% 66%,65% 100%,0 75%);
+    box-shadow: 4px 6px 8px rgba(45,17,5,.25);
+}
+
+.coffeetoffee .t1 {
+    left: 42%;
+    top: 17%;
+    transform: rotate(13deg);
+}
+
+.coffeetoffee .t2 {
+    right: 14%;
+    top: 44%;
+    transform: rotate(-25deg);
+}
+
+.coffeetoffee .bean {
+    position: absolute;
+    z-index: 45;
+    width: 14%;
+    height: 22%;
+    border-radius: 50%;
+    background:
+        radial-gradient(ellipse at 38% 24%, #825035, transparent 15%),
+        linear-gradient(145deg,#70432d,#2c140b);
+    box-shadow:
+        inset 3px 3px 5px rgba(176,118,79,.2),
+        inset -5px -6px 7px rgba(0,0,0,.45),
+        4px 6px 8px rgba(0,0,0,.3);
+}
+
+.coffeetoffee .bean::after {
+    content: "";
+    position: absolute;
+    width: 2px;
+    height: 70%;
+    left: 48%;
+    top: 15%;
+    border-radius: 50%;
+    background: rgba(28,10,5,.7);
+}
+
+.coffeetoffee .bean1 {
+    left: 25%;
+    bottom: 17%;
+    transform: rotate(-24deg);
+}
+
+.coffeetoffee .bean2 {
+    right: 22%;
+    top: 19%;
+    transform: rotate(31deg) scale(.9);
+}
+
+
+/* =========================================================
+   COOKIES & CREAM
+   ========================================================= */
+
+.cookiescream {
+    transform: translate(-50%,-50%) rotate(-4deg);
+}
+
+.cookiescream .baked {
+    border-radius: 50% 50% 54% 46% / 47% 54% 46% 53%;
+    background:
+        radial-gradient(circle at 25% 21%, #ffffff, transparent 26%),
+        radial-gradient(circle at 22% 31%, #30211c 0 4%, transparent 5%),
+        radial-gradient(circle at 71% 29%, #33231f 0 4%, transparent 5%),
+        radial-gradient(circle at 63% 68%, #2d1f1b 0 4%, transparent 5%),
+        radial-gradient(circle at 29% 71%, #34231e 0 4%, transparent 5%),
+        radial-gradient(circle at 48% 48%, #2d211d 0 3%, transparent 4%),
+        linear-gradient(145deg,#eee7d8,#fff9ea 45%,#e1d7c2 74%,#b9a98e);
+}
+
+.cookiescream .oreopiece {
+    position: absolute;
+    z-index: 25;
+    background:
+        radial-gradient(circle at 50% 50%, #eee6d3 0 23%, transparent 24%),
+        linear-gradient(145deg,#211512,#49332c 55%,#120c0a);
+    box-shadow:
+        inset 2px 2px 4px rgba(132,104,90,.25),
+        inset -4px -5px 7px rgba(0,0,0,.45),
+        5px 7px 8px rgba(55,31,23,.2);
+}
+
+.cookiescream .o1 {
+    width: 24%;
+    height: 18%;
+    left: 16%;
+    top: 22%;
+    transform: rotate(-22deg);
+    clip-path: polygon(7% 10%,90% 0,100% 74%,67% 100%,0 76%);
+}
+
+.cookiescream .o2 {
+    width: 22%;
+    height: 19%;
+    right: 14%;
+    top: 27%;
+    transform: rotate(25deg);
+    clip-path: polygon(10% 0,100% 18%,85% 100%,0 80%);
+}
+
+.cookiescream .o3 {
+    width: 25%;
+    height: 17%;
+    right: 17%;
+    bottom: 20%;
+    transform: rotate(-13deg);
+    clip-path: polygon(0 20%,73% 0,100% 67%,29% 100%);
+}
+
+
+/* =========================================================
+   CHOCOLATE CHIP
+   ========================================================= */
+
+.chocchip {
+    transform: translate(-50%,-50%) rotate(-8deg);
+}
+
+.chocchip .baked {
+    border-radius: 48% 52% 47% 53% / 52% 45% 55% 48%;
+    background:
+        radial-gradient(ellipse 17px 12px at 22% 28%, #24100a 0 58%, #552516 60% 74%, transparent 76%),
+        radial-gradient(ellipse 13px 18px at 68% 24%, #190a07 0 58%, #4b2013 60% 74%, transparent 76%),
+        radial-gradient(ellipse 19px 13px at 73% 68%, #27100a 0 58%, #592717 60% 74%, transparent 76%),
+        radial-gradient(ellipse 13px 17px at 28% 72%, #1d0b07 0 58%, #522417 60% 74%, transparent 76%),
+        radial-gradient(ellipse 14px 10px at 50% 48%, #36140b 0 58%, #632a16 60% 74%, transparent 76%),
+        radial-gradient(circle at 27% 20%, #f0b66a, transparent 26%),
+        linear-gradient(145deg,#b9692e,#dc9952 44%,#b46028 72%,#713015);
+    box-shadow:
+        inset 16px 14px 28px rgba(255,230,181,.24),
+        inset -21px -23px 35px rgba(63,21,6,.4),
+        0 34px 45px rgba(48,20,9,.2);
+}
+
+
+/* =========================================================
+   COOKIE DOUGH / COOKIE MONSTER
+   ========================================================= */
+
+.cookiedough {
+    transform: translate(-50%,-50%) rotate(6deg);
+}
+
+.cookiedough .baked {
+    border-radius: 49% 51% 54% 46% / 46% 55% 45% 54%;
+    background:
+        radial-gradient(circle at 26% 19%, #c7e8f2, transparent 27%),
+        radial-gradient(circle at 73% 76%, #467f9d, transparent 38%),
+        linear-gradient(145deg,#72b4d0,#a8d9e7 44%,#6da9c3 73%,#477f99);
+    box-shadow:
+        inset 15px 14px 27px rgba(237,251,255,.34),
+        inset -21px -23px 35px rgba(36,71,87,.34),
+        0 34px 45px rgba(35,65,78,.2);
+}
+
+.cookiedough .chunk {
+    position: absolute;
+    z-index: 30;
+    background:
+        linear-gradient(145deg,#2b120c,#633021 55%,#190a07);
+    box-shadow:
+        inset 2px 2px 3px rgba(179,113,82,.25),
+        inset -4px -5px 6px rgba(0,0,0,.4),
+        5px 7px 8px rgba(27,30,31,.24);
+    border-radius: 4px 8px 5px 6px;
+}
+
+.cookiedough .ch1 {
+    width: 21%;
+    height: 15%;
+    left: 17%;
+    top: 25%;
+    transform: rotate(-19deg);
+}
+
+.cookiedough .ch2 {
+    width: 18%;
+    height: 20%;
+    right: 18%;
+    top: 22%;
+    transform: rotate(25deg);
+}
+
+.cookiedough .ch3 {
+    width: 23%;
+    height: 15%;
+    right: 17%;
+    bottom: 21%;
+    transform: rotate(-12deg);
+}
+
+.cookiedough .ch4 {
+    width: 18%;
+    height: 18%;
+    left: 23%;
+    bottom: 17%;
+    transform: rotate(28deg);
+}
+
+
+/* monster face — ONLY this cookie */
+
+.monster-face {
+    position: absolute;
+    z-index: 80;
+    left: 50%;
+    top: 51%;
+    width: 43%;
+    height: 31%;
+    transform: translate(-50%,-50%);
+}
+
+.monster-eye {
+    position: absolute;
+    width: 25%;
+    aspect-ratio: 1;
+    top: 0;
+    border-radius: 50%;
+    background: #f9f4e7;
+    border: 2px solid #183442;
+    box-shadow:
+        inset 2px 2px 3px rgba(255,255,255,.7),
+        2px 3px 4px rgba(24,51,64,.25);
+}
+
+.monster-eye::after {
+    content: "";
+    position: absolute;
+    width: 35%;
+    height: 45%;
+    left: 40%;
+    top: 32%;
+    border-radius: 50%;
+    background: #152b36;
+}
+
+.monster-eye.left {
+    left: 15%;
+    transform: rotate(-9deg);
+}
+
+.monster-eye.right {
+    right: 15%;
+    transform: rotate(8deg);
+}
+
+.monster-mouth {
+    position: absolute;
+    left: 50%;
+    top: 48%;
+    width: 54%;
+    height: 38%;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: #1a303a;
+    box-shadow:
+        inset 0 4px 4px rgba(0,0,0,.35),
+        3px 5px 6px rgba(22,54,68,.25);
+}
+
+.monster-mouth::before {
+    content: "";
+    position: absolute;
+    width: 68%;
+    height: 25%;
+    left: 16%;
+    bottom: 12%;
+    border-radius: 50%;
+    background: #8e4f58;
+}
+
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.collection {
+    padding: 125px 5vw 160px;
+    background: #d4c5b7;
+}
+
+.collection-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 70px;
+    padding: 0 2vw;
+}
+
+.collection-head small {
+    color: var(--red);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .27em;
+}
+
+.collection-head h2 {
+    margin-top: 17px;
+    font-family: "Playfair Display", serif;
+    font-size: clamp(60px, 8vw, 115px);
+    line-height: .78;
+    font-weight: 500;
+    letter-spacing: -.075em;
+}
+
+.collection-head p {
+    width: 240px;
+    color: rgba(36,24,18,.52);
+    font-size: 10px;
+    line-height: 1.8;
+}
+
+.cookie-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+
+.card {
+    position: relative;
+    min-height: 535px;
+    overflow: hidden;
+    border: 1px solid rgba(36,24,18,.12);
+    cursor: pointer;
+    background: #eee5da;
+    transition:
+        transform .6s cubic-bezier(.2,.8,.2,1),
+        box-shadow .6s ease;
+}
+
+.card:hover {
+    transform: translateY(-13px);
+    box-shadow: 0 35px 70px rgba(43,21,13,.20);
+}
+
+.card:nth-child(4n+1) {
+    background: #e9ded1;
+}
+
+.card:nth-child(4n+2) {
+    margin-top: 45px;
+    background: #eee3d7;
+}
+
+.card:nth-child(4n+3) {
+    background: #20140f;
+    color: white;
+}
+
+.card:nth-child(4n+4) {
+    margin-top: 75px;
+    background: #efe4d7;
+}
+
+.card-top {
+    position: absolute;
+    z-index: 100;
+    left: 22px;
+    right: 22px;
+    top: 22px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 7px;
+    font-weight: 800;
+    letter-spacing: .18em;
+    color: rgba(36,24,18,.43);
+}
+
+.card:nth-child(4n+3) .card-top {
+    color: rgba(255,255,255,.45);
+}
+
+.card-title {
+    position: absolute;
+    z-index: 100;
+    left: 23px;
+    bottom: 23px;
+    max-width: 85%;
+    font-family: "Playfair Display", serif;
+    font-size: 30px;
+    line-height: .86;
+    letter-spacing: -.055em;
+}
+
+.card-title em {
+    display: block;
+    color: var(--red);
+}
+
+.card:nth-child(4n+3) .card-title em {
+    color: #d6a867;
+}
+
+.card-number {
+    position: absolute;
+    z-index: 100;
+    right: 20px;
+    bottom: 20px;
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: .15em;
+    opacity: .35;
+}
+
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.recipe-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    background: rgba(17,11,9,.72);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    opacity: 0;
+    transition: opacity .3s ease;
+}
+
+.recipe-modal.show {
+    opacity: 1;
+}
+
+.modal-card {
+    position: relative;
+    width: min(900px, 100%);
+    max-height: min(820px, 90vh);
+    overflow-y: auto;
+    padding: 55px;
+    background: #f5ede2;
+    color: var(--brown);
+    border: 1px solid rgba(255,255,255,.4);
+    box-shadow: 0 40px 100px rgba(0,0,0,.35);
+    transform: translateY(25px) scale(.97);
+    transition: transform .35s cubic-bezier(.2,.8,.2,1);
+}
+
+.recipe-modal.show .modal-card {
+    transform: translateY(0) scale(1);
+}
+
+.modal-close {
+    position: absolute;
+    top: 22px;
+    right: 22px;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(36,24,18,.25);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--brown);
+    cursor: pointer;
+    font-size: 20px;
+    transition: .25s ease;
+}
+
+.modal-close:hover {
+    background: var(--brown);
+    color: white;
+}
+
+.modal-kicker {
+    color: var(--red);
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: .27em;
+}
+
+#modalTitle {
+    max-width: 720px;
+    margin-top: 15px;
+    font-family: "Playfair Display", serif;
+    font-size: clamp(44px, 6vw, 75px);
+    line-height: .84;
+    font-weight: 500;
+    letter-spacing: -.065em;
+}
+
+#modalMeta {
+    margin-top: 25px;
+    color: var(--red);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .12em;
+}
+
+.modal-columns {
+    display: grid;
+    grid-template-columns: .75fr 1.25fr;
+    gap: 55px;
+    margin-top: 55px;
+}
+
+.modal-section h3 {
+    margin-bottom: 18px;
+    color: var(--red);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+}
+
+.modal-section ul,
+.modal-section ol {
+    padding-left: 18px;
+}
+
+.modal-section li {
+    margin-bottom: 13px;
+    padding-left: 4px;
+    color: rgba(36,24,18,.7);
+    font-size: 12px;
+    line-height: 1.65;
+}
+
+.modal-section ol li::marker {
+    color: var(--red);
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+    padding: 80px 6vw 35px;
+    background: #170e0b;
+    color: white;
+}
+
+.footer-main {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+    padding-bottom: 80px;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+}
+
+.footer-logo {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(55px, 8vw, 120px);
+    line-height: .75;
+    letter-spacing: -.07em;
+}
+
+.footer-logo em {
+    color: #d99da0;
+}
+
+.footer-links {
+    display: grid;
+    grid-template-columns: repeat(2, 150px);
+    gap: 14px;
+}
+
+.footer-links a {
+    color: rgba(255,255,255,.48);
+    font-size: 9px;
+    font-weight: 700;
+    transition: .25s;
+}
+
+.footer-links a:hover {
+    color: white;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 25px;
+    color: rgba(255,255,255,.27);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: .15em;
+}
+
+
+/* =========================================================
+   REVEALS
+   ========================================================= */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(35px);
+    transition:
+        opacity .9s ease,
+        transform .9s cubic-bezier(.2,.8,.2,1);
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    nav {
+        justify-content: flex-start;
+        overflow-x: auto;
+    }
+
+    nav a {
+        flex-shrink: 0;
+    }
+
+    .hero-cookie-stage {
+        width: 58vw;
+        right: -7%;
+    }
+
+    .cookie-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .card:nth-child(4n+2),
+    .card:nth-child(4n+4) {
+        margin-top: 0;
+    }
+
+    .card:nth-child(3n+2) {
+        margin-top: 45px;
+    }
+}
+
+
+@media (max-width: 760px) {
+
+    header {
+        top: 10px;
+    }
+
+    nav a {
+        padding: 9px 11px;
+        font-size: 8px;
+    }
+
+    .hero {
+        min-height: 850px;
+        padding: 150px 24px 70px;
+    }
+
+    .hero-word {
+        top: 215px;
+        font-size: 42vw;
+    }
+
+    .hero-code {
+        left: 14px;
+    }
+
+    .hero-label {
+        top: 130px;
+        right: 20px;
+    }
+
+    .hero-cookie-stage {
+        width: 105vw;
+        right: -28%;
+        top: 180px;
+    }
+
+    .hero-copy {
+        margin-top: 420px;
+    }
+
+    .hero-copy h1 {
+        font-size: 74px;
+    }
+
+    .hero-copy h1 em {
+        margin-left: 45px;
+    }
+
+    .hero-copy p {
+        margin-left: 45px;
+        max-width: 280px;
+    }
+
+    .collection {
+        padding: 90px 24px 110px;
+    }
+
+    .collection-head {
+        display: block;
+        padding: 0;
+    }
+
+    .collection-head h2 {
+        font-size: 65px;
+    }
+
+    .collection-head p {
+        margin-top: 25px;
+        width: 280px;
+    }
+
+    .cookie-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card,
+    .card:nth-child(3n+2) {
+        margin-top: 0;
+        min-height: 510px;
+    }
+
+    .modal-card {
+        padding: 45px 25px 30px;
+    }
+
+    .modal-columns {
+        grid-template-columns: 1fr;
+        gap: 35px;
+        margin-top: 40px;
+    }
+
+    .footer-main {
+        display: block;
+    }
+
+    .footer-links {
+        margin-top: 50px;
+    }
+
+    .footer-bottom {
+        display: block;
+        line-height: 2;
+    }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+
+    .reveal {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<header id="6abbw7">
+<nav>
+    <a href="Index.html">Home</a>
+    <a href="Recipes.html" class="active">Recipes</a>
+    <a href="PopularRecipes.html">Popular Recipes</a>
+    <a href="Posts.html">Posts</a>
+    <a href="Contactus.html">Contact</a>
+    <a href="MemoryGame.html">Memory Game</a>
+    <a href="History.html">History</a>
+</nav>
+</header>
+
+
+<main>
+
+
+<!-- =======================================================
+     HERO
+     ======================================================= -->
+
+<section class="hero">
+
+    <div class="hero-word">RECIPES</div>
+
+    <div class="hero-code">
+        CV / 002 / RECIPE ARCHIVE / 2026
+    </div>
+
+    <div class="hero-label">
+        THE EDIBLE COLLECTION
+    </div>
+
+
+    <div class="hero-cookie-stage">
+
+        <div class="hero-ring"></div>
+
+        <div
+            class="cookie chocchip"
+            style="width:68%;height:68%;"
+        >
+            <div class="baked"></div>
+        </div>
+
+    </div>
+
+
+    <div class="hero-copy reveal">
+
+        <small>02 / THE RECIPE ARCHIVE</small>
+
+        <h1>
+            The
+            <em>Vault.</em>
+        </h1>
+
+        <p>
+            Twenty recipes. Twenty different reasons to turn
+            on the oven. Every specimen has its own texture,
+            personality and ridiculous amount of butter.
+        </p>
+
+    </div>
+
+</section>
+
+
+<div class="archive-bar" style="
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:30px;
+    padding:22px 7vw;
+    background:#241812;
+    color:white;
+">
+
+    <span style="font-size:8px;font-weight:800;letter-spacing:.22em;color:rgba(255,255,255,.55);">
+        <strong style="color:#d9aaa9;">020</strong> SPECIMENS
+    </span>
+
+    <span style="font-size:8px;font-weight:800;letter-spacing:.22em;color:rgba(255,255,255,.55);">
+        CRISP EDGES
+    </span>
+
+    <span style="font-size:8px;font-weight:800;letter-spacing:.22em;color:rgba(255,255,255,.55);">
+        SOFT CENTERS
+    </span>
+
+    <span style="font-size:8px;font-weight:800;letter-spacing:.22em;color:rgba(255,255,255,.55);">
+        BAKED WITH OBSESSION
+    </span>
+
+    <span style="font-size:8px;font-weight:800;letter-spacing:.22em;color:rgba(255,255,255,.55);">
+        EST. 2026
+    </span>
+
+</div>
+
+
+<section class="collection">
+
+    <div class="collection-head reveal">
+
+        <div>
+            <small>03 / CHOOSE YOUR OBSESSION</small>
+            <h2>The Collection</h2>
+        </div>
+
+        <p>
+            Press any cookie to open its recipe.
+            Every specimen hides its own ingredients,
+            technique and baking ritual.
+        </p>
+
+    </div>
+
+
+    <div class="cookie-grid">
+
+
+<!-- =======================================================
+     01 MACADAMIA
+     ======================================================= -->
+
+<article class="card reveal" onclick="openCookieRecipe('white-choc')">
+
+    <div class="card-top">
+        <span>SPECIMEN 01</span>
+        <span>MACADAMIA</span>
+    </div>
+
+    <div class="cookie-stage">
+
+        <div class="cookie macadamia">
+
+            <div class="baked"></div>
+
+            <span class="white-choc wc1"></span>
+            <span class="white-choc wc2"></span>
+            <span class="white-choc wc3"></span>
+
+            <span class="pore p1"></span>
+            <span class="pore p2"></span>
+            <span class="pore p3"></span>
+            <span class="pore p4"></span>
+
+        </div>
+
+    </div>
+
+    <div class="card-title">
+        White Chocolate
+        <em>Macadamia</em>
+    </div>
+
+    <div class="card-number">01</div>
+
+</article>
+
+
+<!-- =======================================================
+     02 PEANUT BUTTER
+     ======================================================= -->
+
+<article class="card reveal" onclick="openCookieRecipe('peanut')">
+
+    <div class="card-top">
+        <span>SPECIMEN 02</span>
+        <span>PEANUT BUTTER</span>
+    </div>
+
+    <div class="cookie-stage">
+
+        <div class="cookie peanut">
+
+            <div class="baked"></div>
+
+            <span class="peanut-piece p1"></span>
+            <span class="peanut-piece p2"></span>
+            <span class="peanut-piece p3"></span>
+
+        </div>
+
+    </div>
+
+    <div class="card-title">
+        Soft
+        <em>Peanut Butter</em>
+    </div>
+
+    <div class="card-number">02</div>
+
+</article>
+
+
+<!-- =======================================================
+     03 SUGAR
+     ======================================================= -->
+
+<article class="card reveal" onclick="openCookieRecipe('sugar')">
+
+    <div class="card-top">
+        <span>SPECIMEN 03</span>
+        <span>SPRINKLE</span>
+    </div>
+
+    <div class="cookie-stage">
+
+        <div class="cookie sugar">
+
+            <div class="baked"></div>
+            <div class="icing"></div>
+
+            <span class="sprinkle s1"></span>
+            <span class="sprinkle s2"></span>
+            <span class="sprinkle s3"></span>
+            <span class="sprinkle s4"></span>
+            <span class="sprinkle s5"></span>
+            <span class="sprinkle s6"></span>
+            <span class="sprinkle s7"></span>
+            <span class="sprinkle s8"></span>
+            <span class="sprinkle s9"></span>
+            <span class="sprinkle s10"></span>
+            <span class="sprinkle s11"></span>
+            <span class="sprinkle s12"></span>
+
+        </div>
+
+    </div>
+
+    <div class="card-title">
+        Bakery Sugar
+        <em>Sprinkle</em>
+    </div>
+
+    <div class="card-number">03</div>
+
+</article>
+
+
+<!-- =======================================================
+     04 NUTELLA BANANA
+     ======================================================= -->
+
+<article class="card reveal" onclick="openCookieRecipe('nutella-banana')">
+
+    <div class="card-top">
+        <span>SPECIMEN 04</span>
+        <span>NUTELLA BANANA</span>
+    </div>
+
+    <div class="cookie-stage">
+
+        <div class="cookie nutella">
+
+            <div class="baked"></div>
+            <div class="sauce"></div>
+
+            <span class="banana b1"></span>
+            <span class="banana b2"></span>
+            <span class="banana b3"></span>
+            <span class="banana b4"></span>
+
+            <span class="banana-line" style="left:18%;top:58%;"></span>
+            <span class="banana-line" style="left:49%;top:68%;transform:rotate(-13deg);"></span>
+
+        </div>
+
+    </div>
+
+    <div class="card-title">
+        Nutella
+        <em>Banana</em>
+    </div>
+
+    <div class="card-number">04</div>
+
+</article>
+
+
+<!-- =======================================================
+     05 LEMON
+     ======================================================= -->
+
+<article class="card reveal" onclick="openCookieRecipe('lemon')">
+
+    <div class="card-top">
+        <span>SPECIMEN 05</span>
+        <span>LEMON</span>
+    </div>
+
+    <div class="cookie-stage">
+
+        <div class="cookie lemon">
+
+            <div class="baked"></div>
+
+            <div class="cream"></div>
+
+            <div class="wedge"></div>
+
+        </div>
+
+    </div>
+
+    <div class="card-title">
+        Zesty Lemon
+        <em>Crinkle</em>
+    </div>
+
+    <div class="card-number">05</div>
+
+</article>
+
+
+<!-- =======================================================
+     06 RED VELVET
+     ======================================================= -->
+
+<article class="card reveal" onclick="openCookieRecipe('red-velvet')">
+
+    <div class="card-top">
+        <span>SPECIMEN 06</span>
+        <span>CREAM CORE</span>
+    </div>
+
+    <div class="cookie-stage">
+
+        <div class="cookie redvelvet">
+
+            <div class="baked"></div>
+
+            <div class="cream"></div>
+
+            <span class="redcrumb r1"></span>
+            <span class="redcrumb r2"></span>
+            <span class="redcrumb r3"></span>
+            <span class="redcrumb r4"></span>
+            <span class="redcrumb r5"></span>
+
+        </div>
+
+    </div>
+
+    <div class="card-title">
+        Red Velvet
+        <em>Cream Core</em>
+    </div>
+
+    <div class="card-number">06</div>
+
+</article>
+
+
+<!-- =======================================================
+     07 BLUEBERRY
+     ======================================================= -->
+
+<article class="card reveal" onclick="openCookieRecipe('blueberry')">
+
+    <div class="card-top">
+        <span>SPECIMEN 07</span>
+        <span>BLUEBERRY</span>
+    </div>
+
+    <div class="cookie-stage">
+
+        <div class="cookie blueberry">
+
+            <div class="baked"></div>
+
+            <div class="cream"></div>
+
+            <span class="berry b1"></span>
+            <span class="berry b2"></span>
+            <span class="berry b3"></span>
+
+        </div>
+
+    </div>
+
+    <div class="card-title">
+        Blueberry
+        <em>Cream Bake</em>
+    </div>
+
+    <div class="card-number">07</div>
+
+</article>
+
+
+<!-- =======================================================
+     08 CARAMEL
+     ======================================================= -->
+
+<article class="card reveal" onclick="openCookieRecipe('caramel')">
+
+    <div class="card-top">
+        <span>SPECIMEN 08</span>
+        <span>SEA SALT</span>
+    </div>
+
+    <div class="cookie-stage">
+
+        <div class="cookie caramel">
+
+            <div class="baked"></div>
+
+            <span class="drizzle d1"></span>
+            <span class="drizzle d2"></span>
+            <span class="drizzle d3"></span>
+
+            <span class="salt s1"></span>
+            <span class="salt s2"></span>
+            <span class="salt s3"></span>
+            <span class="salt s4"></span>
+            <span class="salt s5"></span>
+
+            <span class="peanut pn1"></span>
+            <span class="peanut pn2"></span>
+            <span class="peanut pn3"></span>
+
+        </div>
+
+    </div>
+
+    <div class="card-title">
+        Salted
+        <em>Caramel</em>
+    </div>
+
+    <div class="card-number">08</div>
+
+</article>
+
+
+<!-- =======================================================
+     09 PISTACHIO MATCHA
+     ======================================================= -->
+
+<article class="card reveal" onclick="openCookieRecipe('pistachio')">
+
+    <div class="card-top">
+        <span>SPECIMEN 09</span>
+        <span>MATCHA</span>
+    </div>
+
+    <div class="cookie-stage">
+
+        <div class="cookie pistachio">
+
+            <div class="baked"></div>
+
+            <div class="cream"></div>
+
+            <span class="nut n1"></span>
+            <span class="nut n2"></span>
+            <span class="nut n3"></span>
+            <span class="nut n4"></span>
+
+        </div>
+
+    </div>
+
+    <div class="card-title">
+        Pistachio
+        <em>Matcha Bliss</em>
+    </div>
+
+    <div class="card-number">09</div>
+
+</article>
+
+
+<!-- =======================================================
+     10 STRAWBERRY SHORTCAKE
+     ======================================================= -->
+
+<article class="card reveal" onclick="openCookieRecipe('strawberry')">
+
+    <div class="card-top">
+        <span>SPECIMEN 10</span>
+        <span>SHORTCAKE</span>
+    </div>
+
+    <div class="cookie-stage">
+
+        <div class="cookie shortcake">
+
+            <div class="baked"></div>
+
+            <span class="cream c1"></span>
+            <span class="cream c2"></span>
+            <span class="cream c3"></span>
+            <span class="cream c4"></span>
+
+            <span class="berry b1"></span>
+            <span class="berry b2"></span>
+            <span class="berry b3"></span>
+
+            <span class="mint m1"></span>
+            <span class="mint m2"></span>
+
+        </div>
+
+    </div>
+
+    <div class="card-title">
+        Strawberry
+        <em>Shortcake</em>
+    </div>
+
+    <div class="card-number">10</div>
+
+</article>
+
+
+<!-- =======================================================
+     11 CINNAMON
+     ======================================================= -->
+
+<article class="card reveal" onclick="openCookieRecipe('cinnamon-cream')">
+
+    <div class="card-top">
+        <span>SPECIMEN 11</span>
+        <span>CINNAMON</span>
+    </div>
+
+    <div class="cookie-stage">
+
+        <div class="cookie cinnamon">
+
+            <div class="baked"></div>
+
+            <div class="icing"></div>
+
+            <span class="dot d1"></span>
+            <span class="dot d2"></span>
+            <span class="dot d3"></span>
+            <span class="dot d4"></span>
+            <span class="dot d5"></span>
+            <span class="dot d6"></span>
+
+            <span class="stick"></span>
+
+        </div>
+
+    </div>
+
+    <div class="card-title">
+        Cinnamon
+        <em>Cream</em>
+    </div>
+
+    <div class="card-number">11</div>
+
+</article>
+
+
+<!-- =======================================================
+     12 STRAWBERRY WHITE CREAM
+     ======================================================= -->
+
+<article class="card reveal" onclick="openCookieRecipe('strawberry-white-cream')">
+
+    <div class="card-top">
+        <span>SPECIMEN 12</span>
+        <span>MOLTEN CORE</span>
+    </div>
+
+    <div class="cookie-stage">
+
+        <div class="cookie strawberrycream">
+
+            <div class="baked"></div>
+
+            <div class="core"></div>
+
+            <span class="slice s1"></span>
+            <span class="slice s2"></span>
+            <span class="slice s3"></span>
+            <span class="slice s4"></span>
+            <span class="slice s5"></span>
+            <span class="slice s6"></span>
+
+        </div>
+
+    </div>
+
+    <div class="card-title">
+        Strawberry White
+        <em>Cream Core</em>
+    </div>
+
+    <div class="card-number">12</div>
+
+</article>
+
+
+<!-- =======================================================
+     13 BUTTER RING
+     ======================================================= -->
+
+<article class="card reveal" onclick="openCookieRecipe('butter-cookie')">
+
+    <div class="card-top">
+        <span>SPECIMEN 13</span>
+        <span>DANISH</span>
+    </div>
+
+    <div class="cookie-stage">
+
+        <div class="cookie butterring">
+
+            <div class="baked"></div>
+
+            <div class="butter-knob"></div>
+
+        </div>
+
+    </div>
+
+    <div class="card-title">
+        Danish
+        <em>Butter Ring</em>
+    </div>
+
+    <div class="card-number">13</div>
+
+</article>
+
+
+<!-- =======================================================
+     14 MINT OREO
+     ======================================================= -->
+
+<article class="card reveal" onclick="openCookieRecipe('mint-oreo')">
+
+    <div class="card-top">
+        <span>SPECIMEN 14</span>
+        <span>MINT OREO</span>
+    </div>
+
+    <div class="cookie-stage">
+
+        <div class="cookie mintoreo">
+
+            <div class="baked"></div>
+
+            <div class="oreo"></div>
+
+            <span class="mintleaf ml1"></span>
+            <span class="mintleaf ml2"></span>
+            <span class="mintleaf ml3"></span>
+
+        </div>
+
+    </div>
+
+    <div class="card-title">
+        Mint Chocolate
+        <em>Oreo Loaded</em>
+    </div>
+
+    <div class="card-number">14</div>
+
+</article>
+
+
+<!-- =======================================================
+     15 CRUNCH BERRY
+     ======================================================= -->
+
+<article class="card reveal" onclick="openCookieRecipe('crunch-berry')">
+
+    <div class="card-top">
+        <span>SPECIMEN 15</span>
+        <span>CEREAL</span>
+    </div>
+
+    <div class="cookie-stage">
+
+        <div class="cookie crunchberry">
+
+            <div class="baked"></div>
+
+            <span class="cereal c1"></span>
+            <span class="cereal c2"></span>
+            <span class="cereal c3"></span>
+            <span class="cereal c4"></span>
+            <span class="cereal c5"></span>
+
+            <span class="berry b1"></span>
+            <span class="berry b2"></span>
+
+            <span class="straw st1"></span>
+            <span class="straw st2"></span>
+
+        </div>
+
+    </div>
+
+    <div class="card-title">
+        Crunch Berry
+        <em>Overload</em>
+    </div>
+
+    <div class="card-number">15</div>
+
+</article>
+
+
+<!-- =======================================================
+     16 DARK WHITE
+     ======================================================= -->
+
+<article class="card reveal" onclick="openCookieRecipe('dark-white')">
+
+    <div class="card-top">
+        <span>SPECIMEN 16</span>
+        <span>DARK COCOA</span>
+    </div>
+
+    <div class="cookie-stage">
+
+        <div class="cookie darkwhite">
+
+            <div class="baked"></div>
+
+            <span class="whitechunk w1"></span>
+            <span class="whitechunk w2"></span>
+            <span class="whitechunk w3"></span>
+            <span class="whitechunk w4"></span>
+
+        </div>
+
+    </div>
+
+    <div class="card-title">
+        Dark Chocolate
+        <em>White Chunk</em>
+    </div>
+
+    <div class="card-number">16</div>
+
+</article>
+
+
+<!-- =======================================================
+     17 COFFEE TOFFEE
+     ======================================================= -->
+
+<article class="card reveal" onclick="openCookieRecipe('coffee-toffee')">
+
+    <div class="card-top">
+        <span>SPECIMEN 17</span>
+        <span>ESPRESSO</span>
+    </div>
+
+    <div class="cookie-stage">
+
+        <div class="cookie coffeetoffee">
+
+            <div class="baked"></div>
+
+            <span class="chocoslab cs1"></span>
+            <span class="chocoslab cs2"></span>
+
+            <span class="toffee t1"></span>
+            <span class="toffee t2"></span>
+
+            <span class="bean bean1"></span>
+            <span class="bean bean2"></span>
+
+        </div>
+
+    </div>
+
+    <div class="card-title">
+        Coffee
+        <em>Toffee</em>
+    </div>
+
+    <div class="card-number">17</div>
+
+</article>
+
+
+<!-- =======================================================
+     18 COOKIES & CREAM
+     ======================================================= -->
+
+<article class="card reveal" onclick="openCookieRecipe('cookies-cream')">
+
+    <div class="card-top">
+        <span>SPECIMEN 18</span>
+        <span>COOKIE CRUMB</span>
+    </div>
+
+    <div class="cookie-stage">
+
+        <div class="cookie cookiescream">
+
+            <div class="baked"></div>
+
+            <span class="oreopiece o1"></span>
+            <span class="oreopiece o2"></span>
+            <span class="oreopiece o3"></span>
+
+        </div>
+
+    </div>
+
+    <div class="card-title">
+        Cookies
+        <em>&amp; Cream</em>
+    </div>
+
+    <div class="card-number">18</div>
+
+</article>
+
+
+<!-- =======================================================
+     19 CHOCOLATE CHIP
+     ======================================================= -->
+
+<article class="card reveal" onclick="openCookieRecipe('choc-chip')">
+
+    <div class="card-top">
+        <span>SPECIMEN 19</span>
+        <span>CLASSIC</span>
+    </div>
+
+    <div class="cookie-stage">
+
+        <div class="cookie chocchip">
+
+            <div class="baked"></div>
+
+        </div>
+
+    </div>
+
+    <div class="card-title">
+        Chocolate
+        <em>Chip</em>
+    </div>
+
+    <div class="card-number">19</div>
+
+</article>
+
+
+<!-- =======================================================
+     20 COOKIE DOUGH / COOKIE MONSTER
+     ======================================================= -->
+
+<article class="card reveal" onclick="openCookieRecipe('cookie-monster')">
+
+    <div class="card-top">
+        <span>SPECIMEN 20</span>
+        <span>SKY BLUE</span>
+    </div>
+
+    <div class="cookie-stage">
+
+        <div class="cookie cookiedough">
+
+            <div class="baked"></div>
+
+            <span class="chunk ch1"></span>
+            <span class="chunk ch2"></span>
+            <span class="chunk ch3"></span>
+            <span class="chunk ch4"></span>
+
+            <div class="monster-face">
+
+                <span class="monster-eye left"></span>
+                <span class="monster-eye right"></span>
+
+                <span class="monster-mouth"></span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card-title">
+        Cookie
+        <em>Monster</em>
+    </div>
+
+    <div class="card-number">20</div>
+
+</article>
+
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- =======================================================
+     RECIPE MODAL
+     ======================================================= -->
+
+<div
+    class="recipe-modal"
+    id="recipeModal"
+    onclick="closeRecipeModalOutside(event)"
+>
+
+    <div class="modal-card">
+
+        <button
+            class="modal-close"
+            type="button"
+            onclick="closeRecipeModal()"
+            aria-label="Close recipe"
+        >
+            ×
+        </button>
+
+        <div class="modal-kicker">
+            COOKIE VAULT / RECIPE SPECIMEN
+        </div>
+
+        <h2 id="modalTitle"></h2>
+
+        <div id="modalMeta"></div>
+
+        <div class="modal-columns">
+
+            <section class="modal-section">
+
+                <h3>Ingredients</h3>
+
+                <ul id="modalIngredients"></ul>
+
+            </section>
+
+            <section class="modal-section">
+
+                <h3>Method</h3>
+
+                <ol id="modalSteps"></ol>
+
+            </section>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =======================================================
+     FOOTER
+     ======================================================= -->
+
+<footer>
+
+    <div class="footer-main">
+
+        <div class="footer-logo">
+            Cookie <em>Vault.</em>
+        </div>
+
+        <div class="footer-links">
+
+            <a href="Index.html">Home</a>
+            <a href="Recipes.html">Recipes</a>
+            <a href="PopularRecipes.html">Popular Recipes</a>
+            <a href="Posts.html">Posts</a>
+            <a href="Contactus.html">Contact</a>
+            <a href="MemoryGame.html">Memory Game</a>
+            <a href="History.html">History</a>
+
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <span>COOKIE VAULT / 2026</span>
+        <span>MADE WITH UNREASONABLE AMOUNTS OF BUTTER</span>
+    </div>
+
+</footer>
+
+
+<script>
+
+/* =========================================================
+   RECIPES
+   ========================================================= */
+
+const recipes = {
+
+    "white-choc": {
+        title: "White Chocolate Macadamia Nut Cookies",
+        meta: "BAKE TIME · 10–12 MINS · 175°C / 350°F",
+        ingredients: [
+            "1 cup unsalted butter, softened",
+            "3/4 cup packed brown sugar + 1/2 cup white sugar",
+            "2 large eggs + 1 tsp pure vanilla extract",
+            "2 1/4 cups all-purpose flour + 1 tsp baking soda",
+            "1/2 tsp salt",
+            "1 cup white chocolate chips",
+            "1 cup raw macadamia nuts, coarsely chopped"
+        ],
+        steps: [
+            "Cream softened butter, brown sugar and white sugar until light and fluffy.",
+            "Beat in eggs one at a time, then stir in vanilla.",
+            "Whisk flour, baking soda and salt together.",
+            "Fold in white chocolate chips and chopped macadamia nuts.",
+            "Bake for 10–12 minutes until golden around the edges."
+        ]
+    },
+
+    "peanut": {
+        title: "Classic Soft Peanut Butter Cookies",
+        meta: "BAKE TIME · 9–10 MINS · 180°C / 350°F",
+        ingredients: [
+            "1/2 cup creamy peanut butter",
+            "1/2 cup unsalted butter, softened",
+            "1/2 cup granulated sugar + 1/2 cup brown sugar",
+            "1 egg",
+            "1 1/4 cups all-purpose flour",
+            "3/4 tsp baking soda + 1/2 tsp baking powder",
+            "1/4 tsp salt"
+        ],
+        steps: [
+            "Cream butter, peanut butter and both sugars until smooth.",
+            "Add the egg and mix thoroughly.",
+            "Sift in flour, baking soda, baking powder and salt.",
+            "Roll into 1-inch balls and press with a fork.",
+            "Bake for 9–10 minutes."
+        ]
+    },
+
+    "sugar": {
+        title: "Soft Bakery Sugar Sprinkle Cookies",
+        meta: "BAKE TIME · 8–10 MINS · 175°C / 350°F",
+        ingredients: [
+            "2 3/4 cups all-purpose flour",
+            "1 tsp baking soda + 1/2 tsp baking powder",
+            "1 cup butter, softened",
+            "1 1/2 cups white sugar",
+            "1 egg + 1 tsp vanilla extract",
+            "1/2 cup colorful sprinkles"
+        ],
+        steps: [
+            "Combine flour, baking soda and baking powder.",
+            "Cream butter and sugar.",
+            "Beat in egg and vanilla.",
+            "Fold in the sprinkles gently.",
+            "Bake for 8–10 minutes."
+        ]
+    },
+
+    "nutella-banana": {
+        title: "Nutella Stuffed Banana Cookies",
+        meta: "BAKE TIME · 11–13 MINS · 175°C / 350°F",
+        ingredients: [
+            "1/2 cup Nutella",
+            "1/2 cup ripe banana, mashed",
+            "1/2 cup butter, melted",
+            "1/2 cup brown sugar + 1/4 cup white sugar",
+            "2 cups all-purpose flour + 1 tsp cornstarch",
+            "1/2 tsp baking soda"
+        ],
+        steps: [
+            "Freeze small Nutella dollops for approximately 30 minutes.",
+            "Mix butter, sugars and mashed banana.",
+            "Add flour, cornstarch and baking soda.",
+            "Wrap dough completely around the frozen Nutella.",
+            "Bake for 11–13 minutes."
+        ]
+    },
+
+    "lemon": {
+        title: "Iced Zesty Lemon Crinkle Cookies",
+        meta: "BAKE TIME · 10 MINS · 175°C / 350°F",
+        ingredients: [
+            "1/2 cup unsalted butter",
+            "1 cup granulated sugar",
+            "1 tbsp lemon zest + 2 tbsp lemon juice",
+            "1 egg",
+            "1 1/2 cups flour + 1/2 tsp baking soda + 1/4 tsp salt",
+            "1/2 cup powdered sugar"
+        ],
+        steps: [
+            "Rub lemon zest into sugar.",
+            "Cream butter and lemon sugar.",
+            "Add egg and lemon juice.",
+            "Mix in flour, baking soda and salt.",
+            "Chill, coat in powdered sugar and bake for 10 minutes."
+        ]
+    },
+
+    "red-velvet": {
+        title: "Red Velvet Cream Cheese Core Cookies",
+        meta: "BAKE TIME · 11–12 MINS · 175°C / 350°F",
+        ingredients: [
+            "100g cream cheese + 2 tbsp powdered sugar",
+            "1/2 cup unsalted butter",
+            "3/4 cup brown sugar",
+            "1 egg",
+            "1 tbsp red food coloring gel",
+            "1 1/2 cups flour + 2 tbsp cocoa powder + 1/2 tsp baking soda"
+        ],
+        steps: [
+            "Mix cream cheese and powdered sugar and freeze.",
+            "Beat butter, sugar, egg and red coloring.",
+            "Mix in flour, cocoa and baking soda.",
+            "Wrap dough around frozen cream centers.",
+            "Bake for 11–12 minutes."
+        ]
+    },
+
+    "blueberry": {
+        title: "Blueberry Cream Cheese Soft Bake",
+        meta: "BAKE TIME · 12–14 MINS · 175°C / 350°F",
+        ingredients: [
+            "1/2 cup unsalted butter + 60g cream cheese",
+            "3/4 cup white sugar",
+            "1 egg",
+            "1 3/4 cups all-purpose flour",
+            "1/2 tsp baking powder",
+            "3/4 cup fresh blueberries"
+        ],
+        steps: [
+            "Beat butter, cream cheese and sugar.",
+            "Add the egg.",
+            "Mix in flour and baking powder.",
+            "Fold in blueberries carefully.",
+            "Chill for 30 minutes and bake for 12–14 minutes."
+        ]
+    },
+
+    "caramel": {
+        title: "Salted Caramel Drizzle Cookies",
+        meta: "BAKE TIME · 10–12 MINS · 175°C / 350°F",
+        ingredients: [
+            "1/2 cup browned unsalted butter",
+            "1/2 cup brown sugar + 1/4 cup granulated sugar",
+            "1 egg + 1 tsp vanilla",
+            "1 1/2 cups flour + 1/2 tsp baking soda",
+            "1/2 cup caramel bits",
+            "Flaky sea salt"
+        ],
+        steps: [
+            "Brown the butter.",
+            "Whisk with sugars, egg and vanilla.",
+            "Add flour and baking soda.",
+            "Fold in caramel pieces.",
+            "Bake and finish with flaky sea salt."
+        ]
+    },
+
+    "pistachio": {
+        title: "Pistachio Matcha Bliss Cookies",
+        meta: "BAKE TIME · 10–11 MINS · 175°C / 350°F",
+        ingredients: [
+            "1/2 cup butter",
+            "3/4 cup white sugar",
+            "1 egg",
+            "1 1/2 cups flour",
+            "1 1/2 tbsp culinary matcha",
+            "1/2 tsp baking powder",
+            "3/4 cup chopped pistachios"
+        ],
+        steps: [
+            "Cream butter and sugar.",
+            "Mix in the egg.",
+            "Add flour, matcha and baking powder.",
+            "Fold in pistachios.",
+            "Bake for 10–11 minutes."
+        ]
+    },
+
+    "strawberry": {
+        title: "Strawberry Shortcake Soft Cookies",
+        meta: "BAKE TIME · 11–13 MINS · 175°C / 350°F",
+        ingredients: [
+            "1/2 cup unsalted butter",
+            "3/4 cup granulated sugar",
+            "1 egg + 1/2 tsp strawberry extract",
+            "1 3/4 cups flour + 1/2 tsp baking powder",
+            "1/2 cup crushed freeze-dried strawberries",
+            "1/2 cup white chocolate chips"
+        ],
+        steps: [
+            "Cream butter and sugar.",
+            "Beat in egg and strawberry extract.",
+            "Add flour and baking powder.",
+            "Fold in strawberries and white chocolate.",
+            "Bake for 11–13 minutes."
+        ]
+    },
+
+    "cinnamon-cream": {
+        title: "Cinnamon Cream Snickerdoodles",
+        meta: "BAKE TIME · 9–11 MINS · 180°C / 350°F",
+        ingredients: [
+            "1/2 cup unsalted butter + 1/4 cup cream cheese",
+            "1 cup granulated sugar",
+            "1 egg + 1 tsp vanilla",
+            "1 3/4 cups flour + 1 tsp cream of tartar + 1/2 tsp baking soda",
+            "3 tbsp sugar + 1 tbsp cinnamon"
+        ],
+        steps: [
+            "Cream butter, cream cheese and sugar.",
+            "Add egg and vanilla.",
+            "Fold in flour, cream of tartar and baking soda.",
+            "Chill dough for 30 minutes.",
+            "Roll in cinnamon sugar and bake."
+        ]
+    },
+
+    "strawberry-white-cream": {
+        title: "Strawberry White Chocolate Cream Core",
+        meta: "BAKE TIME · 11–13 MINS · 175°C / 350°F",
+        ingredients: [
+            "80g melted white chocolate + 2 tbsp strawberry jam",
+            "1/2 cup unsalted butter",
+            "3/4 cup sugar",
+            "1 egg",
+            "1 1/2 cups flour + 1/2 tsp baking soda",
+            "2 tbsp freeze-dried strawberry powder"
+        ],
+        steps: [
+            "Mix white chocolate and strawberry jam and freeze.",
+            "Beat butter, sugar, egg and strawberry powder.",
+            "Add flour and baking soda.",
+            "Wrap dough around the frozen cores.",
+            "Bake for 11–13 minutes."
+        ]
+    },
+
+    "butter-cookie": {
+        title: "Rich Danish Butter Ring Cookies",
+        meta: "BAKE TIME · 10–12 MINS · 190°C / 375°F",
+        ingredients: [
+            "1 cup quality European butter",
+            "1/2 cup powdered sugar + 2 tbsp granulated sugar",
+            "1 egg yolk",
+            "1 tsp vanilla + 1/4 tsp almond extract",
+            "2 cups all-purpose flour",
+            "1/2 tsp sea salt"
+        ],
+        steps: [
+            "Cream butter and powdered sugar until pale and airy.",
+            "Beat in egg yolk and extracts.",
+            "Sift in flour and salt.",
+            "Pipe rings with a star tip.",
+            "Bake for 10–12 minutes."
+        ]
+    },
+
+    "mint-oreo": {
+        title: "Mint Chocolate Chip Oreo Loaded Cookies",
+        meta: "BAKE TIME · 10–12 MINS · 175°C / 350°F",
+        ingredients: [
+            "1/2 cup butter",
+            "1/2 cup brown sugar + 1/4 cup white sugar",
+            "1 egg + 1/2 tsp peppermint extract",
+            "Green gel coloring",
+            "1 1/2 cups flour + 1/2 tsp baking soda",
+            "1/2 cup dark chocolate chips",
+            "6–8 Oreo cookies"
+        ],
+        steps: [
+            "Cream butter and sugars.",
+            "Add egg, peppermint and coloring.",
+            "Add flour and baking soda.",
+            "Fold in chocolate and Oreos.",
+            "Bake for 10–12 minutes."
+        ]
+    },
+
+    "crunch-berry": {
+        title: "Crunch Berry Cereal Overload Cookies",
+        meta: "BAKE TIME · 10 MINS · 175°C / 350°F",
+        ingredients: [
+            "1/2 cup melted unsalted butter",
+            "1/2 cup brown sugar + 1/3 cup white sugar",
+            "1 egg + 1 tsp vanilla",
+            "1 1/2 cups flour + 1/2 tsp baking soda",
+            "1 1/2 cups Crunch Berry cereal",
+            "1/3 cup dried cranberries or freeze-dried raspberries"
+        ],
+        steps: [
+            "Mix butter and sugars.",
+            "Add egg and vanilla.",
+            "Fold in flour, baking soda, cereal and berries.",
+            "Press extra cereal onto the tops.",
+            "Bake for approximately 10 minutes."
+        ]
+    },
+
+    "dark-white": {
+        title: "Dark Chocolate White Chunk Cookies",
+        meta: "BAKE TIME · 9–11 MINS · 175°C / 350°F",
+        ingredients: [
+            "1/2 cup unsalted butter",
+            "1/2 cup brown sugar + 1/2 cup white sugar",
+            "1 egg + 1 tsp vanilla",
+            "1 cup all-purpose flour",
+            "1/2 cup Dutch-process dark cocoa",
+            "1/2 tsp baking soda + 1/4 tsp salt",
+            "1 cup white chocolate chunks"
+        ],
+        steps: [
+            "Cream butter and sugars.",
+            "Beat in egg and vanilla.",
+            "Sift in flour, cocoa, baking soda and salt.",
+            "Fold in white chocolate chunks.",
+            "Bake for 9–11 minutes."
+        ]
+    },
+
+    "coffee-toffee": {
+        title: "Dark Coffee Toffee Crunch Cookies",
+        meta: "BAKE TIME · 10–12 MINS · 175°C / 350°F",
+        ingredients: [
+            "1/2 cup unsalted butter, browned and cooled",
+            "1/2 cup brown sugar + 1/4 cup white sugar",
+            "1 egg + 1 tsp vanilla",
+            "1 1/2 cups all-purpose flour",
+            "1 tbsp instant espresso powder",
+            "1/2 tsp baking soda + 1/4 tsp salt",
+            "3/4 cup chopped toffee",
+            "1/3 cup dark chocolate chunks"
+        ],
+        steps: [
+            "Brown the butter until deeply nutty.",
+            "Whisk butter with both sugars.",
+            "Add egg, vanilla and espresso powder.",
+            "Fold in flour, baking soda, salt, toffee and chocolate.",
+            "Bake for 10–12 minutes."
+        ]
+    },
+
+    "cookies-cream": {
+        title: "Ultimate Cookies & Cream Bakery Cookies",
+        meta: "BAKE TIME · 10–12 MINS · 175°C / 350°F",
+        ingredients: [
+            "1/2 cup unsalted butter",
+            "1/2 cup brown sugar + 1/2 cup white sugar",
+            "1 egg + 1 tsp vanilla",
+            "1 3/4 cups all-purpose flour",
+            "1/2 tsp baking soda + 1/4 tsp salt",
+            "8 Oreo cookies",
+            "1/2 cup white chocolate chunks"
+        ],
+        steps: [
+            "Cream butter and sugars.",
+            "Beat in egg and vanilla.",
+            "Mix in flour, baking soda and salt.",
+            "Fold in Oreos and white chocolate.",
+            "Bake for 10–12 minutes."
+        ]
+    },
+
+    "choc-chip": {
+        title: "The Ultimate Gooey Chocolate Chip Cookie",
+        meta: "BAKE TIME · 10–12 MINS · 175°C / 350°F",
+        ingredients: [
+            "1/2 cup unsalted butter, browned",
+            "3/4 cup brown sugar + 1/4 cup white sugar",
+            "1 egg + 1 tsp vanilla",
+            "1 1/2 cups all-purpose flour",
+            "1/2 tsp baking soda + 1/2 tsp sea salt",
+            "1 cup chopped dark chocolate",
+            "1/2 cup milk chocolate chunks"
+        ],
+        steps: [
+            "Brown the butter and cool it slightly.",
+            "Whisk with both sugars.",
+            "Add egg and vanilla.",
+            "Fold in flour, baking soda and salt.",
+            "Add chocolate and bake for 10–12 minutes."
+        ]
+    },
+
+    "cookie-monster": {
+        title: "Cookie Monster Sky Blue Chocolate Chunk Cookies",
+        meta: "BAKE TIME · 10–12 MINS · 175°C / 350°F",
+        ingredients: [
+            "1/2 cup unsalted butter, softened",
+            "1/2 cup brown sugar + 1/3 cup white sugar",
+            "1 egg + 1 tsp vanilla",
+            "1 1/2 cups all-purpose flour",
+            "1/2 tsp baking soda + 1/4 tsp salt",
+            "Sky-blue gel food coloring",
+            "3/4 cup dark chocolate chunks",
+            "4 crushed chocolate sandwich cookies"
+        ],
+        steps: [
+            "Cream butter and sugars until smooth.",
+            "Beat in egg, vanilla and sky-blue coloring.",
+            "Mix in flour, baking soda and salt.",
+            "Fold in chocolate chunks and crushed sandwich cookies.",
+            "Bake for 10–12 minutes until lightly toasted around the edges."
+        ]
+    }
+
+};
+
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+const modal = document.getElementById("recipeModal");
+const modalTitle = document.getElementById("modalTitle");
+const modalMeta = document.getElementById("modalMeta");
+const modalIngredients = document.getElementById("modalIngredients");
+const modalSteps = document.getElementById("modalSteps");
+
+
+function openCookieRecipe(key) {
+
+    const recipe = recipes[key];
+
+    if (!recipe) {
+        return;
+    }
+
+    modalTitle.textContent = recipe.title;
+    modalMeta.textContent = recipe.meta;
+
+    modalIngredients.innerHTML = recipe.ingredients
+        .map(item => `<li>${item}</li>`)
+        .join("");
+
+    modalSteps.innerHTML = recipe.steps
+        .map(step => `<li>${step}</li>`)
+        .join("");
+
+    modal.style.display = "flex";
+
+    requestAnimationFrame(() => {
+        modal.classList.add("show");
+    });
+
+    document.body.style.overflow = "hidden";
+}
+
+
+function closeRecipeModal() {
+
+    modal.classList.remove("show");
+
+    setTimeout(() => {
+        modal.style.display = "none";
+        document.body.style.overflow = "";
+    }, 300);
+}
+
+
+function closeRecipeModalOutside(event) {
+
+    if (event.target === modal) {
+        closeRecipeModal();
+    }
+
+}
+
+
+document.addEventListener("keydown", event => {
+
+    if (
+        event.key === "Escape" &&
+        modal.classList.contains("show")
+    ) {
+        closeRecipeModal();
+    }
+
+});
+
+
+/* =========================================================
+   REVEAL
+   ========================================================= */
+
+const revealItems = document.querySelectorAll(".reveal");
+
+if ("IntersectionObserver" in window) {
+
+    const revealObserver = new IntersectionObserver(
+        entries => {
+
+            entries.forEach(entry => {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add("visible");
+
+                    revealObserver.unobserve(entry.target);
+
+                }
+
+            });
+
+        },
+        {
+            threshold: .08
+        }
+    );
+
+    revealItems.forEach(item => {
+        revealObserver.observe(item);
+    });
+
+} else {
+
+    revealItems.forEach(item => {
+        item.classList.add("visible");
+    });
+
+}
+
+
+/* =========================================================
+   HERO PARALLAX
+   ========================================================= */
+
+const hero = document.querySelector(".hero");
+const heroCookie = document.querySelector(".hero-cookie-stage");
+
+if (
+    hero &&
+    heroCookie &&
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+) {
+
+    hero.addEventListener("pointermove", event => {
+
+        const rect = hero.getBoundingClientRect();
+
+        const x =
+            (event.clientX - rect.left) /
+            rect.width -
+            .5;
+
+        const y =
+            (event.clientY - rect.top) /
+            rect.height -
+            .5;
+
+        heroCookie.style.marginLeft = `${x * 14}px`;
+        heroCookie.style.marginTop = `${y * 14}px`;
+
+    });
+
+    hero.addEventListener("pointerleave", () => {
+
+        heroCookie.style.marginLeft = "0px";
+        heroCookie.style.marginTop = "0px";
+
+    });
+
+}
+
+
+/* =========================================================
+   KEYBOARD CARD ACCESS
+   ========================================================= */
+
+document.querySelectorAll(".card").forEach(card => {
+
+    card.setAttribute("tabindex", "0");
+    card.setAttribute("role", "button");
+
+    card.addEventListener("keydown", event => {
+
+        if (
+            event.key === "Enter" ||
+            event.key === " "
+        ) {
+
+            event.preventDefault();
+            card.click();
+
+        }
+
+    });
+
+});
+
+</script>
+
+</body>
+</html>

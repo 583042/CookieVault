@@ -1,0 +1,3061 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>Cookie Vault | Memory Game</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@500;600;700;800&display=swap"
+    rel="stylesheet"
+>
+
+<style>
+    :root {
+        --cream: #f8f3e8;
+        --cream-deep: #eee5d2;
+        --paper: #fffdf7;
+
+        --pistachio-950: #18231c;
+        --pistachio-900: #213025;
+        --pistachio-800: #2c4030;
+        --pistachio-700: #3d563e;
+        --pistachio-600: #59745a;
+        --pistachio-500: #789274;
+        --pistachio-300: #b8c8a7;
+        --pistachio-200: #d8e1ca;
+
+        --matcha: #687653;
+
+        --gold: #b8944e;
+        --gold-light: #d8bc7a;
+
+        --brown: #49382c;
+        --brown-light: #765e48;
+
+        --shadow: rgba(25, 35, 27, 0.18);
+        --shadow-heavy: rgba(19, 28, 21, 0.32);
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+
+        color: var(--pistachio-950);
+
+        font-family: "DM Sans", sans-serif;
+
+        background:
+            radial-gradient(
+                circle at 10% 15%,
+                rgba(216, 225, 202, 0.55),
+                transparent 25%
+            ),
+            radial-gradient(
+                circle at 88% 12%,
+                rgba(184, 200, 167, 0.38),
+                transparent 28%
+            ),
+            radial-gradient(
+                circle at 50% 100%,
+                rgba(120, 146, 116, 0.16),
+                transparent 34%
+            ),
+            linear-gradient(
+                135deg,
+                #f1eedf 0%,
+                #e5ead8 45%,
+                #f6f0df 100%
+            );
+
+        overflow-x: hidden;
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+
+        pointer-events: none;
+
+        opacity: 0.24;
+
+        background-image:
+            radial-gradient(
+                circle at 20% 20%,
+                rgba(60, 80, 60, 0.12) 0 1px,
+                transparent 1.5px
+            ),
+            radial-gradient(
+                circle at 70% 70%,
+                rgba(80, 70, 45, 0.1) 0 1px,
+                transparent 1.5px
+            );
+
+        background-size: 34px 34px, 43px 43px;
+
+        z-index: -1;
+    }
+
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    button,
+    select {
+        font: inherit;
+    }
+
+    /* =========================================================
+       NAVIGATION
+    ========================================================= */
+
+    header {
+        position: relative;
+        z-index: 50;
+
+        width: min(1180px, calc(100% - 36px));
+        margin: 24px auto 0;
+    }
+
+    nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+
+        padding: 9px;
+
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        border-radius: 999px;
+
+        background: rgba(30, 44, 34, 0.93);
+
+        box-shadow:
+            0 18px 50px rgba(24, 35, 28, 0.18),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+    }
+
+    nav a {
+        position: relative;
+
+        padding: 11px 16px;
+
+        color: rgba(255, 253, 247, 0.72);
+
+        font-size: 13px;
+        font-weight: 700;
+
+        border-radius: 999px;
+
+        transition:
+            color 0.2s ease,
+            background 0.2s ease,
+            transform 0.2s ease;
+    }
+
+    nav a:hover {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.08);
+        transform: translateY(-1px);
+    }
+
+    nav a:nth-child(6) {
+        color: #fff;
+        background: rgba(216, 188, 122, 0.17);
+        box-shadow:
+            inset 0 0 0 1px rgba(216, 188, 122, 0.16);
+    }
+
+    /* =========================================================
+       DECORATIVE BACKDROP
+    ========================================================= */
+
+    .parlor-decor {
+        position: fixed;
+        inset: 0;
+
+        overflow: hidden;
+        pointer-events: none;
+
+        z-index: -1;
+    }
+
+    .shell {
+        position: absolute;
+
+        width: 150px;
+        height: 150px;
+
+        border-radius: 50%;
+
+        border: 1px solid rgba(65, 83, 62, 0.13);
+
+        box-shadow:
+            inset 0 0 0 15px rgba(255, 255, 255, 0.08),
+            inset 0 0 0 35px rgba(255, 255, 255, 0.05);
+
+        transform: rotate(20deg);
+    }
+
+    .shell::before,
+    .shell::after {
+        content: "";
+
+        position: absolute;
+        inset: 18px;
+
+        border-radius: 50%;
+
+        border: 1px dashed rgba(65, 83, 62, 0.1);
+    }
+
+    .shell::after {
+        inset: 40px;
+    }
+
+    .s1 {
+        top: 8%;
+        left: -65px;
+    }
+
+    .s2 {
+        top: 32%;
+        right: -70px;
+        transform: rotate(-18deg);
+    }
+
+    .s3 {
+        bottom: 7%;
+        left: 4%;
+        transform: scale(0.75) rotate(12deg);
+    }
+
+    .s4 {
+        bottom: 20%;
+        right: 3%;
+        transform: scale(0.65) rotate(-20deg);
+    }
+
+    .s5 {
+        top: 55%;
+        left: 44%;
+        opacity: 0.35;
+        transform: scale(0.7);
+    }
+
+    .pistachio-leaf {
+        position: absolute;
+
+        width: 92px;
+        height: 39px;
+
+        border-radius: 100% 0 100% 0;
+
+        background:
+            linear-gradient(
+                135deg,
+                #93aa84,
+                #526c53
+            );
+
+        opacity: 0.28;
+
+        box-shadow:
+            inset 8px 4px 12px rgba(255,255,255,0.14);
+    }
+
+    .pistachio-leaf::after {
+        content: "";
+
+        position: absolute;
+
+        width: 2px;
+        height: 80%;
+
+        left: 50%;
+        top: 10%;
+
+        background: rgba(255,255,255,0.28);
+
+        transform: rotate(40deg);
+    }
+
+    .l1 {
+        top: 18%;
+        left: 3%;
+        transform: rotate(25deg);
+    }
+
+    .l2 {
+        top: 23%;
+        right: 4%;
+        transform: scaleX(-1) rotate(20deg);
+    }
+
+    .l3 {
+        bottom: 13%;
+        right: 8%;
+        transform: rotate(-30deg) scale(0.8);
+    }
+
+    .l4 {
+        bottom: 28%;
+        left: 6%;
+        transform: scaleX(-1) rotate(-25deg) scale(0.75);
+    }
+
+    .pistachio-nut {
+        position: absolute;
+
+        width: 43px;
+        height: 27px;
+
+        border-radius: 58% 42% 55% 45%;
+
+        background:
+            radial-gradient(
+                ellipse at 35% 30%,
+                #dfe8c8 0 12%,
+                #aabb91 30%,
+                #728b67 70%,
+                #51664f 100%
+            );
+
+        border: 2px solid rgba(55, 73, 52, 0.28);
+
+        transform: rotate(-18deg);
+    }
+
+    .pistachio-nut::after {
+        content: "";
+
+        position: absolute;
+        inset: 5px 11px;
+
+        border-radius: 50%;
+
+        border: 1px solid rgba(255,255,255,0.25);
+    }
+
+    .n1 {
+        top: 14%;
+        left: 17%;
+    }
+
+    .n2 {
+        top: 38%;
+        right: 14%;
+        transform: rotate(28deg) scale(0.8);
+    }
+
+    .n3 {
+        bottom: 18%;
+        left: 17%;
+        transform: rotate(12deg) scale(0.7);
+    }
+
+    .n4 {
+        bottom: 31%;
+        right: 23%;
+        transform: rotate(-30deg) scale(0.62);
+    }
+
+    .crumb {
+        position: absolute;
+
+        width: 9px;
+        height: 7px;
+
+        border-radius: 55% 45% 60% 40%;
+
+        background: #a78b5e;
+
+        opacity: 0.4;
+
+        transform: rotate(20deg);
+    }
+
+    .c1 {
+        top: 20%;
+        left: 25%;
+    }
+
+    .c2 {
+        top: 66%;
+        right: 21%;
+        transform: rotate(-25deg) scale(0.7);
+    }
+
+    .c3 {
+        bottom: 17%;
+        right: 37%;
+        transform: scale(0.6);
+    }
+
+    .c4 {
+        top: 42%;
+        left: 12%;
+        transform: rotate(42deg) scale(0.7);
+    }
+
+    .c5 {
+        top: 75%;
+        left: 46%;
+        transform: rotate(-14deg) scale(0.55);
+    }
+
+    .dust {
+        position: absolute;
+
+        width: 4px;
+        height: 4px;
+
+        border-radius: 50%;
+
+        background: #c6b27d;
+
+        opacity: 0.4;
+    }
+
+    .d1 {
+        top: 27%;
+        left: 38%;
+    }
+
+    .d2 {
+        top: 61%;
+        left: 30%;
+    }
+
+    .d3 {
+        top: 72%;
+        right: 30%;
+    }
+
+    .d4 {
+        top: 17%;
+        right: 30%;
+    }
+
+    .d5 {
+        bottom: 10%;
+        left: 38%;
+    }
+
+    .matcha-cloud {
+        position: absolute;
+
+        width: 260px;
+        height: 130px;
+
+        border-radius: 50%;
+
+        background:
+            radial-gradient(
+                ellipse,
+                rgba(103, 119, 80, 0.1),
+                transparent 70%
+            );
+
+        filter: blur(5px);
+    }
+
+    .m1 {
+        top: 5%;
+        left: 23%;
+    }
+
+    .m2 {
+        bottom: 4%;
+        right: 18%;
+        transform: rotate(20deg);
+    }
+
+    .m3 {
+        top: 42%;
+        left: 42%;
+        transform: scale(0.8);
+    }
+
+    .gold-arc {
+        position: absolute;
+
+        width: 230px;
+        height: 230px;
+
+        border: 1px solid rgba(184, 148, 78, 0.18);
+        border-radius: 50%;
+    }
+
+    .a1 {
+        top: 13%;
+        right: -115px;
+    }
+
+    .a2 {
+        bottom: -120px;
+        left: -90px;
+    }
+
+    .a3 {
+        top: 48%;
+        right: 15%;
+        width: 120px;
+        height: 120px;
+        opacity: 0.5;
+    }
+
+    .gold-fleck {
+        position: absolute;
+
+        width: 5px;
+        height: 5px;
+
+        border-radius: 50%;
+
+        background: var(--gold);
+
+        opacity: 0.4;
+    }
+
+    .f1 { top: 12%; left: 42%; }
+    .f2 { top: 27%; right: 34%; }
+    .f3 { top: 51%; left: 20%; }
+    .f4 { top: 68%; right: 11%; }
+    .f5 { bottom: 21%; left: 31%; }
+    .f6 { bottom: 12%; right: 40%; }
+    .f7 { top: 37%; left: 69%; }
+
+    .parlor-cross {
+        position: absolute;
+
+        width: 18px;
+        height: 18px;
+
+        opacity: 0.25;
+    }
+
+    .parlor-cross::before,
+    .parlor-cross::after {
+        content: "";
+
+        position: absolute;
+
+        background: var(--gold);
+
+        border-radius: 999px;
+    }
+
+    .parlor-cross::before {
+        width: 100%;
+        height: 1px;
+
+        top: 50%;
+    }
+
+    .parlor-cross::after {
+        width: 1px;
+        height: 100%;
+
+        left: 50%;
+    }
+
+    .x1 {
+        top: 18%;
+        right: 28%;
+    }
+
+    .x2 {
+        bottom: 25%;
+        left: 26%;
+        transform: scale(0.7);
+    }
+
+    .x3 {
+        top: 65%;
+        right: 38%;
+        transform: scale(0.5);
+    }
+
+    /* =========================================================
+       HERO
+    ========================================================= */
+
+    .hero {
+        width: min(1080px, calc(100% - 36px));
+
+        margin: 76px auto 36px;
+
+        text-align: center;
+    }
+
+    .hero-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+
+        margin-bottom: 20px;
+
+        color: var(--gold);
+
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+    }
+
+    .hero-kicker::before,
+    .hero-kicker::after {
+        content: "";
+
+        width: 28px;
+        height: 1px;
+
+        background: currentColor;
+    }
+
+    .hero h1 {
+        max-width: 900px;
+
+        margin: 0 auto;
+
+        color: var(--pistachio-950);
+
+        font-family: "Playfair Display", serif;
+
+        font-size: clamp(48px, 7vw, 92px);
+        line-height: 0.94;
+        letter-spacing: -0.055em;
+        font-weight: 700;
+    }
+
+    .hero h1 em {
+        color: var(--pistachio-700);
+        font-weight: 600;
+    }
+
+    .hero p {
+        max-width: 660px;
+
+        margin: 26px auto 0;
+
+        color: rgba(33, 48, 37, 0.67);
+
+        font-size: 16px;
+        line-height: 1.75;
+    }
+
+    .hero-line {
+        width: min(500px, 65%);
+
+        height: 1px;
+
+        margin: 35px auto 0;
+
+        background:
+            linear-gradient(
+                90deg,
+                transparent,
+                rgba(184, 148, 78, 0.55),
+                transparent
+            );
+
+        position: relative;
+    }
+
+    .hero-line::after {
+        content: "✦";
+
+        position: absolute;
+
+        left: 50%;
+        top: 50%;
+
+        padding: 0 10px;
+
+        color: var(--gold);
+
+        background: #e9eadb;
+
+        transform: translate(-50%, -50%);
+    }
+
+    /* =========================================================
+       GAME SHELL
+    ========================================================= */
+
+    .game-shell {
+        position: relative;
+
+        width: min(1120px, calc(100% - 36px));
+
+        margin: 0 auto 100px;
+
+        padding: 28px;
+
+        border: 1px solid rgba(70, 87, 66, 0.17);
+        border-radius: 36px;
+
+        background:
+            linear-gradient(
+                145deg,
+                rgba(255, 253, 247, 0.94),
+                rgba(239, 235, 218, 0.9)
+            );
+
+        box-shadow:
+            0 35px 90px rgba(32, 46, 34, 0.16),
+            inset 0 1px 0 rgba(255,255,255,0.9);
+
+        overflow: hidden;
+    }
+
+    .game-shell::before {
+        content: "";
+
+        position: absolute;
+
+        width: 500px;
+        height: 500px;
+
+        top: -270px;
+        right: -220px;
+
+        border-radius: 50%;
+
+        border: 1px solid rgba(184, 148, 78, 0.13);
+        box-shadow:
+            0 0 0 40px rgba(184, 148, 78, 0.035),
+            0 0 0 80px rgba(184, 148, 78, 0.025);
+
+        pointer-events: none;
+    }
+
+    .game-shell::after {
+        content: "";
+
+        position: absolute;
+
+        width: 350px;
+        height: 350px;
+
+        bottom: -230px;
+        left: -180px;
+
+        border-radius: 50%;
+
+        border: 1px solid rgba(90, 115, 87, 0.13);
+
+        pointer-events: none;
+    }
+
+    /* =========================================================
+       GAME HEADER
+    ========================================================= */
+
+    .game-header {
+        position: relative;
+
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 24px;
+
+        padding: 16px 12px 25px;
+
+        border-bottom: 1px solid rgba(60, 78, 59, 0.12);
+    }
+
+    .game-header::before {
+        content: "✦";
+
+        position: absolute;
+
+        top: 2px;
+        right: 4px;
+
+        color: rgba(184, 148, 78, 0.55);
+
+        font-size: 18px;
+    }
+
+    .game-eyebrow {
+        margin-bottom: 7px;
+
+        color: var(--gold);
+
+        font-size: 10px;
+        font-weight: 800;
+
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+    }
+
+    .game-header h2 {
+        margin: 0;
+
+        color: var(--pistachio-950);
+
+        font-family: "Playfair Display", serif;
+
+        font-size: clamp(25px, 4vw, 38px);
+        line-height: 1.05;
+    }
+
+    .game-header p {
+        margin: 10px 0 0;
+
+        color: rgba(33, 48, 37, 0.58);
+
+        font-size: 13px;
+    }
+
+    .controls {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        flex-shrink: 0;
+    }
+
+    .difficulty {
+        appearance: none;
+
+        min-height: 46px;
+
+        padding: 0 40px 0 16px;
+
+        color: var(--pistachio-950);
+
+        border: 1px solid rgba(59, 78, 59, 0.2);
+        border-radius: 14px;
+
+        background:
+            linear-gradient(45deg, transparent 50%, var(--pistachio-700) 50%) calc(100% - 18px) 19px / 5px 5px no-repeat,
+            linear-gradient(135deg, var(--pistachio-700) 50%, transparent 50%) calc(100% - 13px) 19px / 5px 5px no-repeat,
+            rgba(255,255,255,0.72);
+
+        font-size: 12px;
+        font-weight: 700;
+
+        cursor: pointer;
+
+        outline: none;
+    }
+
+    .restart {
+        min-height: 46px;
+
+        padding: 0 17px;
+
+        border: 1px solid rgba(52, 70, 53, 0.15);
+        border-radius: 14px;
+
+        color: #fff;
+
+        background: var(--pistachio-900);
+
+        font-size: 12px;
+        font-weight: 800;
+
+        cursor: pointer;
+
+        box-shadow:
+            0 8px 20px rgba(33, 48, 37, 0.15);
+
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .restart:hover {
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 12px 26px rgba(33, 48, 37, 0.2);
+    }
+
+    .restart:active {
+        transform: translateY(0);
+    }
+
+    /* =========================================================
+       STATS
+    ========================================================= */
+
+    .stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+
+        gap: 12px;
+
+        margin: 22px 0 17px;
+    }
+
+    .stat {
+        position: relative;
+
+        padding: 17px 18px;
+
+        border: 1px solid rgba(65, 84, 63, 0.1);
+        border-radius: 18px;
+
+        background: rgba(255, 255, 255, 0.55);
+
+        overflow: hidden;
+    }
+
+    .stat::after {
+        content: "";
+
+        position: absolute;
+
+        width: 80px;
+        height: 80px;
+
+        top: -50px;
+        right: -40px;
+
+        border-radius: 50%;
+
+        border: 1px solid rgba(184, 148, 78, 0.14);
+    }
+
+    .stat-label {
+        color: rgba(33, 48, 37, 0.5);
+
+        font-size: 10px;
+        font-weight: 800;
+
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+    }
+
+    .stat-value {
+        margin-top: 4px;
+
+        color: var(--pistachio-950);
+
+        font-family: "Playfair Display", serif;
+
+        font-size: 25px;
+        font-weight: 700;
+    }
+
+    /* =========================================================
+       MESSAGE
+    ========================================================= */
+
+    .message {
+        min-height: 27px;
+
+        margin: 3px 0 19px;
+
+        color: var(--pistachio-700);
+
+        text-align: center;
+
+        font-size: 12px;
+        font-weight: 700;
+
+        letter-spacing: 0.02em;
+    }
+
+    .message.pulse {
+        animation: messagePulse 0.35s ease;
+    }
+
+    @keyframes messagePulse {
+        0% {
+            transform: scale(1);
+            opacity: 0.6;
+        }
+
+        50% {
+            transform: scale(1.03);
+            opacity: 1;
+        }
+
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    /* =========================================================
+       BOARD
+    ========================================================= */
+
+    .board {
+        display: grid;
+
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+
+        gap: 14px;
+
+        max-width: 900px;
+
+        margin: 0 auto;
+
+        perspective: 1300px;
+    }
+
+    .card {
+        position: relative;
+
+        width: 100%;
+        aspect-ratio: 1 / 1.08;
+
+        padding: 0;
+
+        border: 0;
+
+        background: transparent;
+
+        cursor: pointer;
+
+        perspective: 1200px;
+
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .card:focus-visible {
+        outline: 3px solid rgba(184, 148, 78, 0.55);
+        outline-offset: 5px;
+        border-radius: 23px;
+    }
+
+    .card-inner {
+        position: absolute;
+        inset: 0;
+
+        transform-style: preserve-3d;
+
+        transition:
+            transform 0.28s cubic-bezier(0.22, 0.72, 0.18, 1);
+
+        will-change: transform;
+    }
+
+    .card.flipped .card-inner,
+    .card.matched .card-inner {
+        transform: rotateY(180deg);
+    }
+
+    .card-front,
+    .card-back {
+        position: absolute;
+        inset: 0;
+
+        overflow: hidden;
+
+        border-radius: 21px;
+
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+
+        transform-style: preserve-3d;
+    }
+
+    /* =========================================================
+       CARD FRONT / VAULT SIDE
+    ========================================================= */
+
+    .card-front {
+        z-index: 2;
+
+        transform:
+            rotateY(0deg)
+            translateZ(1px);
+
+        background:
+            radial-gradient(
+                circle at 30% 20%,
+                rgba(255,255,255,0.12),
+                transparent 30%
+            ),
+            linear-gradient(
+                145deg,
+                #314735,
+                #1d2d22
+            );
+
+        border: 1px solid rgba(216, 188, 122, 0.28);
+
+        box-shadow:
+            inset 0 1px 0 rgba(255,255,255,0.09),
+            inset 0 0 0 1px rgba(255,255,255,0.025),
+            0 13px 25px rgba(25, 39, 29, 0.14);
+    }
+
+    .card-front::before {
+        content: "";
+
+        position: absolute;
+        inset: 9px;
+
+        border-radius: 15px;
+
+        border: 1px solid rgba(216, 188, 122, 0.22);
+
+        box-shadow:
+            inset 0 0 0 1px rgba(255,255,255,0.025);
+    }
+
+    .card-front::after {
+        content: "";
+
+        position: absolute;
+
+        width: 110px;
+        height: 110px;
+
+        top: -55px;
+        right: -55px;
+
+        border-radius: 50%;
+
+        border: 1px solid rgba(216, 188, 122, 0.16);
+    }
+
+    .vault-emblem {
+        position: absolute;
+
+        left: 50%;
+        top: 50%;
+
+        width: 68px;
+        height: 68px;
+
+        display: grid;
+        place-items: center;
+
+        transform: translate(-50%, -50%);
+
+        color: var(--gold-light);
+
+        border: 1px solid rgba(216, 188, 122, 0.52);
+        border-radius: 50%;
+
+        font-family: "Playfair Display", serif;
+
+        font-size: 24px;
+
+        box-shadow:
+            0 0 0 7px rgba(216, 188, 122, 0.045),
+            0 0 0 14px rgba(216, 188, 122, 0.025),
+            inset 0 0 20px rgba(216, 188, 122, 0.05);
+    }
+
+    .vault-emblem::before,
+    .vault-emblem::after {
+        content: "";
+
+        position: absolute;
+
+        width: 5px;
+        height: 5px;
+
+        border-radius: 50%;
+
+        background: var(--gold-light);
+    }
+
+    .vault-emblem::before {
+        top: 7px;
+    }
+
+    .vault-emblem::after {
+        bottom: 7px;
+    }
+
+    /* =========================================================
+       COOKIE SIDE
+    ========================================================= */
+
+    .card-back {
+        z-index: 1;
+
+        transform:
+            rotateY(180deg)
+            translateZ(1px);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 14px;
+
+        background:
+            linear-gradient(
+                145deg,
+                #fffdf7,
+                #eee8d9
+            );
+
+        border: 1px solid rgba(67, 84, 64, 0.14);
+
+        box-shadow:
+            inset 0 1px 0 rgba(255,255,255,0.95),
+            0 13px 25px rgba(35, 48, 37, 0.12);
+    }
+
+    .cookie-backdrop {
+        position: absolute;
+        inset: 0;
+
+        background:
+            radial-gradient(
+                circle at center,
+                rgba(184, 148, 78, 0.08),
+                transparent 58%
+            );
+    }
+
+    .cookie-art {
+        position: relative;
+
+        width: 76%;
+        aspect-ratio: 1;
+
+        border-radius: 48% 52% 49% 51%;
+
+        box-shadow:
+            inset -10px -13px 18px rgba(60, 35, 17, 0.2),
+            inset 9px 8px 15px rgba(255, 255, 255, 0.32),
+            0 13px 20px rgba(60, 45, 29, 0.18);
+
+        transform: rotate(-3deg);
+
+        overflow: visible;
+    }
+
+    .cookie-art::before {
+        content: "";
+
+        position: absolute;
+        inset: 5%;
+
+        border-radius: inherit;
+
+        border: 1px solid rgba(255,255,255,0.2);
+
+        opacity: 0.75;
+    }
+
+    .cookie-art::after {
+        content: "";
+
+        position: absolute;
+        inset: 12%;
+
+        border-radius: 50%;
+
+        background:
+            radial-gradient(
+                circle at 20% 25%,
+                rgba(255,255,255,0.18) 0 2px,
+                transparent 3px
+            ),
+            radial-gradient(
+                circle at 70% 65%,
+                rgba(73,48,27,0.08) 0 2px,
+                transparent 3px
+            ),
+            radial-gradient(
+                circle at 45% 75%,
+                rgba(255,255,255,0.1) 0 1.5px,
+                transparent 2px
+            );
+
+        opacity: 0.8;
+    }
+
+    .edge {
+        position: absolute;
+
+        inset: -2px;
+
+        border-radius: inherit;
+
+        border: 2px solid rgba(71, 47, 26, 0.16);
+
+        pointer-events: none;
+    }
+
+    /* =========================================================
+       COOKIE VARIATIONS
+    ========================================================= */
+
+    .cookie-art:not(.strawberry):not(.lemon):not(.matcha):not(.redvelvet):not(.orange):not(.pistachio):not(.sugar):not(.double):not(.oat):not(.caramel):not(.cocoa) {
+        background:
+            radial-gradient(
+                circle at 31% 25%,
+                #f7d49a,
+                #c98c49 55%,
+                #a96632 100%
+            );
+    }
+
+    .chip {
+        position: absolute;
+
+        width: 12px;
+        height: 10px;
+
+        border-radius: 45% 55% 48% 52%;
+
+        background:
+            linear-gradient(
+                135deg,
+                #5d321f,
+                #2e1811
+            );
+
+        box-shadow:
+            inset 1px 1px 1px rgba(255,255,255,0.15),
+            2px 3px 4px rgba(50, 30, 18, 0.15);
+
+        z-index: 4;
+    }
+
+    .chip:nth-child(2) {
+        left: 23%;
+        top: 31%;
+        transform: rotate(18deg);
+    }
+
+    .chip:nth-child(3) {
+        left: 62%;
+        top: 23%;
+        transform: rotate(-12deg) scale(0.9);
+    }
+
+    .chip:nth-child(4) {
+        left: 48%;
+        top: 54%;
+        transform: rotate(28deg) scale(1.05);
+    }
+
+    .chip:nth-child(5) {
+        left: 72%;
+        top: 67%;
+        transform: rotate(-20deg) scale(0.75);
+    }
+
+    .chip:nth-child(6) {
+        left: 24%;
+        top: 70%;
+        transform: rotate(8deg) scale(0.78);
+    }
+
+    .strawberry {
+        background:
+            radial-gradient(
+                circle at 35% 27%,
+                #f98b86,
+                #d94f58 50%,
+                #9f293b 100%
+            );
+    }
+
+    .strawberry::after {
+        content: "";
+
+        position: absolute;
+        inset: 0;
+
+        border-radius: inherit;
+
+        background:
+            radial-gradient(
+                ellipse at 28% 38%,
+                #fff2d5 0 2px,
+                transparent 3px
+            ),
+            radial-gradient(
+                ellipse at 58% 30%,
+                #fff2d5 0 2px,
+                transparent 3px
+            ),
+            radial-gradient(
+                ellipse at 69% 58%,
+                #fff2d5 0 2px,
+                transparent 3px
+            ),
+            radial-gradient(
+                ellipse at 39% 69%,
+                #fff2d5 0 2px,
+                transparent 3px
+            );
+    }
+
+    .lemon {
+        background:
+            radial-gradient(
+                circle at 35% 25%,
+                #fff4b5,
+                #e5bd48 58%,
+                #b98b26 100%
+            );
+    }
+
+    .lemon::after {
+        background:
+            radial-gradient(
+                circle at 25% 40%,
+                rgba(255,255,255,0.5) 0 2px,
+                transparent 3px
+            ),
+            radial-gradient(
+                circle at 66% 25%,
+                rgba(255,255,255,0.38) 0 1.5px,
+                transparent 2.5px
+            ),
+            radial-gradient(
+                circle at 72% 70%,
+                rgba(130,95,25,0.18) 0 2px,
+                transparent 3px
+            );
+    }
+
+    .matcha {
+        background:
+            radial-gradient(
+                circle at 30% 24%,
+                #b6c695,
+                #778d57 52%,
+                #4d633f 100%
+            );
+    }
+
+    .matcha::after {
+        background:
+            radial-gradient(
+                circle at 26% 35%,
+                rgba(255,255,255,0.22) 0 3px,
+                transparent 4px
+            ),
+            radial-gradient(
+                circle at 68% 57%,
+                rgba(54,73,43,0.22) 0 3px,
+                transparent 4px
+            );
+    }
+
+    .redvelvet {
+        background:
+            radial-gradient(
+                circle at 32% 24%,
+                #c95856,
+                #8e3033 55%,
+                #5f2027 100%
+            );
+    }
+
+    .redvelvet::after {
+        background:
+            radial-gradient(
+                circle at 35% 40%,
+                rgba(255,222,201,0.3) 0 3px,
+                transparent 4px
+            ),
+            radial-gradient(
+                circle at 68% 65%,
+                rgba(255,220,200,0.2) 0 2px,
+                transparent 3px
+            );
+    }
+
+    .orange {
+        background:
+            radial-gradient(
+                circle at 30% 23%,
+                #f8c15e,
+                #d8832f 56%,
+                #a85720 100%
+            );
+    }
+
+    .orange::after {
+        background:
+            radial-gradient(
+                circle at 25% 32%,
+                #f6dc83 0 3px,
+                transparent 4px
+            ),
+            radial-gradient(
+                circle at 65% 63%,
+                #f2bd55 0 2px,
+                transparent 3px
+            );
+    }
+
+    .pistachio {
+        background:
+            radial-gradient(
+                circle at 32% 25%,
+                #e0e4ad,
+                #aebc72 48%,
+                #70834b 100%
+            );
+    }
+
+    .pistachio::after {
+        background:
+            radial-gradient(
+                circle at 24% 34%,
+                rgba(255,255,255,0.35) 0 3px,
+                transparent 4px
+            ),
+            radial-gradient(
+                circle at 70% 62%,
+                rgba(72,86,43,0.2) 0 3px,
+                transparent 4px
+            );
+    }
+
+    .sugar {
+        background:
+            radial-gradient(
+                circle at 31% 24%,
+                #fffdf2,
+                #e9d8b5 55%,
+                #c9aa7d 100%
+            );
+    }
+
+    .sugar::after {
+        background:
+            radial-gradient(
+                circle at 24% 28%,
+                rgba(255,255,255,0.8) 0 2px,
+                transparent 3px
+            ),
+            radial-gradient(
+                circle at 61% 35%,
+                rgba(165,132,89,0.2) 0 2px,
+                transparent 3px
+            ),
+            radial-gradient(
+                circle at 73% 70%,
+                rgba(255,255,255,0.7) 0 2px,
+                transparent 3px
+            );
+    }
+
+    .double {
+        background:
+            radial-gradient(
+                circle at 30% 23%,
+                #8d5943,
+                #4d2c24 55%,
+                #281817 100%
+            );
+    }
+
+    .double::after {
+        background:
+            radial-gradient(
+                circle at 28% 38%,
+                #d3a077 0 4px,
+                transparent 5px
+            ),
+            radial-gradient(
+                circle at 66% 65%,
+                #a76f4f 0 3px,
+                transparent 4px
+            );
+    }
+
+    .oat {
+        background:
+            radial-gradient(
+                circle at 32% 24%,
+                #efd39b,
+                #c89e59 54%,
+                #96713e 100%
+            );
+    }
+
+    .oat::after {
+        background:
+            repeating-linear-gradient(
+                25deg,
+                transparent 0 8px,
+                rgba(105,75,36,0.13) 9px 11px,
+                transparent 12px 18px
+            );
+    }
+
+    .caramel {
+        background:
+            radial-gradient(
+                circle at 31% 23%,
+                #e7bb6a,
+                #ae6d32 56%,
+                #70401f 100%
+            );
+    }
+
+    .caramel::after {
+        background:
+            radial-gradient(
+                ellipse at 31% 35%,
+                #f1d58e 0 5px,
+                transparent 7px
+            ),
+            radial-gradient(
+                ellipse at 66% 61%,
+                #8e4d25 0 5px,
+                transparent 7px
+            );
+    }
+
+    .cocoa {
+        background:
+            radial-gradient(
+                circle at 30% 23%,
+                #6e4a3b,
+                #3d2722 55%,
+                #201615 100%
+            );
+    }
+
+    .cocoa::after {
+        background:
+            radial-gradient(
+                circle at 29% 32%,
+                rgba(236,196,147,0.4) 0 3px,
+                transparent 4px
+            ),
+            radial-gradient(
+                circle at 70% 62%,
+                rgba(185,139,103,0.28) 0 3px,
+                transparent 4px
+            );
+    }
+
+    /* =========================================================
+       CARD INTERACTIONS
+    ========================================================= */
+
+    .card:not(.flipped):not(.matched):hover .card-inner {
+        transform: translateY(-4px) rotateX(2deg);
+    }
+
+    .card.flipped .card-front,
+    .card.matched .card-front {
+        z-index: 1;
+    }
+
+    .card.flipped .card-back,
+    .card.matched .card-back {
+        z-index: 2;
+    }
+
+    .card.matched {
+        cursor: default;
+    }
+
+    .card.matched .card-back {
+        border-color: rgba(184, 148, 78, 0.46);
+
+        box-shadow:
+            inset 0 1px 0 rgba(255,255,255,0.95),
+            0 0 0 2px rgba(184, 148, 78, 0.08),
+            0 14px 30px rgba(60, 70, 45, 0.16);
+    }
+
+    .card.matched .cookie-art {
+        animation: matchedSettle 0.42s ease-out both;
+    }
+
+    @keyframes matchedSettle {
+        0% {
+            transform: scale(0.88) rotate(-7deg);
+        }
+
+        65% {
+            transform: scale(1.04) rotate(2deg);
+        }
+
+        100% {
+            transform: scale(1) rotate(-2deg);
+        }
+    }
+
+    .card.mismatch .card-inner {
+        animation: shakeCard 0.32s ease;
+    }
+
+    @keyframes shakeCard {
+        0%, 100% {
+            transform: rotateY(180deg) translateX(0);
+        }
+
+        25% {
+            transform: rotateY(180deg) translateX(-4px);
+        }
+
+        75% {
+            transform: rotateY(180deg) translateX(4px);
+        }
+    }
+
+    /* =========================================================
+       MATCH PARTICLES
+    ========================================================= */
+
+    .match-particle {
+        position: fixed;
+
+        width: 7px;
+        height: 7px;
+
+        border-radius: 50%;
+
+        background: var(--gold);
+
+        pointer-events: none;
+
+        z-index: 100;
+
+        animation: particleBurst 0.7s ease-out forwards;
+    }
+
+    @keyframes particleBurst {
+        0% {
+            opacity: 1;
+            transform: translate(0, 0) scale(1);
+        }
+
+        100% {
+            opacity: 0;
+            transform:
+                translate(var(--x), var(--y))
+                scale(0.1);
+        }
+    }
+
+    /* =========================================================
+       WIN CARD
+    ========================================================= */
+
+    .win-card {
+        position: relative;
+
+        display: none;
+
+        max-width: 700px;
+
+        margin: 28px auto 0;
+
+        padding: 34px;
+
+        text-align: center;
+
+        border: 1px solid rgba(184, 148, 78, 0.3);
+        border-radius: 26px;
+
+        background:
+            linear-gradient(
+                145deg,
+                rgba(255,253,247,0.96),
+                rgba(236,232,214,0.92)
+            );
+
+        box-shadow:
+            0 25px 55px rgba(37, 51, 39, 0.14);
+    }
+
+    .win-card.visible {
+        display: block;
+
+        animation: winReveal 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    }
+
+    @keyframes winReveal {
+        0% {
+            opacity: 0;
+            transform: translateY(18px) scale(0.96);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    .win-card::before,
+    .win-card::after {
+        content: "✦";
+
+        position: absolute;
+
+        color: var(--gold);
+
+        font-size: 18px;
+
+        opacity: 0.65;
+    }
+
+    .win-card::before {
+        top: 18px;
+        left: 23px;
+    }
+
+    .win-card::after {
+        right: 23px;
+        bottom: 18px;
+    }
+
+    .win-crown {
+        color: var(--gold);
+
+        font-size: 26px;
+
+        margin-bottom: 8px;
+    }
+
+    .win-card h3 {
+        margin: 0;
+
+        color: var(--pistachio-950);
+
+        font-family: "Playfair Display", serif;
+
+        font-size: 34px;
+    }
+
+    .win-card p {
+        max-width: 510px;
+
+        margin: 10px auto 0;
+
+        color: rgba(33, 48, 37, 0.62);
+
+        font-size: 13px;
+        line-height: 1.7;
+    }
+
+    .win-cookie {
+        width: 82px;
+        height: 82px;
+
+        margin: 22px auto 0;
+
+        border-radius: 50%;
+
+        background:
+            radial-gradient(
+                circle at 32% 24%,
+                #dce3b3,
+                #9eaf6d 50%,
+                #627644 100%
+            );
+
+        box-shadow:
+            inset -10px -11px 15px rgba(49, 61, 34, 0.2),
+            inset 8px 7px 13px rgba(255,255,255,0.26),
+            0 13px 25px rgba(50, 60, 38, 0.17);
+
+        position: relative;
+    }
+
+    .win-cookie::before,
+    .win-cookie::after {
+        content: "";
+
+        position: absolute;
+
+        width: 8px;
+        height: 6px;
+
+        border-radius: 50%;
+
+        background: #52623a;
+    }
+
+    .win-cookie::before {
+        left: 25px;
+        top: 31px;
+    }
+
+    .win-cookie::after {
+        right: 22px;
+        bottom: 27px;
+    }
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================= */
+
+    @media (max-width: 900px) {
+        nav {
+            justify-content: flex-start;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        nav a {
+            flex-shrink: 0;
+        }
+
+        .game-header {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .controls {
+            width: 100%;
+        }
+
+        .difficulty {
+            flex: 1;
+        }
+    }
+
+    @media (max-width: 650px) {
+        header {
+            width: calc(100% - 22px);
+            margin-top: 12px;
+        }
+
+        nav {
+            padding: 7px;
+        }
+
+        nav a {
+            padding: 10px 13px;
+            font-size: 11px;
+        }
+
+        .hero {
+            width: calc(100% - 28px);
+            margin-top: 56px;
+        }
+
+        .hero h1 {
+            font-size: clamp(43px, 13vw, 68px);
+        }
+
+        .hero p {
+            font-size: 14px;
+        }
+
+        .game-shell {
+            width: calc(100% - 22px);
+            padding: 15px;
+
+            border-radius: 26px;
+        }
+
+        .stats {
+            gap: 8px;
+        }
+
+        .stat {
+            padding: 13px;
+        }
+
+        .stat-value {
+            font-size: 21px;
+        }
+
+        .board {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 9px;
+        }
+
+        .card {
+            aspect-ratio: 1 / 1.05;
+        }
+
+        .card-back {
+            padding: 8px;
+        }
+
+        .cookie-art {
+            width: 79%;
+        }
+
+        .pistachio-leaf,
+        .shell,
+        .matcha-cloud {
+            opacity: 0.16;
+        }
+
+        .gold-arc {
+            opacity: 0.4;
+        }
+    }
+
+    @media (max-width: 430px) {
+        .board {
+            gap: 7px;
+        }
+
+        .game-header {
+            padding-left: 6px;
+            padding-right: 6px;
+        }
+
+        .controls {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .difficulty,
+        .restart {
+            width: 100%;
+        }
+
+        .win-card {
+            padding: 27px 20px;
+        }
+
+        .win-card h3 {
+            font-size: 29px;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        html {
+            scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+            animation-duration: 0.001ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.001ms !important;
+        }
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<!-- =========================================================
+     DECORATION
+========================================================= -->
+
+<div class="parlor-decor" aria-hidden="true">
+
+    <span class="shell s1"></span>
+    <span class="shell s2"></span>
+    <span class="shell s3"></span>
+    <span class="shell s4"></span>
+    <span class="shell s5"></span>
+
+    <span class="pistachio-leaf l1"></span>
+    <span class="pistachio-leaf l2"></span>
+    <span class="pistachio-leaf l3"></span>
+    <span class="pistachio-leaf l4"></span>
+
+    <span class="pistachio-nut n1"></span>
+    <span class="pistachio-nut n2"></span>
+    <span class="pistachio-nut n3"></span>
+    <span class="pistachio-nut n4"></span>
+
+    <span class="crumb c1"></span>
+    <span class="crumb c2"></span>
+    <span class="crumb c3"></span>
+    <span class="crumb c4"></span>
+    <span class="crumb c5"></span>
+
+    <span class="dust d1"></span>
+    <span class="dust d2"></span>
+    <span class="dust d3"></span>
+    <span class="dust d4"></span>
+    <span class="dust d5"></span>
+
+    <span class="matcha-cloud m1"></span>
+    <span class="matcha-cloud m2"></span>
+    <span class="matcha-cloud m3"></span>
+
+    <span class="gold-arc a1"></span>
+    <span class="gold-arc a2"></span>
+    <span class="gold-arc a3"></span>
+
+    <span class="gold-fleck f1"></span>
+    <span class="gold-fleck f2"></span>
+    <span class="gold-fleck f3"></span>
+    <span class="gold-fleck f4"></span>
+    <span class="gold-fleck f5"></span>
+    <span class="gold-fleck f6"></span>
+    <span class="gold-fleck f7"></span>
+
+    <span class="parlor-cross x1"></span>
+    <span class="parlor-cross x2"></span>
+    <span class="parlor-cross x3"></span>
+
+</div>
+
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
+
+<header>
+    <nav>
+        <a href="Index.html">Home</a>
+        <a href="Recipes.html">Recipes</a>
+        <a href="PopularRecipes.html">Popular Recipes</a>
+        <a href="Posts.html">Posts</a>
+        <a href="Contactus.html">Contact</a>
+        <a href="MemoryGame.html">Memory Game</a>
+        <a href="History.html">History</a>
+    </nav>
+</header>
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<main>
+
+    <section class="hero">
+
+        <div class="hero-kicker">
+            The Pistachio Parlor
+        </div>
+
+        <h1>
+            Memory,<br>
+            <em>steeped in pistachio.</em>
+        </h1>
+
+        <p>
+            Step inside the private patisserie game room.
+            Open two cards, find their matching Cookie Vault creation,
+            and complete the collection before the clock runs away.
+        </p>
+
+        <div class="hero-line"></div>
+
+    </section>
+
+    <!-- =====================================================
+         GAME
+    ===================================================== -->
+
+    <section class="game-shell">
+
+        <div class="game-header">
+
+            <div>
+                <div class="game-eyebrow">
+                    Private Patisserie Game Room
+                </div>
+
+                <h2>
+                    The Memory Collection
+                </h2>
+
+                <p>
+                    Every card hides a different Cookie Vault creation.
+                </p>
+            </div>
+
+            <div class="controls">
+
+                <select
+                    id="difficulty"
+                    class="difficulty"
+                    aria-label="Choose difficulty"
+                >
+                    <option value="easy">
+                        Easy · 6 pairs
+                    </option>
+
+                    <option value="normal" selected>
+                        Normal · 8 pairs
+                    </option>
+
+                    <option value="hard">
+                        Hard · 12 pairs
+                    </option>
+                </select>
+
+                <button
+                    type="button"
+                    id="restart"
+                    class="restart"
+                >
+                    ↻ Restart Game
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- =================================================
+             STATS
+        ================================================= -->
+
+        <div class="stats">
+
+            <div class="stat">
+                <div class="stat-label">
+                    Time
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="time"
+                >
+                    00:00
+                </div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-label">
+                    Moves
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="moves"
+                >
+                    0
+                </div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-label">
+                    Pairs
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="pairs"
+                >
+                    0 / 8
+                </div>
+            </div>
+
+        </div>
+
+        <div
+            class="message"
+            id="message"
+            aria-live="polite"
+        >
+            Choose a card to open the vault.
+        </div>
+
+        <!-- =================================================
+             BOARD
+        ================================================= -->
+
+        <div
+            class="board"
+            id="board"
+            aria-label="Memory game board"
+        ></div>
+
+        <!-- =================================================
+             WIN CARD
+        ================================================= -->
+
+        <div
+            class="win-card"
+            id="winCard"
+        >
+
+            <div class="win-crown">
+                ✦
+            </div>
+
+            <div class="win-cookie"></div>
+
+            <h3>
+                The Vault Is Complete
+            </h3>
+
+            <p id="winText">
+                Every pistachio creation has been uncovered.
+            </p>
+
+        </div>
+
+    </section>
+
+</main>
+
+<script>
+    /* =========================================================
+       COOKIE COLLECTION
+    ========================================================= */
+
+    const cookieCollection = [
+        {
+            id: "classic",
+            name: "Classic Chocolate Chip",
+            className: ""
+        },
+
+        {
+            id: "strawberry",
+            name: "Strawberry Cream",
+            className: "strawberry"
+        },
+
+        {
+            id: "lemon",
+            name: "Lemon Sugar",
+            className: "lemon"
+        },
+
+        {
+            id: "matcha",
+            name: "Matcha Pistachio",
+            className: "matcha"
+        },
+
+        {
+            id: "redvelvet",
+            name: "Red Velvet",
+            className: "redvelvet"
+        },
+
+        {
+            id: "orange",
+            name: "Orange Zest",
+            className: "orange"
+        },
+
+        {
+            id: "pistachio",
+            name: "Pistachio Cream",
+            className: "pistachio"
+        },
+
+        {
+            id: "sugar",
+            name: "Vanilla Sugar",
+            className: "sugar"
+        },
+
+        {
+            id: "double",
+            name: "Double Chocolate",
+            className: "double"
+        },
+
+        {
+            id: "oat",
+            name: "Golden Oat",
+            className: "oat"
+        },
+
+        {
+            id: "caramel",
+            name: "Salted Caramel",
+            className: "caramel"
+        },
+
+        {
+            id: "cocoa",
+            name: "Dark Cocoa",
+            className: "cocoa"
+        }
+    ];
+
+    /* =========================================================
+       GAME STATE
+    ========================================================= */
+
+    let firstCard = null;
+    let secondCard = null;
+
+    let locked = false;
+
+    let moves = 0;
+    let matchedPairs = 0;
+    let totalPairs = 8;
+
+    let seconds = 0;
+    let timer = null;
+
+    let gameStarted = false;
+
+    /* =========================================================
+       ELEMENTS
+    ========================================================= */
+
+    const board = document.getElementById("board");
+    const timeDisplay = document.getElementById("time");
+    const movesDisplay = document.getElementById("moves");
+    const pairsDisplay = document.getElementById("pairs");
+    const message = document.getElementById("message");
+    const winCard = document.getElementById("winCard");
+    const winText = document.getElementById("winText");
+    const restartButton = document.getElementById("restart");
+    const difficultySelect = document.getElementById("difficulty");
+
+    /* =========================================================
+       SHUFFLE
+    ========================================================= */
+
+    function shuffle(array) {
+        const shuffled = [...array];
+
+        for (
+            let i = shuffled.length - 1;
+            i > 0;
+            i--
+        ) {
+            const j = Math.floor(Math.random() * (i + 1));
+
+            [
+                shuffled[i],
+                shuffled[j]
+            ] = [
+                shuffled[j],
+                shuffled[i]
+            ];
+        }
+
+        return shuffled;
+    }
+
+    /* =========================================================
+       COOKIE ART
+    ========================================================= */
+
+    function createCookieArt(cookie) {
+        const cookieArt = document.createElement("div");
+
+        cookieArt.className =
+            "cookie-art " + cookie.className;
+
+        cookieArt.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        const edge = document.createElement("span");
+
+        edge.className = "edge";
+
+        cookieArt.appendChild(edge);
+
+        if (cookie.id === "classic") {
+            for (let i = 0; i < 5; i++) {
+                const chip = document.createElement("span");
+
+                chip.className = "chip";
+
+                cookieArt.appendChild(chip);
+            }
+        }
+
+        return cookieArt;
+    }
+
+    /* =========================================================
+       CARD CREATION
+    ========================================================= */
+
+    function createCard(cookie, index) {
+        const card = document.createElement("button");
+
+        card.type = "button";
+
+        card.className = "card";
+
+        card.dataset.cookie = cookie.id;
+
+        card.dataset.index = index;
+
+        card.setAttribute(
+            "aria-label",
+            "Hidden Cookie Vault card"
+        );
+
+        const inner = document.createElement("span");
+
+        inner.className = "card-inner";
+
+        /* FRONT */
+
+        const front = document.createElement("span");
+
+        front.className = "card-front";
+
+        const emblem = document.createElement("span");
+
+        emblem.className = "vault-emblem";
+
+        emblem.textContent = "✦";
+
+        front.appendChild(emblem);
+
+        /* BACK */
+
+        const back = document.createElement("span");
+
+        back.className = "card-back";
+
+        const cookieBackdrop =
+            document.createElement("span");
+
+        cookieBackdrop.className =
+            "cookie-backdrop";
+
+        back.appendChild(cookieBackdrop);
+
+        back.appendChild(
+            createCookieArt(cookie)
+        );
+
+        inner.appendChild(front);
+        inner.appendChild(back);
+
+        card.appendChild(inner);
+
+        card.addEventListener(
+            "click",
+            () => flipCard(card)
+        );
+
+        return card;
+    }
+
+    /* =========================================================
+       CREATE BOARD
+    ========================================================= */
+
+    function createBoard() {
+        stopTimer();
+
+        firstCard = null;
+        secondCard = null;
+
+        locked = false;
+
+        moves = 0;
+        matchedPairs = 0;
+
+        seconds = 0;
+
+        gameStarted = false;
+
+        updateDisplays();
+
+        board.innerHTML = "";
+
+        winCard.classList.remove("visible");
+
+        const selectedCookies =
+            cookieCollection.slice(
+                0,
+                totalPairs
+            );
+
+        let cards = [];
+
+        selectedCookies.forEach(cookie => {
+            cards.push(cookie);
+            cards.push(cookie);
+        });
+
+        cards = shuffle(cards);
+
+        cards.forEach((cookie, index) => {
+            board.appendChild(
+                createCard(cookie, index)
+            );
+        });
+
+        message.textContent =
+            "Choose a card to open the vault.";
+    }
+
+    /* =========================================================
+       FLIP CARD
+    ========================================================= */
+
+    function flipCard(card) {
+        if (locked) {
+            return;
+        }
+
+        if (card === firstCard) {
+            return;
+        }
+
+        if (
+            card.classList.contains("flipped") ||
+            card.classList.contains("matched")
+        ) {
+            return;
+        }
+
+        if (!gameStarted) {
+            startTimer();
+
+            gameStarted = true;
+        }
+
+        card.classList.add("flipped");
+
+        card.setAttribute(
+            "aria-label",
+            cookieNameFromCard(card)
+        );
+
+        if (!firstCard) {
+            firstCard = card;
+
+            message.textContent =
+                "Now find its matching creation.";
+
+            pulseMessage();
+
+            return;
+        }
+
+        secondCard = card;
+
+        moves++;
+
+        updateDisplays();
+
+        checkMatch();
+    }
+
+    /* =========================================================
+       COOKIE NAME
+    ========================================================= */
+
+    function cookieNameFromCard(card) {
+        const cookie =
+            cookieCollection.find(
+                item =>
+                    item.id === card.dataset.cookie
+            );
+
+        return cookie
+            ? cookie.name
+            : "Cookie Vault card";
+    }
+
+    /* =========================================================
+       MATCH CHECK
+    ========================================================= */
+
+    function checkMatch() {
+        locked = true;
+
+        const isMatch =
+            firstCard.dataset.cookie ===
+            secondCard.dataset.cookie;
+
+        if (isMatch) {
+            setTimeout(
+                handleMatch,
+                180
+            );
+        } else {
+            secondCard.classList.add(
+                "mismatch"
+            );
+
+            firstCard.classList.add(
+                "mismatch"
+            );
+
+            setTimeout(
+                handleMismatch,
+                500
+            );
+        }
+    }
+
+    /* =========================================================
+       MATCHED
+    ========================================================= */
+
+    function handleMatch() {
+        if (!firstCard || !secondCard) {
+            return;
+        }
+
+        /*
+         * IMPORTANT:
+         * matched cards stay flipped.
+         * We never remove "flipped".
+         */
+
+        firstCard.classList.remove(
+            "mismatch"
+        );
+
+        secondCard.classList.remove(
+            "mismatch"
+        );
+
+        firstCard.classList.add(
+            "matched"
+        );
+
+        secondCard.classList.add(
+            "matched"
+        );
+
+        firstCard.setAttribute(
+            "aria-label",
+            "Matched " +
+            cookieNameFromCard(firstCard)
+        );
+
+        secondCard.setAttribute(
+            "aria-label",
+            "Matched " +
+            cookieNameFromCard(secondCard)
+        );
+
+        createMatchParticles(
+            firstCard
+        );
+
+        createMatchParticles(
+            secondCard
+        );
+
+        matchedPairs++;
+
+        updateDisplays();
+
+        if (
+            matchedPairs === totalPairs
+        ) {
+            message.textContent =
+                "The entire collection has been uncovered.";
+
+            pulseMessage();
+
+            firstCard = null;
+            secondCard = null;
+
+            locked = false;
+
+            finishGame();
+
+            return;
+        }
+
+        message.textContent =
+            "Beautiful match. The pair stays in the collection.";
+
+        pulseMessage();
+
+        firstCard = null;
+        secondCard = null;
+
+        locked = false;
+    }
+
+    /* =========================================================
+       MISMATCH
+    ========================================================= */
+
+    function handleMismatch() {
+        if (!firstCard || !secondCard) {
+            locked = false;
+
+            return;
+        }
+
+        firstCard.classList.remove(
+            "flipped",
+            "mismatch"
+        );
+
+        secondCard.classList.remove(
+            "flipped",
+            "mismatch"
+        );
+
+        firstCard.setAttribute(
+            "aria-label",
+            "Hidden Cookie Vault card"
+        );
+
+        secondCard.setAttribute(
+            "aria-label",
+            "Hidden Cookie Vault card"
+        );
+
+        firstCard = null;
+        secondCard = null;
+
+        locked = false;
+
+        message.textContent =
+            "Not quite. Try another combination.";
+
+        pulseMessage();
+    }
+
+    /* =========================================================
+       MESSAGE PULSE
+    ========================================================= */
+
+    function pulseMessage() {
+        message.classList.remove(
+            "pulse"
+        );
+
+        void message.offsetWidth;
+
+        message.classList.add(
+            "pulse"
+        );
+    }
+
+    /* =========================================================
+       TIMER
+    ========================================================= */
+
+    function startTimer() {
+        stopTimer();
+
+        timer = setInterval(() => {
+            seconds++;
+
+            updateTime();
+        }, 1000);
+    }
+
+    function stopTimer() {
+        if (timer) {
+            clearInterval(timer);
+
+            timer = null;
+        }
+    }
+
+    function updateTime() {
+        const minutes =
+            Math.floor(seconds / 60);
+
+        const remainingSeconds =
+            seconds % 60;
+
+        timeDisplay.textContent =
+            String(minutes).padStart(2, "0") +
+            ":" +
+            String(remainingSeconds).padStart(2, "0");
+    }
+
+    /* =========================================================
+       DISPLAY UPDATES
+    ========================================================= */
+
+    function updateDisplays() {
+        updateTime();
+
+        movesDisplay.textContent =
+            moves;
+
+        pairsDisplay.textContent =
+            matchedPairs +
+            " / " +
+            totalPairs;
+    }
+
+    /* =========================================================
+       PARTICLES
+    ========================================================= */
+
+    function createMatchParticles(card) {
+        const rect =
+            card.getBoundingClientRect();
+
+        const centerX =
+            rect.left +
+            rect.width / 2;
+
+        const centerY =
+            rect.top +
+            rect.height / 2;
+
+        const particleCount = 8;
+
+        for (
+            let i = 0;
+            i < particleCount;
+            i++
+        ) {
+            const particle =
+                document.createElement("span");
+
+            particle.className =
+                "match-particle";
+
+            const angle =
+                Math.random() *
+                Math.PI *
+                2;
+
+            const distance =
+                35 +
+                Math.random() * 65;
+
+            particle.style.left =
+                centerX + "px";
+
+            particle.style.top =
+                centerY + "px";
+
+            particle.style.setProperty(
+                "--x",
+                Math.cos(angle) *
+                distance +
+                "px"
+            );
+
+            particle.style.setProperty(
+                "--y",
+                Math.sin(angle) *
+                distance +
+                "px"
+            );
+
+            document.body.appendChild(
+                particle
+            );
+
+            setTimeout(() => {
+                particle.remove();
+            }, 750);
+        }
+    }
+
+    /* =========================================================
+       FINISH GAME
+    ========================================================= */
+
+    function finishGame() {
+        stopTimer();
+
+        winText.textContent =
+            "You uncovered all " +
+            totalPairs +
+            " pairs in " +
+            moves +
+            " moves, finishing in " +
+            timeDisplay.textContent +
+            ". The Pistachio Parlor is officially complete.";
+
+        setTimeout(() => {
+            winCard.classList.add(
+                "visible"
+            );
+
+            winCard.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        }, 450);
+    }
+
+    /* =========================================================
+       DIFFICULTY
+    ========================================================= */
+
+    difficultySelect.addEventListener(
+        "change",
+        () => {
+            const difficulty =
+                difficultySelect.value;
+
+            if (difficulty === "easy") {
+                totalPairs = 6;
+            }
+
+            if (difficulty === "normal") {
+                totalPairs = 8;
+            }
+
+            if (difficulty === "hard") {
+                totalPairs = 12;
+            }
+
+            createBoard();
+        }
+    );
+
+    /* =========================================================
+       RESTART
+    ========================================================= */
+
+    restartButton.addEventListener(
+        "click",
+        createBoard
+    );
+
+    /* =========================================================
+       KEYBOARD RESTART
+    ========================================================= */
+
+    document.addEventListener(
+        "keydown",
+        event => {
+            const tag =
+                document.activeElement
+                    ?.tagName
+                    ?.toLowerCase();
+
+            if (
+                event.key.toLowerCase() === "r" &&
+                tag !== "input" &&
+                tag !== "textarea" &&
+                tag !== "select"
+            ) {
+                createBoard();
+            }
+        }
+    );
+
+    /* =========================================================
+       START
+    ========================================================= */
+
+    createBoard();
+</script>
+```
+
+</body>
+</html>

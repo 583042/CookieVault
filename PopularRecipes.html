@@ -1,0 +1,1870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Popular Recipes — Cookie Vault</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --cream: #f7f0e8;
+            --paper: #fffaf5;
+            --brown: #351d15;
+            --brown-soft: #76584c;
+            --red: #c7274d;
+            --pink: #f1c6cd;
+            --line: rgba(53, 29, 21, 0.09);
+            --muted: #9b8176;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(
+                    circle at 15% 12%,
+                    rgba(244, 194, 202, 0.28),
+                    transparent 27%
+                ),
+                radial-gradient(
+                    circle at 88% 32%,
+                    rgba(235, 204, 174, 0.24),
+                    transparent 25%
+                ),
+                linear-gradient(135deg, #faf5ef 0%, #f6eee5 100%);
+            color: var(--brown);
+            font-family: "DM Sans", sans-serif;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.035;
+            background-image:
+                repeating-radial-gradient(
+                    circle at 20% 30%,
+                    #000 0 1px,
+                    transparent 1px 4px
+                ),
+                repeating-radial-gradient(
+                    circle at 70% 80%,
+                    #000 0 1px,
+                    transparent 1px 5px
+                );
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        /* =========================
+           NAVIGATION
+        ========================= */
+
+        header {
+            position: fixed;
+            top: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            width: min(1200px, calc(100% - 30px));
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 3px;
+            padding: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 100px;
+            background: rgba(25, 17, 14, 0.88);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            box-shadow:
+                0 18px 60px rgba(30, 15, 10, 0.20),
+                inset 0 1px rgba(255, 255, 255, 0.10);
+        }
+
+        nav a {
+            padding: 10px 15px;
+            border-radius: 100px;
+            color: rgba(255, 250, 244, 0.62);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            white-space: nowrap;
+            transition:
+                background 0.3s ease,
+                color 0.3s ease,
+                transform 0.3s ease;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.10);
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        nav a.active {
+            background: rgba(255, 255, 255, 0.10);
+            color: #fff;
+            box-shadow: inset 0 1px rgba(255, 255, 255, 0.12);
+        }
+
+        /* =========================
+           PAGE HEADER
+        ========================= */
+
+        .page {
+            width: min(1200px, calc(100% - 40px));
+            margin: 0 auto;
+        }
+
+        .hero {
+            position: relative;
+            min-height: 500px;
+            padding:
+                165px 0
+                65px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "POPULAR";
+            position: absolute;
+            right: -55px;
+            top: 90px;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(53, 29, 21, 0.055);
+            font-family: "Playfair Display", serif;
+            font-size: clamp(7rem, 18vw, 15rem);
+            font-weight: 800;
+            line-height: 0.8;
+            letter-spacing: -0.07em;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 720px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            margin-bottom: 22px;
+            color: var(--red);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 2.4px;
+            text-transform: uppercase;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 28px;
+            height: 1px;
+            background: var(--red);
+        }
+
+        .hero h1 {
+            max-width: 760px;
+            font-family: "Playfair Display", serif;
+            font-size: clamp(4rem, 8vw, 7.5rem);
+            font-weight: 600;
+            letter-spacing: -0.065em;
+            line-height: 0.87;
+        }
+
+        .hero h1 span {
+            color: var(--red);
+            font-style: italic;
+        }
+
+        .hero-copy {
+            max-width: 510px;
+            margin-top: 28px;
+            color: var(--brown-soft);
+            font-size: 0.88rem;
+            font-weight: 500;
+            line-height: 1.8;
+        }
+
+        .collection-heading {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 26px;
+        }
+
+        .collection-heading h2 {
+            font-family: "Playfair Display", serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 600;
+            letter-spacing: -0.045em;
+        }
+
+        .collection-heading p {
+            max-width: 260px;
+            color: var(--muted);
+            font-size: 0.67rem;
+            font-weight: 700;
+            letter-spacing: 1.1px;
+            line-height: 1.7;
+            text-align: right;
+            text-transform: uppercase;
+        }
+
+        /* =========================
+           CARD GRID
+        ========================= */
+
+        .recipes-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 22px;
+            padding-bottom: 100px;
+        }
+
+        .card {
+            position: relative;
+            min-height: 500px;
+            padding: 32px 30px 38px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            cursor: pointer;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.97),
+                    rgba(255, 248, 241, 0.91)
+                );
+
+            border: 1px solid var(--line);
+            border-radius: 34px;
+
+            box-shadow:
+                0 12px 35px rgba(53, 29, 21, 0.065);
+
+            transition:
+                transform 0.45s cubic-bezier(.2, .8, .2, 1),
+                box-shadow 0.45s ease,
+                border-color 0.45s ease;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            left: 50%;
+            top: 34%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.46);
+            filter: blur(30px);
+            pointer-events: none;
+        }
+
+        .card::after {
+            content: "OPEN RECIPE  →";
+            position: absolute;
+            bottom: 20px;
+            color: var(--red);
+            font-size: 0.59rem;
+            font-weight: 800;
+            letter-spacing: 1.8px;
+            opacity: 0;
+            transform: translateY(7px);
+            transition:
+                opacity 0.3s ease,
+                transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(199, 39, 77, 0.20);
+            box-shadow:
+                0 30px 70px rgba(53, 29, 21, 0.14),
+                0 8px 20px rgba(199, 39, 77, 0.06);
+        }
+
+        .card:hover::after {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            padding: 6px 9px;
+            color: #9b7668;
+            background: rgba(255, 248, 241, 0.85);
+            border: 1px solid rgba(53, 29, 21, 0.08);
+            border-radius: 999px;
+            font-size: 0.52rem;
+            font-weight: 800;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+        }
+
+        .card-index {
+            position: absolute;
+            top: 22px;
+            right: 25px;
+            z-index: 10;
+            color: rgba(53, 29, 21, 0.20);
+            font-family: "Playfair Display", serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .cookie-stage {
+            position: relative;
+            z-index: 3;
+            width: 255px;
+            height: 245px;
+            margin-bottom: 3px;
+            display: grid;
+            place-items: center;
+        }
+
+        .plate-shadow {
+            position: absolute;
+            width: 190px;
+            height: 28px;
+            bottom: 17px;
+            border-radius: 50%;
+            background: rgba(60, 29, 18, 0.14);
+            filter: blur(11px);
+            transform: scaleX(1.16);
+        }
+
+        /* =====================================================
+           MASTER COOKIE
+           These are NOT circles.
+           Every cookie has an irregular silhouette.
+        ===================================================== */
+
+        .cookie-shape {
+            position: relative;
+            width: 172px;
+            height: 162px;
+            flex-shrink: 0;
+
+            animation:
+                bakeryFloat 5.4s ease-in-out infinite;
+
+            filter:
+                drop-shadow(0 14px 8px rgba(53, 29, 21, 0.13));
+
+            transition:
+                transform 0.45s cubic-bezier(.2, .8, .2, 1),
+                filter 0.45s ease;
+        }
+
+        .card:hover .cookie-shape {
+            animation-play-state: paused;
+            transform:
+                translateY(-6px)
+                rotate(-2deg)
+                scale(1.075);
+            filter:
+                drop-shadow(0 18px 13px rgba(53, 29, 21, 0.18));
+        }
+
+        @keyframes bakeryFloat {
+            0%, 100% {
+                transform: translateY(0) rotate(-1deg);
+            }
+
+            50% {
+                transform: translateY(-7px) rotate(1.2deg);
+            }
+        }
+
+        /* =====================================================
+           DOUBLE CHOCOLATE
+        ===================================================== */
+
+        .double-choco {
+            width: 176px;
+            height: 158px;
+
+            border-radius:
+                47% 53% 43% 57%
+                / 54% 43% 57% 46%;
+
+            background:
+                radial-gradient(
+                    ellipse at 30% 25%,
+                    rgba(255, 194, 118, 0.38),
+                    transparent 22%
+                ),
+                radial-gradient(
+                    ellipse at 72% 68%,
+                    rgba(87, 29, 15, 0.30),
+                    transparent 34%
+                ),
+                linear-gradient(
+                    145deg,
+                    #a85b31 0%,
+                    #8b421f 43%,
+                    #713117 74%,
+                    #54200f 100%
+                );
+
+            box-shadow:
+                inset 0 7px 9px rgba(255, 213, 157, 0.18),
+                inset 0 -10px 16px rgba(49, 16, 7, 0.34),
+                inset 7px 0 10px rgba(63, 20, 9, 0.22);
+
+            transform: rotate(-3deg);
+        }
+
+        .double-choco::before {
+            content: "";
+            position: absolute;
+            inset: 8px;
+            border-radius:
+                45% 55% 42% 58%
+                / 52% 44% 56% 48%;
+            border: 2px solid rgba(63, 22, 9, 0.18);
+            box-shadow:
+                inset 0 0 0 3px rgba(242, 159, 83, 0.09);
+        }
+
+        .double-choco::after {
+            content: "";
+            position: absolute;
+            width: 55px;
+            height: 24px;
+            left: 23px;
+            top: 17px;
+            border-radius: 50%;
+            background: rgba(255, 215, 165, 0.13);
+            filter: blur(7px);
+            transform: rotate(-12deg);
+        }
+
+        .choc {
+            position: absolute;
+            z-index: 4;
+            background:
+                linear-gradient(
+                    145deg,
+                    #5b2515,
+                    #34120c 65%,
+                    #210b08
+                );
+            border-radius: 7px;
+            box-shadow:
+                inset 2px 2px 2px rgba(255, 159, 102, 0.18),
+                inset -2px -3px 3px rgba(0, 0, 0, 0.28),
+                3px 4px 5px rgba(46, 15, 8, 0.20);
+        }
+
+        .choc::after {
+            content: "";
+            position: absolute;
+            width: 42%;
+            height: 2px;
+            left: 15%;
+            top: 17%;
+            border-radius: 10px;
+            background: rgba(255, 195, 147, 0.18);
+        }
+
+        .double-choco .choc-1 {
+            width: 31px;
+            height: 21px;
+            left: 31px;
+            top: 47px;
+            transform: rotate(-18deg);
+        }
+
+        .double-choco .choc-2 {
+            width: 27px;
+            height: 27px;
+            right: 34px;
+            top: 32px;
+            transform: rotate(17deg);
+        }
+
+        .double-choco .choc-3 {
+            width: 35px;
+            height: 19px;
+            left: 71px;
+            top: 24px;
+            transform: rotate(7deg);
+        }
+
+        .double-choco .choc-4 {
+            width: 24px;
+            height: 30px;
+            left: 43px;
+            bottom: 31px;
+            transform: rotate(23deg);
+        }
+
+        .double-choco .choc-5 {
+            width: 33px;
+            height: 20px;
+            right: 26px;
+            bottom: 37px;
+            transform: rotate(-14deg);
+        }
+
+        .double-choco .choc-6 {
+            width: 21px;
+            height: 18px;
+            left: 91px;
+            bottom: 20px;
+            transform: rotate(-5deg);
+        }
+
+        /* =====================================================
+           OREO EXTREME
+        ===================================================== */
+
+        .oreo-flavor {
+            width: 178px;
+            height: 160px;
+
+            border-radius:
+                54% 46% 57% 43%
+                / 45% 58% 42% 55%;
+
+            background:
+                radial-gradient(
+                    ellipse at 31% 26%,
+                    #fffefb 0%,
+                    #e9e0d5 42%,
+                    transparent 43%
+                ),
+                linear-gradient(
+                    135deg,
+                    #f5eee5,
+                    #d9cec1 57%,
+                    #c1b2a4
+                );
+
+            box-shadow:
+                inset 7px 6px 12px rgba(255, 255, 255, 0.76),
+                inset -8px -10px 14px rgba(93, 67, 54, 0.17),
+                inset 0 0 0 2px rgba(108, 82, 67, 0.12);
+            transform: rotate(2deg);
+        }
+
+        .oreo-flavor::before {
+            content: "";
+            position: absolute;
+            inset: 9px;
+            border-radius:
+                49% 51% 53% 47%
+                / 47% 56% 44% 53%;
+            border: 1px solid rgba(92, 67, 55, 0.13);
+        }
+
+        .oreo-flavor::after {
+            content: "";
+            position: absolute;
+            width: 60px;
+            height: 14px;
+            top: 22px;
+            left: 30px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.62);
+            filter: blur(6px);
+            transform: rotate(-17deg);
+        }
+
+        .oreo-piece {
+            position: absolute;
+            z-index: 4;
+            background:
+                linear-gradient(
+                    145deg,
+                    #2b211e,
+                    #15100f 70%,
+                    #0d0908
+                );
+            box-shadow:
+                inset 2px 2px 3px rgba(255,255,255,0.10),
+                inset -2px -3px 4px rgba(0,0,0,0.35),
+                2px 3px 4px rgba(31, 21, 17, 0.22);
+        }
+
+        .oreo-piece::after {
+            content: "";
+            position: absolute;
+            inset: 5px;
+            border-radius: inherit;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .oreo-flavor .piece-1 {
+            width: 39px;
+            height: 23px;
+            left: 25px;
+            top: 46px;
+            border-radius: 8px 13px 6px 10px;
+            transform: rotate(-19deg);
+        }
+
+        .oreo-flavor .piece-2 {
+            width: 27px;
+            height: 31px;
+            right: 29px;
+            top: 31px;
+            border-radius: 10px 5px 12px 7px;
+            transform: rotate(17deg);
+        }
+
+        .oreo-flavor .piece-3 {
+            width: 38px;
+            height: 20px;
+            left: 69px;
+            top: 72px;
+            border-radius: 8px 12px 9px 5px;
+            transform: rotate(5deg);
+        }
+
+        .oreo-flavor .piece-4 {
+            width: 25px;
+            height: 34px;
+            left: 42px;
+            bottom: 26px;
+            border-radius: 6px 11px 7px 12px;
+            transform: rotate(28deg);
+        }
+
+        .oreo-flavor .piece-5 {
+            width: 33px;
+            height: 21px;
+            right: 25px;
+            bottom: 32px;
+            border-radius: 12px 5px 9px 7px;
+            transform: rotate(-18deg);
+        }
+
+        .oreo-crumb {
+            position: absolute;
+            z-index: 5;
+            width: 8px;
+            height: 7px;
+            border-radius: 45% 55% 50% 50%;
+            background: #201614;
+            box-shadow: 1px 2px 2px rgba(0,0,0,0.2);
+        }
+
+        .oreo-flavor .crumb-1 {
+            left: 61px;
+            top: 35px;
+        }
+
+        .oreo-flavor .crumb-2 {
+            right: 56px;
+            top: 65px;
+        }
+
+        .oreo-flavor .crumb-3 {
+            left: 30px;
+            bottom: 48px;
+        }
+
+        .oreo-flavor .crumb-4 {
+            right: 46px;
+            bottom: 23px;
+        }
+
+        /* =====================================================
+           S'MORES
+        ===================================================== */
+
+        .smores {
+            width: 181px;
+            height: 163px;
+
+            border-radius:
+                42% 58% 49% 51%
+                / 56% 44% 58% 42%;
+
+            background:
+                radial-gradient(
+                    ellipse at 28% 25%,
+                    rgba(255, 223, 171, 0.72),
+                    transparent 26%
+                ),
+                linear-gradient(
+                    140deg,
+                    #d9954d,
+                    #b86b2e 56%,
+                    #8e4b20
+                );
+
+            box-shadow:
+                inset 6px 5px 12px rgba(255, 224, 174, 0.28),
+                inset -9px -11px 15px rgba(91, 39, 13, 0.27),
+                inset 0 0 0 2px rgba(107, 52, 20, 0.18);
+
+            transform: rotate(-2deg);
+        }
+
+        .smores::before {
+            content: "";
+            position: absolute;
+            inset: 9px;
+            border-radius:
+                40% 60% 51% 49%
+                / 55% 46% 57% 43%;
+            border: 1px solid rgba(103, 53, 20, 0.19);
+        }
+
+        .marshmallow {
+            position: absolute;
+            z-index: 3;
+            width: 75px;
+            height: 53px;
+            left: 50px;
+            top: 48px;
+
+            border-radius:
+                45% 55% 53% 47%
+                / 55% 43% 57% 45%;
+
+            background:
+                radial-gradient(
+                    ellipse at 35% 25%,
+                    #fffdf7,
+                    #f4e8d7 55%,
+                    #d8c1a7
+                );
+
+            box-shadow:
+                inset 4px 4px 7px rgba(255,255,255,0.9),
+                inset -5px -7px 9px rgba(128,91,59,0.17),
+                0 5px 7px rgba(83,43,20,0.16);
+
+            transform: rotate(7deg);
+        }
+
+        .marshmallow::after {
+            content: "";
+            position: absolute;
+            width: 25px;
+            height: 10px;
+            right: 8px;
+            bottom: 5px;
+            border-radius: 50%;
+            background: rgba(139, 72, 30, 0.27);
+            filter: blur(4px);
+        }
+
+        .smores-choc {
+            position: absolute;
+            z-index: 5;
+            background:
+                linear-gradient(
+                    140deg,
+                    #57301d,
+                    #2a130d 72%
+                );
+            box-shadow:
+                inset 2px 2px 2px rgba(255,196,134,0.18),
+                inset -2px -3px 3px rgba(0,0,0,0.3),
+                2px 3px 4px rgba(54,23,10,0.24);
+        }
+
+        .smores-choc.one {
+            width: 36px;
+            height: 19px;
+            left: 25px;
+            top: 29px;
+            transform: rotate(-19deg);
+            border-radius: 5px 8px 5px 9px;
+        }
+
+        .smores-choc.two {
+            width: 31px;
+            height: 25px;
+            right: 27px;
+            bottom: 35px;
+            transform: rotate(19deg);
+            border-radius: 8px 5px 9px 6px;
+        }
+
+        .smores-choc.three {
+            width: 25px;
+            height: 18px;
+            left: 37px;
+            bottom: 25px;
+            transform: rotate(8deg);
+            border-radius: 5px 8px 6px 5px;
+        }
+
+        .graham-line {
+            position: absolute;
+            z-index: 2;
+            width: 31px;
+            height: 3px;
+            border-radius: 50%;
+            background: rgba(104, 49, 18, 0.25);
+        }
+
+        .graham-line.one {
+            left: 77px;
+            top: 28px;
+            transform: rotate(25deg);
+        }
+
+        .graham-line.two {
+            right: 37px;
+            top: 76px;
+            transform: rotate(-18deg);
+        }
+
+        .graham-line.three {
+            left: 25px;
+            bottom: 52px;
+            transform: rotate(-12deg);
+        }
+
+        /* =====================================================
+           CHRISTMAS JOY
+        ===================================================== */
+
+        .christmas-cookie {
+            width: 174px;
+            height: 163px;
+
+            border-radius:
+                51% 49% 42% 58%
+                / 46% 57% 43% 54%;
+
+            background:
+                radial-gradient(
+                    ellipse at 30% 23%,
+                    rgba(149, 203, 155, 0.48),
+                    transparent 28%
+                ),
+                linear-gradient(
+                    145deg,
+                    #5f8b63,
+                    #42694a 56%,
+                    #2f5138
+                );
+
+            box-shadow:
+                inset 7px 5px 11px rgba(194, 229, 191, 0.19),
+                inset -9px -11px 16px rgba(24, 55, 29, 0.38),
+                inset 0 0 0 2px rgba(28, 67, 36, 0.22);
+
+            transform: rotate(3deg);
+        }
+
+        .christmas-cookie::before {
+            content: "";
+            position: absolute;
+            inset: 9px;
+            border-radius:
+                48% 52% 43% 57%
+                / 47% 55% 45% 53%;
+            border: 1px solid rgba(205, 235, 201, 0.17);
+        }
+
+        .christmas-icing {
+            position: absolute;
+            z-index: 4;
+            width: 89px;
+            height: 19px;
+            left: 43px;
+            top: 65px;
+
+            border-radius: 50% 42% 55% 45%;
+
+            background:
+                linear-gradient(
+                    100deg,
+                    #fff9ed,
+                    #f2dfc5
+                );
+
+            box-shadow:
+                inset 2px 2px 3px rgba(255,255,255,0.8),
+                inset -2px -3px 4px rgba(140,99,62,0.16),
+                0 4px 5px rgba(22,44,25,0.18);
+
+            transform: rotate(-11deg);
+        }
+
+        .christmas-icing::after {
+            content: "";
+            position: absolute;
+            width: 32px;
+            height: 5px;
+            left: 13px;
+            top: 5px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.58);
+            filter: blur(2px);
+        }
+
+        .festive-piece {
+            position: absolute;
+            z-index: 6;
+            box-shadow:
+                inset 2px 1px 2px rgba(255,255,255,0.35),
+                1px 2px 3px rgba(20,35,20,0.20);
+        }
+
+        .festive-piece.red {
+            background:
+                linear-gradient(
+                    145deg,
+                    #e45561,
+                    #9d2639
+                );
+        }
+
+        .festive-piece.cream {
+            background:
+                linear-gradient(
+                    145deg,
+                    #fff5dc,
+                    #dcbf92
+                );
+        }
+
+        .festive-piece.one {
+            width: 14px;
+            height: 9px;
+            left: 27px;
+            top: 48px;
+            border-radius: 5px 8px 4px 7px;
+            transform: rotate(-25deg);
+        }
+
+        .festive-piece.two {
+            width: 11px;
+            height: 11px;
+            right: 28px;
+            top: 43px;
+            border-radius: 50%;
+        }
+
+        .festive-piece.three {
+            width: 16px;
+            height: 8px;
+            right: 30px;
+            bottom: 45px;
+            border-radius: 6px;
+            transform: rotate(25deg);
+        }
+
+        .festive-piece.four {
+            width: 10px;
+            height: 13px;
+            left: 38px;
+            bottom: 31px;
+            border-radius: 50%;
+            transform: rotate(-8deg);
+        }
+
+        .festive-piece.five {
+            width: 13px;
+            height: 8px;
+            left: 88px;
+            bottom: 24px;
+            border-radius: 5px;
+            transform: rotate(19deg);
+        }
+
+        .festive-piece.six {
+            width: 9px;
+            height: 12px;
+            right: 58px;
+            top: 27px;
+            border-radius: 50%;
+        }
+
+        /* =========================
+           CARD TEXT
+        ========================= */
+
+        .card h3 {
+            position: relative;
+            z-index: 5;
+            max-width: 340px;
+            color: var(--brown);
+            font-family: "Playfair Display", serif;
+            font-size: 1.55rem;
+            font-weight: 700;
+            line-height: 1.08;
+            transition: color 0.3s ease;
+        }
+
+        .card:hover h3 {
+            color: var(--red);
+        }
+
+        .card-subtitle {
+            position: relative;
+            z-index: 5;
+            margin-top: 8px;
+            color: #a18477;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 1.1px;
+            text-transform: uppercase;
+        }
+
+        .card-meta {
+            position: relative;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: 15px;
+            color: #8c7065;
+            font-size: 0.66rem;
+            font-weight: 700;
+        }
+
+        .meta-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--red);
+        }
+
+        /* =========================
+           REVEAL
+        ========================= */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition:
+                opacity 0.7s ease,
+                transform 0.7s cubic-bezier(.2,.8,.2,1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* =========================
+           MODAL
+        ========================= */
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: 500;
+            display: none;
+            place-items: center;
+            padding: 20px;
+
+            background: rgba(35, 20, 15, 0.58);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+        }
+
+        .modal.show {
+            display: grid;
+            animation: modalFade 0.25s ease;
+        }
+
+        @keyframes modalFade {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-box {
+            position: relative;
+            width: min(720px, 100%);
+            max-height: min(760px, calc(100vh - 40px));
+            overflow-y: auto;
+            padding: 42px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #fffdf9,
+                    #f8eee5
+                );
+
+            border: 1px solid rgba(255,255,255,0.7);
+            border-radius: 34px;
+
+            box-shadow:
+                0 35px 100px rgba(20, 10, 6, 0.28);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            width: 40px;
+            height: 40px;
+            display: grid;
+            place-items: center;
+
+            border: 1px solid rgba(53,29,21,0.09);
+            border-radius: 50%;
+            background: rgba(255,255,255,0.7);
+            color: var(--brown);
+            cursor: pointer;
+            font-size: 18px;
+
+            transition:
+                transform 0.25s ease,
+                background 0.25s ease;
+        }
+
+        .modal-close:hover {
+            transform: rotate(90deg);
+            background: #fff;
+        }
+
+        .modal-kicker {
+            margin-bottom: 10px;
+            color: var(--red);
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .modal-box h2 {
+            max-width: 580px;
+            margin-bottom: 30px;
+            font-family: "Playfair Display", serif;
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            font-weight: 600;
+            letter-spacing: -0.05em;
+            line-height: 0.98;
+        }
+
+        .modal-section {
+            margin-top: 28px;
+        }
+
+        .modal-section h3 {
+            margin-bottom: 13px;
+            color: var(--brown);
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+        }
+
+        .modal-section ul,
+        .modal-section ol {
+            padding-left: 21px;
+        }
+
+        .modal-section li {
+            margin-bottom: 9px;
+            color: #73594e;
+            font-size: 0.82rem;
+            font-weight: 500;
+            line-height: 1.65;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1000px) {
+            header {
+                top: 12px;
+            }
+
+            nav {
+                justify-content: flex-start;
+                overflow-x: auto;
+                scrollbar-width: none;
+            }
+
+            nav::-webkit-scrollbar {
+                display: none;
+            }
+
+            nav a {
+                padding: 10px 13px;
+            }
+
+            .hero {
+                padding-top: 145px;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .page {
+                width: min(100% - 28px, 600px);
+            }
+
+            .hero {
+                min-height: 420px;
+                padding-top: 150px;
+            }
+
+            .hero h1 {
+                font-size: clamp(3.5rem, 17vw, 5.8rem);
+            }
+
+            .hero::before {
+                top: 120px;
+                right: -80px;
+                font-size: 7rem;
+            }
+
+            .collection-heading {
+                display: block;
+            }
+
+            .collection-heading p {
+                margin-top: 10px;
+                text-align: left;
+            }
+
+            .recipes-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .card {
+                min-height: 475px;
+            }
+
+            .modal-box {
+                padding: 32px 24px;
+                border-radius: 27px;
+            }
+        }
+
+        @media (max-width: 450px) {
+            nav a {
+                font-size: 9px;
+                padding: 10px 11px;
+            }
+
+            .hero {
+                padding-top: 140px;
+            }
+
+            .hero h1 {
+                font-size: 3.7rem;
+            }
+
+            .cookie-stage {
+                transform: scale(0.92);
+                margin-top: -4px;
+                margin-bottom: -8px;
+            }
+
+            .card {
+                min-height: 450px;
+                border-radius: 28px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            .reveal {
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <header id="6abbw7">
+        <nav>
+            <a href="Index.html">Home</a>
+            <a href="Recipes.html">Recipes</a>
+            <a href="PopularRecipes.html" class="active">Popular Recipes</a>
+            <a href="Posts.html">Posts</a>
+            <a href="Contactus.html">Contact</a>
+            <a href="MemoryGame.html">Memory Game</a>
+            <a href="History.html">History</a>
+        </nav>
+    </header>
+
+
+    <main>
+
+        <!-- =========================
+             HERO
+        ========================== -->
+
+        <section class="hero page">
+            <div class="hero-content">
+                <div class="eyebrow">
+                    The crowd favourites
+                </div>
+
+                <h1>
+                    Popular<br>
+                    <span>Recipes.</span>
+                </h1>
+
+                <p class="hero-copy">
+                    The cookies people keep coming back for.
+                    Four recipes with rich centres, dramatic textures,
+                    and the kind of homemade imperfection that makes
+                    a cookie feel actually baked rather than manufactured.
+                </p>
+            </div>
+        </section>
+
+
+        <!-- =========================
+             COLLECTION
+        ========================== -->
+
+        <section class="page">
+
+            <div class="collection-heading">
+                <div>
+                    <div class="eyebrow">
+                        Most wanted
+                    </div>
+
+                    <h2>
+                        The favourites.
+                    </h2>
+                </div>
+
+                <p>
+                    Four recipes.<br>
+                    Zero boring cookies.
+                </p>
+            </div>
+
+
+            <div class="recipes-grid">
+
+                <!-- DOUBLE CHOCO -->
+
+                <article
+                    class="card reveal"
+                    role="button"
+                    tabindex="0"
+                    onclick="openPopularRecipe('double-choco')"
+                    onkeydown="handleCardKey(event, 'double-choco')"
+                >
+                    <span class="card-badge">
+                        Chocolate
+                    </span>
+
+                    <span class="card-index">
+                        01
+                    </span>
+
+                    <div class="cookie-stage">
+
+                        <div class="plate-shadow"></div>
+
+                        <div class="cookie-shape double-choco">
+
+                            <span class="choc choc-1"></span>
+                            <span class="choc choc-2"></span>
+                            <span class="choc choc-3"></span>
+                            <span class="choc choc-4"></span>
+                            <span class="choc choc-5"></span>
+                            <span class="choc choc-6"></span>
+
+                        </div>
+                    </div>
+
+                    <h3>
+                        Double Choco Intense
+                    </h3>
+
+                    <p class="card-subtitle">
+                        Deep cocoa · molten chocolate
+                    </p>
+
+                    <div class="card-meta">
+                        <span>10 min</span>
+                        <span class="meta-dot"></span>
+                        <span>Rich & fudgy</span>
+                    </div>
+                </article>
+
+
+                <!-- OREO -->
+
+                <article
+                    class="card reveal"
+                    role="button"
+                    tabindex="0"
+                    onclick="openPopularRecipe('oreo')"
+                    onkeydown="handleCardKey(event, 'oreo')"
+                >
+                    <span class="card-badge">
+                        Cookies & cream
+                    </span>
+
+                    <span class="card-index">
+                        02
+                    </span>
+
+                    <div class="cookie-stage">
+
+                        <div class="plate-shadow"></div>
+
+                        <div class="cookie-shape oreo-flavor">
+
+                            <span class="oreo-piece piece-1"></span>
+                            <span class="oreo-piece piece-2"></span>
+                            <span class="oreo-piece piece-3"></span>
+                            <span class="oreo-piece piece-4"></span>
+                            <span class="oreo-piece piece-5"></span>
+
+                            <span class="oreo-crumb crumb-1"></span>
+                            <span class="oreo-crumb crumb-2"></span>
+                            <span class="oreo-crumb crumb-3"></span>
+                            <span class="oreo-crumb crumb-4"></span>
+
+                        </div>
+                    </div>
+
+                    <h3>
+                        Oreo Extreme
+                    </h3>
+
+                    <p class="card-subtitle">
+                        Crushed Oreo · white chocolate
+                    </p>
+
+                    <div class="card-meta">
+                        <span>10–12 min</span>
+                        <span class="meta-dot"></span>
+                        <span>Creamy crunch</span>
+                    </div>
+                </article>
+
+
+                <!-- S'MORES -->
+
+                <article
+                    class="card reveal"
+                    role="button"
+                    tabindex="0"
+                    onclick="openPopularRecipe('smores')"
+                    onkeydown="handleCardKey(event, 'smores')"
+                >
+                    <span class="card-badge">
+                        Dorm favourite
+                    </span>
+
+                    <span class="card-index">
+                        03
+                    </span>
+
+                    <div class="cookie-stage">
+
+                        <div class="plate-shadow"></div>
+
+                        <div class="cookie-shape smores">
+
+                            <span class="marshmallow"></span>
+
+                            <span class="smores-choc one"></span>
+                            <span class="smores-choc two"></span>
+                            <span class="smores-choc three"></span>
+
+                            <span class="graham-line one"></span>
+                            <span class="graham-line two"></span>
+                            <span class="graham-line three"></span>
+
+                        </div>
+                    </div>
+
+                    <h3>
+                        Dorm S'mores Cookie
+                    </h3>
+
+                    <p class="card-subtitle">
+                        Graham · chocolate · marshmallow
+                    </p>
+
+                    <div class="card-meta">
+                        <span>9–11 min</span>
+                        <span class="meta-dot"></span>
+                        <span>Gooey centre</span>
+                    </div>
+                </article>
+
+
+                <!-- CHRISTMAS -->
+
+                <article
+                    class="card reveal"
+                    role="button"
+                    tabindex="0"
+                    onclick="openPopularRecipe('christmas')"
+                    onkeydown="handleCardKey(event, 'christmas')"
+                >
+                    <span class="card-badge">
+                        Seasonal
+                    </span>
+
+                    <span class="card-index">
+                        04
+                    </span>
+
+                    <div class="cookie-stage">
+
+                        <div class="plate-shadow"></div>
+
+                        <div class="cookie-shape christmas-cookie">
+
+                            <span class="christmas-icing"></span>
+
+                            <span class="festive-piece red one"></span>
+                            <span class="festive-piece cream two"></span>
+                            <span class="festive-piece red three"></span>
+                            <span class="festive-piece cream four"></span>
+                            <span class="festive-piece red five"></span>
+                            <span class="festive-piece cream six"></span>
+
+                        </div>
+                    </div>
+
+                    <h3>
+                        Christmas Joy Sprinkle Cookie
+                    </h3>
+
+                    <p class="card-subtitle">
+                        Vanilla · festive sprinkles
+                    </p>
+
+                    <div class="card-meta">
+                        <span>10 min</span>
+                        <span class="meta-dot"></span>
+                        <span>Buttery & crisp</span>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         RECIPE MODAL
+    ========================== -->
+
+    <div
+        class="modal"
+        id="recipeModal"
+        aria-hidden="true"
+        role="dialog"
+        aria-modal="true"
+    >
+
+        <div
+            class="modal-box"
+            onclick="event.stopPropagation()"
+        >
+
+            <button
+                class="modal-close"
+                type="button"
+                aria-label="Close recipe"
+                onclick="closePopularRecipe()"
+            >
+                ×
+            </button>
+
+            <div class="modal-kicker">
+                Popular recipe
+            </div>
+
+            <h2 id="modalTitle">
+                Recipe
+            </h2>
+
+            <div class="modal-section">
+                <h3>
+                    Ingredients
+                </h3>
+
+                <ul id="modalIngredients"></ul>
+            </div>
+
+            <div class="modal-section">
+                <h3>
+                    Method
+                </h3>
+
+                <ol id="modalSteps"></ol>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script>
+        const popularCookieData = {
+            "double-choco": {
+                title: "Double Choco Intense",
+
+                ingredients: [
+                    "100g Softened Butter",
+                    "90g Brown Sugar",
+                    "130g Flour",
+                    "30g Dark Cocoa Powder",
+                    "100g Dark Chocolate Chips"
+                ],
+
+                steps: [
+                    "Cream butter and brown sugar together until light and fluffy.",
+                    "Sift in flour and cocoa powder, then mix together well.",
+                    "Fold in a generous amount of dark chocolate chips.",
+                    "Bake at 175°C for 10 minutes for a rich, fudgy center."
+                ]
+            },
+
+            "oreo": {
+                title: "Oreo Extreme",
+
+                ingredients: [
+                    "115g Butter, softened",
+                    "100g Sugar",
+                    "150g Flour",
+                    "8 Crushed Oreo Cookies",
+                    "50g White Chocolate Chips"
+                ],
+
+                steps: [
+                    "Beat butter and sugar together until combined.",
+                    "Fold in the flour until a smooth dough forms.",
+                    "Mix in crushed Oreo pieces and white chocolate chips.",
+                    "Bake at 180°C for 10–12 minutes until set."
+                ]
+            },
+
+            "smores": {
+                title: "Dorm S'mores Cookie",
+
+                ingredients: [
+                    "100g Unsalted Butter",
+                    "80g Brown Sugar",
+                    "140g Flour",
+                    "6 Mini Marshmallows",
+                    "50g Milk Chocolate Pieces",
+                    "4 Graham Crackers, crumbled"
+                ],
+
+                steps: [
+                    "Prepare basic cookie dough using butter, sugar, and flour.",
+                    "Fold in graham cracker crumbs and chocolate pieces.",
+                    "Form cookie dough balls and press a mini marshmallow into the center of each.",
+                    "Bake at 175°C for 9–11 minutes until golden and gooey."
+                ]
+            },
+
+            "christmas": {
+                title: "Christmas Joy Sprinkle Cookie",
+
+                ingredients: [
+                    "110g Softened Butter",
+                    "100g Granulated Sugar",
+                    "1 Egg",
+                    "160g Flour",
+                    "1/2 tsp Vanilla Extract",
+                    "40g Festive Red & Green Sprinkles"
+                ],
+
+                steps: [
+                    "Cream butter, sugar, and vanilla extract together.",
+                    "Add the egg and mix until smooth.",
+                    "Sift in flour and gently fold in the festive sprinkles.",
+                    "Chill dough for 20 minutes, then bake at 175°C for 10 minutes."
+                ]
+            }
+        };
+
+
+        function openPopularRecipe(recipeKey) {
+            const recipe = popularCookieData[recipeKey];
+
+            if (!recipe) {
+                return;
+            }
+
+            const modal = document.getElementById("recipeModal");
+            const title = document.getElementById("modalTitle");
+            const ingredients = document.getElementById("modalIngredients");
+            const steps = document.getElementById("modalSteps");
+
+            title.textContent = recipe.title;
+
+            ingredients.innerHTML = "";
+            steps.innerHTML = "";
+
+            recipe.ingredients.forEach(function (ingredient) {
+                const item = document.createElement("li");
+                item.textContent = ingredient;
+                ingredients.appendChild(item);
+            });
+
+            recipe.steps.forEach(function (step) {
+                const item = document.createElement("li");
+                item.textContent = step;
+                steps.appendChild(item);
+            });
+
+            modal.classList.add("show");
+            modal.setAttribute("aria-hidden", "false");
+
+            document.body.style.overflow = "hidden";
+        }
+
+
+        function closePopularRecipe() {
+            const modal = document.getElementById("recipeModal");
+
+            modal.classList.remove("show");
+            modal.setAttribute("aria-hidden", "true");
+
+            document.body.style.overflow = "";
+        }
+
+
+        function handleCardKey(event, recipeKey) {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                openPopularRecipe(recipeKey);
+            }
+        }
+
+
+        document.getElementById("recipeModal").addEventListener(
+            "click",
+            function (event) {
+                if (event.target === this) {
+                    closePopularRecipe();
+                }
+            }
+        );
+
+
+        document.addEventListener(
+            "keydown",
+            function (event) {
+                if (event.key === "Escape") {
+                    closePopularRecipe();
+                }
+            }
+        );
+
+
+        /* =========================
+           SCROLL REVEAL
+        ========================== */
+
+        const revealItems = document.querySelectorAll(".reveal");
+
+        if ("IntersectionObserver" in window) {
+
+            const revealObserver = new IntersectionObserver(
+                function (entries, observer) {
+
+                    entries.forEach(function (entry) {
+
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("visible");
+                            observer.unobserve(entry.target);
+                        }
+
+                    });
+
+                },
+                {
+                    threshold: 0.12
+                }
+            );
+
+            revealItems.forEach(function (item, index) {
+
+                item.style.transitionDelay =
+                    Math.min(index * 0.08, 0.24) + "s";
+
+                revealObserver.observe(item);
+
+            });
+
+        } else {
+
+            revealItems.forEach(function (item) {
+                item.classList.add("visible");
+            });
+
+        }
+    </script>
+
+</body>
+</html>
